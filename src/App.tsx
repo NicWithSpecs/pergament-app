@@ -6,18 +6,31 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
   BackgroundVariant,
+  SelectionMode,
 } from "reactflow";
+
+import NoteNode from "./components/NoteNode";
 
 import "reactflow/dist/style.css";
 import "./App.css";
 
 const initialNodes = [
-  { id: "1", position: { x: 0, y: 0 }, data: { label: "22" } },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
+  { id: "1", position: { x: 300, y: 150 }, data: { label: "22" } },
+  { id: "2", position: { x: 300, y: 300 }, data: { label: "2" } },
+  {
+    id: "node-1",
+    type: "noteNode",
+    position: { x: 0, y: 0 },
+    data: { value: 123 },
+  },
 ];
 const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
 
+const panOnDrag = [1, 2];
+
 const proOptions = { hideAttribution: true };
+
+const nodeTypes = { noteNode: NoteNode };
 
 export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -36,8 +49,12 @@ export default function App() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        nodeTypes={nodeTypes}
         proOptions={proOptions}
         fitView
+        selectionOnDrag
+        panOnDrag={panOnDrag}
+        selectionMode={SelectionMode.Partial}
       >
         <Controls />
         <Background
