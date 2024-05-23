@@ -1,12 +1,17 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import ReactFlow, {
   Controls,
   Background,
   useNodesState,
   useEdgesState,
+  Node,
   addEdge,
   BackgroundVariant,
   SelectionMode,
+  OnConnect,
+  OnNodesChange,
+  applyNodeChanges,
+  NodeTypes,
 } from "reactflow";
 
 import NoteNode from "./components/NoteNode";
@@ -14,7 +19,7 @@ import NoteNode from "./components/NoteNode";
 import "reactflow/dist/style.css";
 import "./App.css";
 
-const initialNodes = [
+const initialNodes: Node[] = [
   { id: "1", position: { x: 300, y: 150 }, data: { label: "22" } },
   { id: "2", position: { x: 300, y: 300 }, data: { label: "2" } },
   {
@@ -30,13 +35,17 @@ const panOnDrag = [1, 2];
 
 const proOptions = { hideAttribution: true };
 
-const nodeTypes = { noteNode: NoteNode };
+const nodeTypes: NodeTypes = { noteNode: NoteNode };
 
 export default function App() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const onConnect = useCallback(
+  const onNodesChange: OnNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    [setNodes]
+  );
+  const onConnect: OnConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );

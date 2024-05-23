@@ -1,20 +1,14 @@
-import { useCallback } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { Handle, Position } from "reactflow";
 
-const handleStyle = { left: 10 };
-
-function NoteNode({ data, isConnectable }) {
-  const onChange = useCallback((evt) => {
-    console.log(evt.target.value);
+function NoteNode() {
+  const onChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
+    if (evt.target) console.log(evt.target.value);
   }, []);
 
   return (
     <div className="note-node">
-      <Handle
-        type="target"
-        position={Position.Top}
-        isConnectable={isConnectable}
-      />
+      <Handle type="target" position={Position.Top} isConnectable={true} />
       <div>
         <label htmlFor="text">Text:</label>
         <input
@@ -29,14 +23,7 @@ function NoteNode({ data, isConnectable }) {
         type="source"
         position={Position.Bottom}
         id="a"
-        style={handleStyle}
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="b"
-        isConnectable={isConnectable}
+        isConnectable={true}
       />
     </div>
   );
