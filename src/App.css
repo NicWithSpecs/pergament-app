@@ -1,6 +1,8 @@
 #root {
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
+  font-family: "Inter", sans-serif;;
+  color: rgb(0, 0, 0);
 }
 
 #canvas {
@@ -18,22 +20,29 @@
 }
 
 .note-node {
-  height: 50px;
-  border: 1px solid #eee;
-  padding: 5px;
+  min-width: 200px;
+  border: 2px solid #000000;
   border-radius: 5px;
   background: white;
+  overflow: hidden;
+  font-size: 12px;
 }
 
-.note-node label {
+.note-content {
+  margin: 5px;
   display: block;
-  color: #777;
-  font-size: 12px;
+  color: #000000;
 }
 
-.note-node input {
-  color: #777;
-  background-color: white;
-  font-size: 12px;
+.editing {
+  cursor: text;
+}
+
+.selected > .note-node {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+p {
+  margin: 4px;
 }
 

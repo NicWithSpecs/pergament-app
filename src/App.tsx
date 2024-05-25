@@ -20,20 +20,21 @@ import "reactflow/dist/style.css";
 import "./App.css";
 
 const initialNodes: Node[] = [
-  { id: "1", position: { x: 300, y: 150 }, data: { label: "22" } },
-  { id: "2", position: { x: 300, y: 300 }, data: { label: "2" } },
+  { id: "1", position: { x: 300, y: 150 }, data: { label: "Hello" } },
+  { id: "2", position: { x: 300, y: 300 }, data: { label: "World" } },
   {
     id: "node-1",
     type: "noteNode",
+    /* dragHandle: ".drag-handle", */
     position: { x: 0, y: 0 },
-    data: { value: 123 },
+    data: {},
   },
 ];
 const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
 
 const panOnDrag = [1, 2];
 
-const proOptions = { hideAttribution: true };
+const proOptions = { hideAttribution: false };
 
 const nodeTypes: NodeTypes = { noteNode: NoteNode };
 
@@ -59,6 +60,7 @@ export default function App() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        elementsSelectable={true}
         proOptions={proOptions}
         fitView
         selectionOnDrag
