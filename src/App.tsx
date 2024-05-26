@@ -12,21 +12,35 @@ import ReactFlow, {
   OnNodesChange,
   applyNodeChanges,
   NodeTypes,
+  MarkerType,
+  ConnectionMode,
+  EdgeTypes,
+  StraightEdge,
 } from "reactflow";
-
-import NoteNode from "./components/NoteNode";
 
 import "reactflow/dist/style.css";
 import "./App.css";
+import NoteNode from "./components/NoteNode";
+import FloatingEdge from "./components/FloatingEdge";
+import CustomConnectionLine from "./components/CustomConnectionLine";
 
 const initialNodes: Node[] = [
-  { id: "1", position: { x: 300, y: 150 }, data: { label: "Hello" } },
-  { id: "2", position: { x: 300, y: 300 }, data: { label: "World" } },
   {
     id: "node-1",
     type: "noteNode",
-    /* dragHandle: ".drag-handle", */
     position: { x: 0, y: 0 },
+    data: {},
+  },
+  {
+    id: "node-2",
+    type: "noteNode",
+    position: { x: 0, y: 350 },
+    data: {},
+  },
+  {
+    id: "node-3",
+    type: "noteNode",
+    position: { x: 300, y: 150 },
     data: {},
   },
 ];
@@ -37,6 +51,26 @@ const panOnDrag = [1, 2];
 const proOptions = { hideAttribution: false };
 
 const nodeTypes: NodeTypes = { noteNode: NoteNode };
+
+const edgeTypes: EdgeTypes = {
+  floating: FloatingEdge,
+  straight: StraightEdge,
+};
+
+const connectionLineStyle = {
+  strokeWidth: 1,
+  stroke: "black",
+  zIndex: "-1 !important",
+};
+
+const defaultEdgeOptions = {
+  style: { strokeWidth: 2, stroke: "black" },
+  type: "floating",
+  markerEnd: {
+    type: MarkerType.ArrowClosed,
+    color: "black",
+  },
+};
 
 export default function App() {
   const [nodes, setNodes] = useNodesState(initialNodes);
@@ -60,12 +94,18 @@ export default function App() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        defaultEdgeOptions={defaultEdgeOptions}
         elementsSelectable={true}
         proOptions={proOptions}
         fitView
         selectionOnDrag
         panOnDrag={panOnDrag}
         selectionMode={SelectionMode.Partial}
+        connectionLineComponent={CustomConnectionLine}
+        connectionLineStyle={connectionLineStyle}
+        connectionMode={ConnectionMode.Loose}
+        connectionRadius={50}
       >
         <Controls />
         <Background

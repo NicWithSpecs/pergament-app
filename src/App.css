@@ -46,3 +46,7 @@ p {
   margin: 4px;
 }
 
+.react-flow__connectionline {
+  z-index: -1 !important;
+}
+
