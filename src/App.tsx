@@ -44,11 +44,14 @@ const initialNodes: Node[] = [
     data: {},
   },
 ];
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges = [
+  { id: "e1-2", source: "node-1", target: "node-2", updatable: true },
+];
 
 const panOnDrag = [1, 2];
 
 const proOptions = { hideAttribution: false };
+const fitViewOptions = { padding: 2 };
 
 const nodeTypes: NodeTypes = { noteNode: NoteNode };
 
@@ -85,6 +88,20 @@ export default function App() {
     [setEdges]
   );
 
+  const addNode = () => {
+    const newNode = {
+      id: "note-" + self.crypto.randomUUID(),
+      type: "noteNode",
+      position: {
+        x: 0,
+        y: 0,
+      },
+      data: {},
+    };
+
+    setNodes((nds) => nds.concat(newNode));
+  };
+
   return (
     <div id="canvas">
       <ReactFlow
@@ -99,22 +116,26 @@ export default function App() {
         elementsSelectable={true}
         proOptions={proOptions}
         fitView
+        fitViewOptions={fitViewOptions}
         selectionOnDrag
         panOnDrag={panOnDrag}
         selectionMode={SelectionMode.Partial}
         connectionLineComponent={CustomConnectionLine}
         connectionLineStyle={connectionLineStyle}
         connectionMode={ConnectionMode.Loose}
-        connectionRadius={50}
+        connectionRadius={70}
       >
         <Controls />
         <Background
           variant={BackgroundVariant.Dots}
           color="#cdcfd0"
-          gap={10}
+          gap={12}
           size={1}
         />
       </ReactFlow>
+      <button className="AddNodeBtn" onClick={addNode}>
+        Add Node
+      </button>
     </div>
   );
 }

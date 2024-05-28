@@ -8,28 +8,32 @@ import {
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useState } from "react";
+import { FaLongArrowAltRight } from "react-icons/fa";
 
-const dragHandleStyle: React.CSSProperties = {
+/* const noteHeaderStyle: React.CSSProperties = {
   display: "block",
   width: "100%",
   height: 12,
   backgroundColor: "black",
   border: "1px solid black",
   cursor: "move",
-};
+  opacity: 0,
+}; */
 
 const arrowHandleStyle: React.CSSProperties = {
   display: "block",
-  width: 12,
-  height: 12,
-  top: 2,
-  right: 2,
+  width: 11,
+  height: 11,
+  top: -12,
+  right: 1,
   position: "absolute",
-  backgroundColor: "orange",
-  border: "none",
+  backgroundColor: "white",
   borderRadius: "50%",
   transform: "none",
   cursor: "crosshair",
+  textAlign: "center",
+  lineHeight: "9px",
+  fontWeight: "bold",
 };
 
 const arrowTargetStyle: React.CSSProperties = {
@@ -60,9 +64,10 @@ function NoteNode({ selected }: NodeProps) {
     extensions: [StarterKit],
     content: `
       <p>
-        This is a note.
+        <strong>This is a note.</strong>
       </p>
       <p>
+        Drag to move.<br>
         Double click to edit.
       </p>
     `,
@@ -82,16 +87,25 @@ function NoteNode({ selected }: NodeProps) {
 
   return (
     <div className="note-node" onDoubleClick={handleDoubleClick}>
-      <div className="drag-handle" style={dragHandleStyle}>
-        {!isConnecting && (
+      {!isConnecting && (
+        <>
           <Handle
             className="customHandle"
             position={Position.Right}
             type="source"
             style={arrowHandleStyle}
-          />
-        )}
-      </div>
+          >
+            <FaLongArrowAltRight
+              style={{
+                pointerEvents: "none",
+                fontSize: 11,
+                lineHeight: "0",
+                verticalAlign: "middle",
+              }}
+            />
+          </Handle>
+        </>
+      )}
 
       {/* {editor && (
         <button
@@ -111,6 +125,7 @@ function NoteNode({ selected }: NodeProps) {
         style={arrowTargetStyle}
         isConnectableStart={false}
       />
+      {isConnecting && <div className="blob"></div>}
     </div>
   );
 }

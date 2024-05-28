@@ -1,9 +1,23 @@
 import { useCallback } from "react";
-import { useStore, getStraightPath, EdgeProps } from "reactflow";
+import {
+  useStore,
+  EdgeProps,
+  getBezierPath,
+  useReactFlow,
+  EdgeLabelRenderer,
+} from "reactflow";
 
 import { getEdgeParams } from "../utils";
 
-function FloatingEdge({ id, source, target, markerEnd, style }: EdgeProps) {
+function FloatingEdge({
+  id,
+  source,
+  target,
+  markerEnd,
+  style,
+  selected,
+}: EdgeProps) {
+  const { setEdges } = useReactFlow();
   const sourceNode = useStore(
     useCallback((store) => store.nodeInternals.get(source), [source])
   );
@@ -15,23 +29,69 @@ function FloatingEdge({ id, source, target, markerEnd, style }: EdgeProps) {
     return null;
   }
 
-  const { sx, sy, tx, ty } = getEdgeParams(sourceNode, targetNode);
+  const onEdgeClick = () => {
+    setEdges((edges) => edges.filter((edge) => edge.id !== id));
+  };
 
-  const [edgePath] = getStraightPath({
+  const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(
+    sourceNode,
+    targetNode
+  );
+
+  /* const [edgePath] = getStraightPath({
     sourceX: sx,
     sourceY: sy,
+    targetX: tx,
+    targetY: ty,
+  }); */
+
+  /* const [edgePathSmoothstep] = getSmoothStepPath({
+    sourceX: sx,
+    sourceY: sy,
+    sourcePosition: sourcePos,
+    targetPosition: targetPos,
+    targetX: tx,
+    targetY: ty,
+  }); */
+
+  const [edgePathBezier, labelX, labelY] = getBezierPath({
+    sourceX: sx,
+    sourceY: sy,
+    sourcePosition: sourcePos,
+    targetPosition: targetPos,
     targetX: tx,
     targetY: ty,
   });
 
   return (
-    <path
-      id={id}
-      className="react-flow__edge-path"
-      d={edgePath}
-      markerEnd={markerEnd}
-      style={style}
-    />
+    <>
+      <path
+        id={id}
+        className="react-flow__edge-path"
+        d={edgePathBezier}
+        markerEnd={markerEnd}
+        style={style}
+      />
+      {selected && (
+        <EdgeLabelRenderer>
+          <div
+            style={{
+              position: "absolute",
+              transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+              fontSize: 12,
+              // everything inside EdgeLabelRenderer has no pointer events by default
+              // if you have an interactive element, set pointer-events: all
+              pointerEvents: "all",
+            }}
+            className="nodrag nopan"
+          >
+            <button className="edgebutton" onClick={onEdgeClick}>
+              ×
+            </button>
+          </div>
+        </EdgeLabelRenderer>
+      )}
+    </>
   );
 }
 

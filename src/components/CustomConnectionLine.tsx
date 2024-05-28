@@ -9,7 +9,6 @@ function CustomConnectionLine({
   connectionLineStyle,
 }: ConnectionLineComponentProps) {
   if (!fromNode) {
-    // Handle the case when fromNode is undefined
     return null;
   }
 
@@ -37,7 +36,7 @@ function CustomConnectionLine({
         fill="black"
         r={2}
         stroke="black"
-        strokeWidth={2}
+        strokeWidth={3}
       />
     </g>
   );

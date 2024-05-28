@@ -1,7 +1,8 @@
 #root {
   margin: 0 auto;
   text-align: left;
-  font-family: "Inter", sans-serif;;
+  font-family: "Inter", sans-serif;
+  font-size: 100%;
   color: rgb(0, 0, 0);
 }
 
@@ -15,23 +16,26 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
-}
-
 .note-node {
-  min-width: 200px;
-  border: 2px solid #000000;
+  min-width: 300px;
+  border: 1px solid black;
+  border-top: 14px solid black;
   border-radius: 5px;
-  background: white;
-  overflow: hidden;
-  font-size: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  /* overflow: hidden; */
+  font-size: 1rem;
+  transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
 }
 
 .note-content {
   margin: 5px;
   display: block;
   color: #000000;
+}
+
+.note-node:has(.react-flow__handle-connecting) {
+  scale: 1.1;
 }
 
 .editing {
@@ -48,5 +52,79 @@ p {
 
 .react-flow__connectionline {
   z-index: -1 !important;
+}
+
+.react-flow__handle-right {
+  transition: scale 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), rotate 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: none;
+  font-size: 8px;
+}
+
+svg {
+  display: block;
+  margin: auto;
+}
+
+.react-flow__handle-right:hover {
+  scale: 2;
+  rotate: -45deg;
+  border: 1px solid black;
+}
+
+.blob {
+  position:absolute;
+  top: calc(50% - 10px);
+  left: calc(50% - 10px);
+	border-radius: 50%;
+	height: 20px;
+	width: 20px;
+  transform: scale(1);
+	animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+.selected > path {
+  stroke-width: 3px !important;
+}
+
+.edgebutton {
+  width: 20px;
+  height: 20px;
+  background: #eee;
+  color: black;
+  border: 1px solid #000000;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+}
+
+.edgebutton:hover {
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.08);
+  background: #c86060;
+  color: white;
+}
+
+.AddNodeBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
