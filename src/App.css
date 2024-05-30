@@ -9,7 +9,20 @@
 #canvas {
   width: 100vw;
   height: 100vh;
-  background-color: #ebedee;
+  background-color: #dfe1e1;
+  /* background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(43, 45, 81) 100%); */
+}
+
+#canvas:after {
+  pointer-events: none;
+  content:"";
+  background-image:url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png");
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top:0;
+  left: 0;
+  opacity:0.04;
 }
 
 .card {
@@ -21,8 +34,7 @@
   border: 1px solid black;
   border-top: 14px solid black;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.5);
-  /* overflow: hidden; */
+  background: rgba(255, 255, 255, 0.492);
   font-size: 1rem;
   transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   backdrop-filter: blur(10px);
@@ -100,7 +112,7 @@ svg {
 }
 
 .selected > path {
-  stroke-width: 3px !important;
+  stroke-width: 4px !important;
 }
 
 .edgebutton {

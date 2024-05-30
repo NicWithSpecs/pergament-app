@@ -6,6 +6,7 @@ import {
   useReactFlow,
   EdgeLabelRenderer,
 } from "reactflow";
+import { FaTimes } from "react-icons/fa";
 
 import { getEdgeParams } from "../utils";
 
@@ -86,7 +87,7 @@ function FloatingEdge({
             className="nodrag nopan"
           >
             <button className="edgebutton" onClick={onEdgeClick}>
-              ×
+              <FaTimes />
             </button>
           </div>
         </EdgeLabelRenderer>
