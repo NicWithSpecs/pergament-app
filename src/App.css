@@ -9,8 +9,13 @@
 #canvas {
   width: 100vw;
   height: 100vh;
-  background-color: #dfe1e1;
+  background-color: #e1dfdf;
+  overflow: hidden;
   /* background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(43, 45, 81) 100%); */
+}
+
+.react-flow__renderer {
+  overflow: hidden;
 }
 
 #canvas:after {
@@ -30,17 +35,17 @@
 }
 
 .note-node {
-  min-width: 300px;
   border: 1px solid black;
   border-top: 14px solid black;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.492);
+  background: rgba(255, 255, 255, 0);
   font-size: 1rem;
   transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   backdrop-filter: blur(10px);
 }
 
 .note-content {
+  width: 100%;
   margin: 5px;
   display: block;
   color: #000000;
@@ -48,6 +53,11 @@
 
 .note-node:has(.react-flow__handle-connecting) {
   scale: 1.1;
+}
+
+.react-flow__resize-control.line.right {
+  transform: translate(-14px, -14px);
+  z-index: 500;
 }
 
 .editing {
@@ -112,7 +122,7 @@ svg {
 }
 
 .selected > path {
-  stroke-width: 4px !important;
+  stroke-width: 3px !important;
 }
 
 .edgebutton {

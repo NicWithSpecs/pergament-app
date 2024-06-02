@@ -1,8 +1,10 @@
 import {
   Handle,
   NodeProps,
+  NodeResizeControl,
   Position,
   ReactFlowState,
+  ResizeControlVariant,
   useStore,
 } from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -50,6 +52,14 @@ const arrowTargetStyle: React.CSSProperties = {
   cursor: "crosshair",
 };
 
+const resizerStyle: React.CSSProperties = {
+  position: "absolute",
+  background: "transparent",
+  border: "none",
+  top: "100%",
+  right: "-70",
+};
+
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
@@ -87,6 +97,16 @@ function NoteNode({ selected }: NodeProps) {
 
   return (
     <div className="note-node" onDoubleClick={handleDoubleClick}>
+      {selected && (
+        <NodeResizeControl
+          style={resizerStyle}
+          minWidth={100}
+          minHeight={100}
+          variant={ResizeControlVariant.Line}
+        >
+          <ResizeIcon />
+        </NodeResizeControl>
+      )}
       {!isConnecting && (
         <>
           <Handle
@@ -127,6 +147,35 @@ function NoteNode({ selected }: NodeProps) {
       />
       {isConnecting && <div className="blob"></div>}
     </div>
+  );
+}
+
+function ResizeIcon() {
+  return (
+    <svg width="11" xmlns="http://www.w3.org/2000/svg" height="11" fill="none">
+      <rect
+        rx=".658"
+        ry=".658"
+        x="4.842"
+        y="-1.62"
+        transform="rotate(45 5.5 5.5)"
+        width="1.316"
+        height="14.24"
+        style={{ fill: "rgb(0, 0, 0)", fillOpacity: 1 }}
+        className="fills"
+      />
+      <rect
+        rx=".678"
+        ry=".678"
+        x="7.232"
+        y="4.34"
+        transform="rotate(45 7.91 7.91)"
+        width="1.356"
+        height="7.14"
+        style={{ fill: "rgb(0, 0, 0)", fillOpacity: 1 }}
+        className="fills"
+      />
+    </svg>
   );
 }
 

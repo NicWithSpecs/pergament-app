@@ -5,6 +5,7 @@ import {
   getBezierPath,
   useReactFlow,
   EdgeLabelRenderer,
+  BaseEdge,
 } from "reactflow";
 import { FaTimes } from "react-icons/fa";
 
@@ -66,13 +67,20 @@ function FloatingEdge({
 
   return (
     <>
-      <path
+      <BaseEdge
+        id={id}
+        path={edgePathBezier}
+        markerEnd={markerEnd}
+        interactionWidth={15}
+        style={style}
+      />
+      {/* <path
         id={id}
         className="react-flow__edge-path"
         d={edgePathBezier}
         markerEnd={markerEnd}
         style={style}
-      />
+      /> */}
       {selected && (
         <EdgeLabelRenderer>
           <div
