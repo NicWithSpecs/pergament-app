@@ -27,7 +27,8 @@
   position: fixed;
   top:0;
   left: 0;
-  opacity:0.04;
+  /* opacity:0.04; */
+  opacity: 0;
 }
 
 .card {
@@ -36,19 +37,28 @@
 
 .note-node {
   border: 1px solid black;
-  border-top: 14px solid black;
+  border-top: 15px solid black;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0);
+  padding: 10px;
+  background: rgb(255, 255, 255);
   font-size: 1rem;
   transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
 }
 
 .note-content {
   width: 100%;
-  margin: 5px;
+  margin: 0;
   display: block;
   color: #000000;
+}
+
+.uneditable {
+  pointer-events: none;
+}
+
+.ProseMirror:focus {
+  outline: none;
 }
 
 .note-node:has(.react-flow__handle-connecting) {
@@ -142,6 +152,14 @@ svg {
   box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.08);
   background: #c86060;
   color: white;
+}
+
+.resize-icon {
+  scale: 1;
+}
+
+.resize-icon:hover {
+  scale: 1.2;
 }
 
 .AddNodeBtn {

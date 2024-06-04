@@ -12,22 +12,12 @@ import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
-/* const noteHeaderStyle: React.CSSProperties = {
-  display: "block",
-  width: "100%",
-  height: 12,
-  backgroundColor: "black",
-  border: "1px solid black",
-  cursor: "move",
-  opacity: 0,
-}; */
-
 const arrowHandleStyle: React.CSSProperties = {
   display: "block",
   width: 11,
   height: 11,
-  top: -12,
-  right: 1,
+  top: 2,
+  right: 2,
   position: "absolute",
   backgroundColor: "white",
   borderRadius: "50%",
@@ -135,7 +125,9 @@ function NoteNode({ selected }: NodeProps) {
           Strike
         </button>
       )} */}
-      <div className={`note-content ${editing ? "nodrag editing" : ""}`}>
+      <div
+        className={`note-content ${editing ? "nodrag editing" : "uneditable"}`}
+      >
         <EditorContent editor={editor} />
       </div>
       <Handle
@@ -152,7 +144,13 @@ function NoteNode({ selected }: NodeProps) {
 
 function ResizeIcon() {
   return (
-    <svg width="11" xmlns="http://www.w3.org/2000/svg" height="11" fill="none">
+    <svg
+      className="resize-icon"
+      width="11"
+      xmlns="http://www.w3.org/2000/svg"
+      height="11"
+      fill="none"
+    >
       <rect
         rx=".658"
         ry=".658"
@@ -161,7 +159,7 @@ function ResizeIcon() {
         transform="rotate(45 5.5 5.5)"
         width="1.316"
         height="14.24"
-        style={{ fill: "rgb(0, 0, 0)", fillOpacity: 1 }}
+        style={{ fill: "rgb(0, 0, 0)", fillOpacity: 0.5 }}
         className="fills"
       />
       <rect
@@ -172,7 +170,7 @@ function ResizeIcon() {
         transform="rotate(45 7.91 7.91)"
         width="1.356"
         height="7.14"
-        style={{ fill: "rgb(0, 0, 0)", fillOpacity: 1 }}
+        style={{ fill: "rgb(0, 0, 0)", fillOpacity: 0.5 }}
         className="fills"
       />
     </svg>

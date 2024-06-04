@@ -48,6 +48,10 @@ const connectionLineStyle = {
   zIndex: "-1 !important",
 };
 
+const noteNodeStyle = {
+  width: 300,
+};
+
 const defaultEdgeOptions = {
   style: { strokeWidth: 2, stroke: "black" },
   type: "floating",
@@ -79,7 +83,7 @@ const PergamentCanvas = () => {
         changes[0] = {
           ...changes[0],
           dimensions: {
-            height: undefined!,
+            height: undefined!, // experimental solution
             width: changes[0].dimensions.width,
           },
         };
@@ -122,6 +126,7 @@ const PergamentCanvas = () => {
     },
     [setNodes, customApplyNodeChanges]
   );
+
   const onConnect: OnConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
@@ -136,6 +141,7 @@ const PergamentCanvas = () => {
         y: 300,
       }),
       data: {},
+      style: noteNodeStyle,
     };
 
     setNodes((nds) => nds.concat(newNode));
@@ -165,6 +171,7 @@ const PergamentCanvas = () => {
         connectionLineStyle={connectionLineStyle}
         connectionMode={ConnectionMode.Loose}
         connectionRadius={70}
+        deleteKeyCode={"Delete"}
       >
         <Controls />
         <HelperLines
