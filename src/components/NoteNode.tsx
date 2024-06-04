@@ -53,7 +53,7 @@ const resizerStyle: React.CSSProperties = {
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
-function NoteNode({ selected }: NodeProps) {
+function NoteNode({ selected, data }: NodeProps) {
   const [editing, setEditing] = useState(false);
 
   const connectionNodeId = useStore(connectionNodeIdSelector);
@@ -62,15 +62,7 @@ function NoteNode({ selected }: NodeProps) {
 
   const editor = useEditor({
     extensions: [StarterKit],
-    content: `
-      <p>
-        <strong>This is a note.</strong>
-      </p>
-      <p>
-        Drag to move.<br>
-        Double click to edit.
-      </p>
-    `,
+    content: data.content,
   });
 
   const handleDoubleClick = () => {
@@ -100,7 +92,7 @@ function NoteNode({ selected }: NodeProps) {
       {!isConnecting && (
         <>
           <Handle
-            className="customHandle"
+            className={`customHandle ${selected ? "" : "invisible"}`}
             position={Position.Right}
             type="source"
             style={arrowHandleStyle}
@@ -137,7 +129,7 @@ function NoteNode({ selected }: NodeProps) {
         style={arrowTargetStyle}
         isConnectableStart={false}
       />
-      {isConnecting && <div className="blob"></div>}
+      {isConnecting && !selected && <div className="blob" />}
     </div>
   );
 }

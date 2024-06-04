@@ -59,6 +59,7 @@ const defaultEdgeOptions = {
     type: MarkerType.ArrowClosed,
     color: "black",
   },
+  data: { label: "" },
 };
 
 const PergamentCanvas = () => {
@@ -140,7 +141,17 @@ const PergamentCanvas = () => {
         x: 300,
         y: 300,
       }),
-      data: {},
+      data: {
+        content: `
+      <p>
+        <strong>This is a note.</strong>
+      </p>
+      <p>
+        Drag to move.<br>
+        Double click to edit.
+      </p>
+    `,
+      },
       style: noteNodeStyle,
     };
 
