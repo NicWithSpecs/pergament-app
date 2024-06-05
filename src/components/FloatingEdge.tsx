@@ -50,6 +50,10 @@ function FloatingEdge({
     return null;
   }
 
+  /* const focusEditor = () => {
+    editor?.chain().focus();
+  }; */
+
   /* const deleteEdge = () => {
     setEdges((edges) => edges.filter((edge) => edge.id !== id));
   }; */
@@ -93,13 +97,6 @@ function FloatingEdge({
         interactionWidth={15}
         style={style}
       />
-      {/* <path
-        id={id}
-        className="react-flow__edge-path"
-        d={edgePathBezier}
-        markerEnd={markerEnd}
-        style={style}
-      /> */}
 
       <EdgeLabelRenderer>
         {editor &&
@@ -121,6 +118,7 @@ function FloatingEdge({
                 style={{
                   pointerEvents: "all",
                   maxWidth: 100,
+                  minWidth: 30,
                   textAlign: "center",
                 }}
                 spellCheck="false"

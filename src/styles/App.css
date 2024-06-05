@@ -1,3 +1,12 @@
+body {
+  margin: 0;
+}
+
+svg {
+  display: block;
+  margin: auto;
+}
+
 #root {
   margin: 0 auto;
   text-align: left;
@@ -6,19 +15,14 @@
   color: rgb(0, 0, 0);
 }
 
-#canvas {
+#pergament-canvas {
   width: 100vw;
   height: 100vh;
   background-color: #e1dfdf;
   overflow: hidden;
-  /* background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(43, 45, 81) 100%); */
 }
 
-.react-flow__renderer {
-  overflow: hidden;
-}
-
-#canvas:after {
+#pergament-canvas:after {
   pointer-events: none;
   content:"";
   background-image:url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png");
@@ -31,8 +35,8 @@
   opacity: 0;
 }
 
-.card {
-  padding: 2em;
+.react-flow__renderer {
+  overflow: hidden;
 }
 
 .note-node {
@@ -53,18 +57,6 @@
   color: #000000;
 }
 
-.uneditable {
-  pointer-events: none;
-}
-
-.invisible {
-  opacity: 0;
-}
-
-.ProseMirror:focus {
-  outline: none;
-}
-
 .note-node:has(.react-flow__handle-connecting) {
   scale: 1.1;
   .blob {
@@ -77,16 +69,20 @@
   z-index: 500;
 }
 
+.uneditable {
+  pointer-events: none;
+}
+
+.invisible {
+  opacity: 0;
+}
+
 .editing {
   cursor: text;
 }
 
 .selected > .note-node {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-p {
-  margin: 4px;
 }
 
 .react-flow__connectionline {
@@ -96,12 +92,6 @@ p {
 .react-flow__handle-right {
   transition: scale 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), rotate 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   border: none;
-  font-size: 8px;
-}
-
-svg {
-  display: block;
-  margin: auto;
 }
 
 .react-flow__handle-right:hover {
@@ -110,7 +100,7 @@ svg {
   border: 1px solid black;
 }
 
-.blob {
+.connection-indicator {
   position:absolute;
   top: calc(50% - 10px);
   left: calc(50% - 10px);
@@ -150,9 +140,7 @@ svg {
   scale: 1.2;
 }
 
-.AddNodeBtn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+.ProseMirror:focus {
+  outline: none;
 }
 

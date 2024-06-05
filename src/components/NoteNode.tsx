@@ -63,6 +63,11 @@ function NoteNode({ selected, data }: NodeProps) {
   const editor = useEditor({
     extensions: [StarterKit],
     content: data.content,
+    editorProps: {
+      attributes: {
+        class: "prose prose-sm focus:outline-none",
+      },
+    },
   });
 
   const handleDoubleClick = () => {
@@ -129,7 +134,7 @@ function NoteNode({ selected, data }: NodeProps) {
         style={arrowTargetStyle}
         isConnectableStart={false}
       />
-      {isConnecting && !selected && <div className="blob" />}
+      {isConnecting && !selected && <div className="connection-indicator" />}
     </div>
   );
 }

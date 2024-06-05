@@ -21,17 +21,14 @@ import ReactFlow, {
 } from "reactflow";
 
 import "reactflow/dist/style.css";
+import { getHelperLines } from "../utils";
+
 import NoteNode from "../components/NoteNode";
 import FloatingEdge from "../components/FloatingEdge";
 import CustomConnectionLine from "../components/CustomConnectionLine";
-
-import { getHelperLines } from "../utils";
 import HelperLines from "../components/HelperLine";
 
-const initialNodes: Node[] = [];
-
 const panOnDrag = [1, 2];
-/* const snapGrid = [12, 12]; */
 const proOptions = { hideAttribution: false };
 const fitViewOptions = { padding: 2 };
 
@@ -59,11 +56,11 @@ const defaultEdgeOptions = {
     type: MarkerType.ArrowClosed,
     color: "black",
   },
-  data: { label: "" },
+  data: { label: " " },
 };
 
 const PergamentCanvas = () => {
-  const [nodes, setNodes] = useNodesState(initialNodes);
+  const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { screenToFlowPosition } = useReactFlow();
 
@@ -143,9 +140,9 @@ const PergamentCanvas = () => {
       }),
       data: {
         content: `
-      <p>
+      <h3>
         <strong>This is a note.</strong>
-      </p>
+      </h3>
       <p>
         Drag to move.<br>
         Double click to edit.
@@ -159,10 +156,8 @@ const PergamentCanvas = () => {
   };
 
   return (
-    <div id="canvas">
+    <div id="pergament-canvas">
       <ReactFlow
-        /* snapToGrid={true}
-        snapGrid={snapGrid} */
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -196,7 +191,10 @@ const PergamentCanvas = () => {
           size={1}
         />
       </ReactFlow>
-      <button className="AddNodeBtn" onClick={addNode}>
+      <button
+        className="bg-black hover:bg-slate-600 absolute top-5 left-5 text-white font-bold py-2 px-4 rounded"
+        onClick={addNode}
+      >
         Add Node
       </button>
     </div>

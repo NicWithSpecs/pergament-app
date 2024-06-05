@@ -1,5 +1,5 @@
 import "reactflow/dist/style.css";
-import "./App.css";
+import "./styles/App.css";
 import PergamentCanvas from "./components/PergamentCanvas";
 import { ReactFlowProvider } from "reactflow";
 
