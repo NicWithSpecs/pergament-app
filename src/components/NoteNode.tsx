@@ -11,16 +11,16 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useState } from "react";
-import { FaLongArrowAltRight } from "react-icons/fa";
+/* import { FaLongArrowAltRight } from "react-icons/fa"; */
 
 const arrowHandleStyle: React.CSSProperties = {
   display: "block",
   width: 11,
   height: 11,
-  top: 2,
-  right: 2,
+  top: -4,
+  right: -4,
   position: "absolute",
-  backgroundColor: "white",
+  backgroundColor: "black",
   borderRadius: "50%",
   transform: "none",
   cursor: "crosshair",
@@ -32,7 +32,7 @@ const arrowHandleStyle: React.CSSProperties = {
 const arrowTargetStyle: React.CSSProperties = {
   display: "block",
   top: 0,
-  left: 0,
+  right: 0,
   width: "100%",
   height: "100%",
   backgroundColor: "blue",
@@ -54,12 +54,13 @@ const resizerStyle: React.CSSProperties = {
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
-function NoteNode({ selected, data }: NodeProps) {
+function NoteNode({ selected, data, dragging }: NodeProps) {
   const [editing, setEditing] = useState(false);
 
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
+  /* const isTarget = connectionNodeId && connectionNodeId !== id; */
 
   const editor = useEditor({
     extensions: [
@@ -90,7 +91,7 @@ function NoteNode({ selected, data }: NodeProps) {
 
   return (
     <div className="note-node" onDoubleClick={handleDoubleClick}>
-      {selected && (
+      {selected && !dragging && (
         <NodeResizeControl
           style={resizerStyle}
           minWidth={100}
@@ -100,25 +101,26 @@ function NoteNode({ selected, data }: NodeProps) {
           <ResizeIcon />
         </NodeResizeControl>
       )}
+
       {!isConnecting && (
         <>
           <Handle
-            className={`customHandle ${selected ? "" : "invisible"}`}
+            className={`customHandle ${
+              selected && !dragging ? "" : "invisible"
+            }`}
             position={Position.Right}
             type="source"
             style={arrowHandleStyle}
-          >
-            <FaLongArrowAltRight
-              style={{
-                pointerEvents: "none",
-                fontSize: 11,
-                lineHeight: "0",
-                verticalAlign: "middle",
-              }}
-            />
-          </Handle>
+          />
         </>
       )}
+      <Handle
+        className="arrowTarget"
+        position={Position.Left}
+        type="target"
+        style={arrowTargetStyle}
+        isConnectableStart={!isConnecting ? false : true}
+      />
 
       {/* {editor && (
         <button
@@ -133,14 +135,6 @@ function NoteNode({ selected, data }: NodeProps) {
       >
         <EditorContent editor={editor} spellCheck={false} />
       </div>
-      <Handle
-        className="arrowTarget"
-        position={Position.Left}
-        type="target"
-        style={arrowTargetStyle}
-        isConnectableStart={false}
-      />
-      {isConnecting && !selected && <div className="connection-indicator" />}
     </div>
   );
 }

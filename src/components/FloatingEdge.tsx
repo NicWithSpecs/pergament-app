@@ -12,6 +12,7 @@ import StarterKit from "@tiptap/starter-kit";
 
 import { getEdgeParams } from "../utils";
 import CharacterCount from "@tiptap/extension-character-count";
+import Placeholder from "@tiptap/extension-placeholder";
 
 const limit = 50;
 
@@ -35,6 +36,9 @@ function FloatingEdge({
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Placeholder.configure({
+        placeholder: "Add label…",
+      }),
       CharacterCount.configure({
         limit,
       }),
@@ -106,7 +110,8 @@ function FloatingEdge({
                 position: "absolute",
                 transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
                 background: "#e1dfdf",
-                padding: 3,
+                border: selected ? "1px solid grey" : "none",
+                padding: selected ? 6 : 3,
                 borderRadius: 5,
                 fontSize: 12,
                 fontWeight: 700,

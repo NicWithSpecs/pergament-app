@@ -168,7 +168,7 @@ const PergamentCanvas = () => {
         connectionLineComponent={CustomConnectionLine}
         connectionLineStyle={connectionLineStyle}
         connectionMode={ConnectionMode.Loose}
-        connectionRadius={70}
+        /* connectionRadius={70} */
         deleteKeyCode={"Delete"}
       >
         <Controls />

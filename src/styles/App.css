@@ -41,8 +41,7 @@ svg {
 
 .note-node {
   border: 1px solid black;
-  border-top: 15px solid black;
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 10px;
   background: rgb(255, 255, 255);
   font-size: 1rem;
@@ -98,39 +97,11 @@ svg {
   scale: 2;
   rotate: -45deg;
   border: 1px solid black;
-}
+} 
 
 .dragging > .note-node {
   scale: 1.04;
   box-shadow: rgba(0, 0, 0, 0.47) 5px 5px 15px;
-}
-
-.connection-indicator {
-  position:absolute;
-  top: calc(50% - 10px);
-  left: calc(50% - 10px);
-	border-radius: 50%;
-	height: 20px;
-	width: 20px;
-  transform: scale(1);
-	animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-	0% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-	}
-
-	70% {
-		transform: scale(1);
-		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-	}
-
-	100% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-	}
 }
 
 .selected > path {
