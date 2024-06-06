@@ -100,6 +100,11 @@ svg {
   border: 1px solid black;
 }
 
+.dragging > .note-node {
+  scale: 1.04;
+  box-shadow: rgba(0, 0, 0, 0.47) 5px 5px 15px;
+}
+
 .connection-indicator {
   position:absolute;
   top: calc(50% - 10px);
@@ -142,5 +147,13 @@ svg {
 
 .ProseMirror:focus {
   outline: none;
+}
+
+.tiptap .is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
 

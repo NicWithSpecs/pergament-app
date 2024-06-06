@@ -30,7 +30,7 @@ import HelperLines from "../components/HelperLine";
 
 const panOnDrag = [1, 2];
 const proOptions = { hideAttribution: false };
-const fitViewOptions = { padding: 2 };
+const fitViewOptions = { padding: 4 };
 
 const nodeTypes: NodeTypes = { noteNode: NoteNode };
 
@@ -139,15 +139,7 @@ const PergamentCanvas = () => {
         y: 300,
       }),
       data: {
-        content: `
-      <h3>
-        <strong>This is a note.</strong>
-      </h3>
-      <p>
-        Drag to move.<br>
-        Double click to edit.
-      </p>
-    `,
+        content: ``,
       },
       style: noteNodeStyle,
     };

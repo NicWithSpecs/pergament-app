@@ -8,6 +8,7 @@ import {
   useStore,
 } from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
+import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
@@ -61,7 +62,12 @@ function NoteNode({ selected, data }: NodeProps) {
   const isConnecting = !!connectionNodeId;
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      Placeholder.configure({
+        placeholder: "Write something …",
+      }),
+    ],
     content: data.content,
     editorProps: {
       attributes: {
@@ -72,13 +78,13 @@ function NoteNode({ selected, data }: NodeProps) {
 
   const handleDoubleClick = () => {
     setEditing(true);
-    editor?.setEditable(true);
+    /* editor?.setEditable(true); */
   };
 
   useEffect(() => {
     if (!selected) {
       setEditing(false);
-      editor?.setEditable(false);
+      /* editor?.setEditable(false); */
     }
   }, [selected, editor]);
 
@@ -125,7 +131,7 @@ function NoteNode({ selected, data }: NodeProps) {
       <div
         className={`note-content ${editing ? "nodrag editing" : "uneditable"}`}
       >
-        <EditorContent editor={editor} />
+        <EditorContent editor={editor} spellCheck={false} />
       </div>
       <Handle
         className="arrowTarget"
