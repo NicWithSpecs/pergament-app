@@ -45,7 +45,7 @@ svg {
   padding: 10px;
   background: rgb(255, 255, 255);
   font-size: 1rem;
-  transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: scale 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   /* backdrop-filter: blur(10px); */
 }
 
@@ -66,13 +66,15 @@ svg {
 .react-flow__resize-control.line.right {
   transform: translate(-14px, -14px);
   z-index: 500;
+  transition: opacity 0.3s ease-in-out;
+  transition-delay: 0.2s;
 }
 
 .uneditable {
   pointer-events: none;
 }
 
-.invisible {
+.hide {
   opacity: 0;
 }
 
@@ -89,14 +91,14 @@ svg {
 }
 
 .react-flow__handle-right {
-  transition: scale 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), rotate 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  scale: 1;
+  transition: scale 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease-in-out;
+  transition-delay: 0s;
   border: none;
 }
 
 .react-flow__handle-right:hover {
   scale: 2;
-  rotate: -45deg;
-  border: 1px solid black;
 } 
 
 .dragging > .note-node {
@@ -110,6 +112,7 @@ svg {
 
 .resize-icon {
   scale: 1;
+  transition: scale 0.05s ease-in-out;
 }
 
 .resize-icon:hover {

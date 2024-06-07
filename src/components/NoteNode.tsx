@@ -91,23 +91,20 @@ function NoteNode({ selected, data, dragging }: NodeProps) {
 
   return (
     <div className="note-node" onDoubleClick={handleDoubleClick}>
-      {selected && !dragging && (
-        <NodeResizeControl
-          style={resizerStyle}
-          minWidth={100}
-          minHeight={100}
-          variant={ResizeControlVariant.Line}
-        >
-          <ResizeIcon />
-        </NodeResizeControl>
-      )}
+      <NodeResizeControl
+        className={`customHandle ${selected && !dragging ? "" : "hide"}`}
+        style={resizerStyle}
+        minWidth={150}
+        minHeight={100}
+        variant={ResizeControlVariant.Line}
+      >
+        <ResizeIcon />
+      </NodeResizeControl>
 
       {!isConnecting && (
         <>
           <Handle
-            className={`customHandle ${
-              selected && !dragging ? "" : "invisible"
-            }`}
+            className={`customHandle ${selected && !dragging ? "" : "hide"}`}
             position={Position.Right}
             type="source"
             style={arrowHandleStyle}

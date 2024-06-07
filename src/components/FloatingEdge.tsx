@@ -110,7 +110,7 @@ function FloatingEdge({
                 position: "absolute",
                 transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
                 background: "#e1dfdf",
-                border: selected ? "1px solid grey" : "none",
+                border: selected ? "1px solid #a1a1a1" : "none",
                 padding: selected ? 6 : 3,
                 borderRadius: 5,
                 fontSize: 12,
