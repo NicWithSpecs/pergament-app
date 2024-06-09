@@ -136,7 +136,7 @@ function NoteNode({ selected, data, dragging }: NodeProps) {
   );
 }
 
-function ResizeIcon() {
+export function ResizeIcon() {
   return (
     <svg
       className="resize-icon"

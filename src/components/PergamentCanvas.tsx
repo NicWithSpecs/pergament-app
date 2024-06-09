@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -21,18 +21,17 @@ import ReactFlow, {
 } from "reactflow";
 
 import "reactflow/dist/style.css";
-import { getHelperLines } from "../utils";
 
 import NoteNode from "../components/NoteNode";
 import FloatingEdge from "../components/FloatingEdge";
 import CustomConnectionLine from "../components/CustomConnectionLine";
-import HelperLines from "../components/HelperLine";
+import ImageNode from "./ImageNode";
 
 const panOnDrag = [1, 2];
 const proOptions = { hideAttribution: false };
 const fitViewOptions = { padding: 4 };
 
-const nodeTypes: NodeTypes = { noteNode: NoteNode };
+const nodeTypes: NodeTypes = { noteNode: NoteNode, imageNode: ImageNode };
 
 const edgeTypes: EdgeTypes = {
   floating: FloatingEdge,
@@ -64,53 +63,21 @@ const PergamentCanvas = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { screenToFlowPosition } = useReactFlow();
 
-  const [helperLineHorizontal, setHelperLineHorizontal] = useState<
-    number | undefined
-  >(undefined);
-  const [helperLineVertical, setHelperLineVertical] = useState<
-    number | undefined
-  >(undefined);
-
   const customApplyNodeChanges = useCallback(
     (changes: NodeChange[], nodes: Node[]): Node[] => {
       if (
         changes[0].type === "dimensions" &&
         changes[0].resizing &&
-        changes[0].dimensions !== undefined
+        changes[0].dimensions !== undefined &&
+        nodes.find((node) => node.id === changes[0].id)?.type === "noteNode"
       ) {
         changes[0] = {
           ...changes[0],
           dimensions: {
-            height: undefined!, // experimental solution
+            height: undefined!, // ! experimental solution
             width: changes[0].dimensions.width,
           },
         };
-      }
-
-      // reset the helper lines (clear existing lines, if any)
-      setHelperLineHorizontal(undefined);
-      setHelperLineVertical(undefined);
-
-      // this will be true if it's a single node being dragged
-      // inside we calculate the helper lines and snap position for the position where the node is being moved to
-      if (
-        changes.length === 1 &&
-        changes[0].type === "position" &&
-        changes[0].dragging &&
-        changes[0].position
-      ) {
-        const helperLines = getHelperLines(changes[0], nodes);
-
-        // if we have a helper line, we snap the node to the helper line position
-        // this is being done by manipulating the node position inside the change object
-        changes[0].position.x =
-          helperLines.snapPosition.x ?? changes[0].position.x;
-        changes[0].position.y =
-          helperLines.snapPosition.y ?? changes[0].position.y;
-
-        // if helper lines are returned, we set them so that they can be displayed
-        setHelperLineHorizontal(helperLines.horizontal);
-        setHelperLineVertical(helperLines.vertical);
       }
 
       return applyNodeChanges(changes, nodes);
@@ -130,7 +97,7 @@ const PergamentCanvas = () => {
     [setEdges]
   );
 
-  const addNode = () => {
+  const addNoteNode = () => {
     const newNode = {
       id: "note-" + self.crypto.randomUUID(),
       type: "noteNode",
@@ -142,6 +109,24 @@ const PergamentCanvas = () => {
         content: ``,
       },
       style: noteNodeStyle,
+    };
+
+    setNodes((nds) => nds.concat(newNode));
+  };
+
+  const addImageNode = () => {
+    const newNode = {
+      id: "image-" + self.crypto.randomUUID(),
+      type: "imageNode",
+      position: screenToFlowPosition({
+        x: 300,
+        y: 300,
+      }),
+      data: {
+        image: {
+          url: "https://www.wikimedia.de/wp-content/uploads/2021/09/Wikipedia-logo-v2-de.svg",
+        },
+      },
     };
 
     setNodes((nds) => nds.concat(newNode));
@@ -171,10 +156,6 @@ const PergamentCanvas = () => {
         deleteKeyCode={"Delete"}
       >
         <Controls />
-        <HelperLines
-          horizontal={helperLineHorizontal}
-          vertical={helperLineVertical}
-        />
         <Background
           variant={BackgroundVariant.Dots}
           color="#a9a9a9"
@@ -183,10 +164,16 @@ const PergamentCanvas = () => {
         />
       </ReactFlow>
       <button
-        className="bg-black hover:bg-slate-600 absolute top-5 left-5 text-white font-bold py-2 px-4 rounded"
-        onClick={addNode}
+        className="bg-black hover:bg-slate-600 fixed top-5 left-5 text-white font-bold py-2 px-4 rounded"
+        onClick={addNoteNode}
       >
-        Add Node
+        Add Note
+      </button>
+      <button
+        className="bg-black hover:bg-slate-600 fixed top-20 left-5 text-white font-bold py-2 px-4 rounded"
+        onClick={addImageNode}
+      >
+        Add Image
       </button>
     </div>
   );

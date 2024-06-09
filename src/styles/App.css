@@ -39,6 +39,26 @@ svg {
   overflow: hidden;
 }
 
+.react-flow__selection {
+  background-color: #8585853e;
+  border: 1px solid #505050;
+}
+
+.react-flow__nodesselection-rect {
+  border-color: black;
+  background-color: #bbbbbb3e;
+}
+
+.react-flow__resize-control {
+  border-color: black !important;
+  background-color: white !important;
+}
+
+.react-flow__resize-control.handle {
+  width: 6px;
+  height: 6px;
+}
+
 .note-node {
   border: 1px solid black;
   border-radius: 2px;
@@ -47,6 +67,10 @@ svg {
   font-size: 1rem;
   transition: scale 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   /* backdrop-filter: blur(10px); */
+
+  .react-flow__resize-control.line.right {
+    height: 10px;
+  }
 }
 
 .note-content {
@@ -58,12 +82,21 @@ svg {
 
 .note-node:has(.react-flow__handle-connecting) {
   scale: 1.1;
-  .blob {
-    background-color: #00000080;
-  }
 }
 
-.react-flow__resize-control.line.right {
+.image-node {
+  border-radius: 15px;
+  border: 2px solid black;
+  /* background: rgb(255, 255, 255); */
+  transition: scale 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* backdrop-filter: blur(10px); */
+}
+
+.image-node:has(.react-flow__handle-connecting) {
+  scale: 1.1;
+}
+
+.note-node > .react-flow__resize-control.line.right {
   transform: translate(-14px, -14px);
   z-index: 500;
   transition: opacity 0.3s ease-in-out;
