@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -26,12 +26,17 @@ import NoteNode from "../components/NoteNode";
 import FloatingEdge from "../components/FloatingEdge";
 import CustomConnectionLine from "../components/CustomConnectionLine";
 import ImageNode from "./ImageNode";
+import FrameNode from "./FrameNode";
 
 const panOnDrag = [1, 2];
 const proOptions = { hideAttribution: false };
 const fitViewOptions = { padding: 4 };
 
-const nodeTypes: NodeTypes = { noteNode: NoteNode, imageNode: ImageNode };
+const nodeTypes: NodeTypes = {
+  noteNode: NoteNode,
+  imageNode: ImageNode,
+  frameNode: FrameNode,
+};
 
 const edgeTypes: EdgeTypes = {
   floating: FloatingEdge,
@@ -48,6 +53,12 @@ const noteNodeStyle = {
   width: 300,
 };
 
+const frameNodeStyle = {
+  width: 400,
+  height: 400,
+  zIndex: -1,
+};
+
 const defaultEdgeOptions = {
   style: { strokeWidth: 2, stroke: "black" },
   type: "floating",
@@ -61,7 +72,7 @@ const defaultEdgeOptions = {
 const PergamentCanvas = () => {
   const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { screenToFlowPosition } = useReactFlow();
+  const { screenToFlowPosition, getIntersectingNodes } = useReactFlow();
 
   const customApplyNodeChanges = useCallback(
     (changes: NodeChange[], nodes: Node[]): Node[] => {
@@ -92,6 +103,59 @@ const PergamentCanvas = () => {
     [setNodes, customApplyNodeChanges]
   );
 
+  const onNodeDrag = useCallback((_: MouseEvent, node: Node) => {
+    const intersections = getIntersectingNodes(node).map((n) => n.id);
+
+    setNodes((ns) =>
+      ns.map((n) => ({
+        ...n,
+        className:
+          intersections.includes(n.id) && n.type === "frameNode" ? "" : "",
+      }))
+    );
+  }, []);
+
+  const onNodeDragStop = useCallback(
+    (_: MouseEvent, node: Node) => {
+      // find intersecting frame node
+      const intersectingFrame = getIntersectingNodes(node).find(
+        (node) => node.type === "frameNode"
+      );
+
+      if (intersectingFrame) {
+        setNodes((nodes) =>
+          nodes.map((n) => ({
+            ...n,
+            position:
+              n.id === node.id && n.parentId !== intersectingFrame.id
+                ? {
+                    x: n.position.x - intersectingFrame.position.x,
+                    y: n.position.y - intersectingFrame.position.y,
+                  }
+                : n.position,
+            parentId: n.id === node.id ? intersectingFrame.id : n.parentId,
+          }))
+        );
+      } else if (node.parentId !== "") {
+        const parentNode = nodes.find((p) => p.id === node.parentId);
+        setNodes((nodes) =>
+          nodes.map((n) => ({
+            ...n,
+            position:
+              n.id === node.id && parentNode
+                ? {
+                    x: parentNode.position.x + n.position.x,
+                    y: parentNode.position.y + n.position.y,
+                  }
+                : n.position,
+            parentId: n.id === node.id ? "" : n.parentId,
+          }))
+        );
+      }
+    },
+    [setNodes, getIntersectingNodes, nodes]
+  );
+
   const onConnect: OnConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
@@ -109,6 +173,7 @@ const PergamentCanvas = () => {
         content: ``,
       },
       style: noteNodeStyle,
+      parentId: "",
     };
 
     setNodes((nds) => nds.concat(newNode));
@@ -127,6 +192,23 @@ const PergamentCanvas = () => {
           url: "https://www.wikimedia.de/wp-content/uploads/2021/09/Wikipedia-logo-v2-de.svg",
         },
       },
+      parentId: "",
+    };
+
+    setNodes((nds) => nds.concat(newNode));
+  };
+
+  const addFrameNode = () => {
+    const newNode = {
+      id: "frame-" + self.crypto.randomUUID(),
+      type: "frameNode",
+      position: screenToFlowPosition({
+        x: 300,
+        y: 300,
+      }),
+      data: {},
+      style: frameNodeStyle,
+      parentId: "",
     };
 
     setNodes((nds) => nds.concat(newNode));
@@ -135,9 +217,13 @@ const PergamentCanvas = () => {
   return (
     <div id="pergament-canvas">
       <ReactFlow
+        maxZoom={2.5}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
+        onNodeDrag={onNodeDrag}
+        onNodeDragStop={onNodeDragStop}
+        nodeDragThreshold={5}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
@@ -150,6 +236,7 @@ const PergamentCanvas = () => {
         selectionOnDrag
         panOnDrag={panOnDrag}
         selectionMode={SelectionMode.Partial}
+        selectNodesOnDrag={false}
         connectionLineComponent={CustomConnectionLine}
         connectionLineStyle={connectionLineStyle}
         connectionMode={ConnectionMode.Loose}
@@ -164,16 +251,22 @@ const PergamentCanvas = () => {
         />
       </ReactFlow>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-5 left-5 text-white font-bold py-2 px-4 rounded"
+        className="bg-black hover:bg-slate-600 fixed top-20 left-5 text-white font-bold py-2 px-4 rounded"
         onClick={addNoteNode}
       >
         Add Note
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-20 left-5 text-white font-bold py-2 px-4 rounded"
+        className="bg-black hover:bg-slate-600 fixed top-40 left-5 text-white font-bold py-2 px-4 rounded"
         onClick={addImageNode}
       >
         Add Image
+      </button>
+      <button
+        className="bg-black hover:bg-slate-600 fixed top-60 left-5 text-white font-bold py-2 px-4 rounded"
+        onClick={addFrameNode}
+      >
+        Add Frame
       </button>
     </div>
   );

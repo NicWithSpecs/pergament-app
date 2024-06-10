@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Handle,
   NodeProps,
@@ -40,45 +41,33 @@ const arrowTargetStyle: React.CSSProperties = {
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
-const ImageNode = ({ selected, data, dragging }: NodeProps) => {
-  /* const [editing, setEditing] = useState(false); */
-
+const FrameNode = ({ selected, dragging }: NodeProps) => {
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
 
   return (
-    <>
-      <div className="node image-node overflow-hidden">
-        <NodeResizer
-          minWidth={30}
-          minHeight={30}
-          keepAspectRatio={true}
-          isVisible={selected}
-        />
-        <img
-          className="w-full h-full"
-          src={data.image.url}
-          alt={data.image.alt}
-        />
-        {!isConnecting && (
+    <div className="node frame-node">
+      <NodeResizer minWidth={100} minHeight={100} isVisible={selected} />
+      {!isConnecting && (
+        <>
           <Handle
             className={`customHandle ${selected && !dragging ? "" : "hide"}`}
             position={Position.Right}
             type="source"
             style={arrowHandleStyle}
           />
-        )}
-        <Handle
-          className="arrowTarget"
-          position={Position.Left}
-          type="target"
-          style={arrowTargetStyle}
-          isConnectableStart={!isConnecting ? false : true}
-        />
-      </div>
-    </>
+        </>
+      )}
+      <Handle
+        className="arrowTarget"
+        position={Position.Left}
+        type="target"
+        style={arrowTargetStyle}
+        isConnectableStart={!isConnecting ? false : true}
+      />
+    </div>
   );
 };
 
-export default ImageNode;
+export default FrameNode;

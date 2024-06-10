@@ -90,7 +90,7 @@ function NoteNode({ selected, data, dragging }: NodeProps) {
   }, [selected, editor]);
 
   return (
-    <div className="note-node" onDoubleClick={handleDoubleClick}>
+    <div className="node note-node" onDoubleClick={handleDoubleClick}>
       <NodeResizeControl
         className={`customHandle ${selected && !dragging ? "" : "hide"}`}
         style={resizerStyle}

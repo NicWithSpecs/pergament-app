@@ -22,7 +22,7 @@ svg {
   overflow: hidden;
 }
 
-#pergament-canvas:after {
+/* #pergament-canvas:after {
   pointer-events: none;
   content:"";
   background-image:url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png");
@@ -31,9 +31,8 @@ svg {
   position: fixed;
   top:0;
   left: 0;
-  /* opacity:0.04; */
-  opacity: 0;
-}
+  opacity: 0.1;
+} */
 
 .react-flow__renderer {
   overflow: hidden;
@@ -59,17 +58,24 @@ svg {
   height: 6px;
 }
 
-.note-node {
-  border: 1px solid black;
-  border-radius: 2px;
+.node {
+  border: 2px solid black;
+  border-radius: 10px;
   padding: 10px;
+  transition: scale 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.note-node {
   background: rgb(255, 255, 255);
   font-size: 1rem;
   transition: scale 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  /* backdrop-filter: blur(10px); */
-
+  
   .react-flow__resize-control.line.right {
     height: 10px;
+    transform: translate(-14px, -14px);
+    z-index: 500;
+    transition: opacity 0.3s ease-in-out;
+    transition-delay: 0.2s;
   }
 }
 
@@ -80,27 +86,14 @@ svg {
   color: #000000;
 }
 
-.note-node:has(.react-flow__handle-connecting) {
+.note-node:has(.react-flow__handle-connecting), .image-node:has(.react-flow__handle-connecting), .frame-node:has(.react-flow__handle-connecting) {
   scale: 1.1;
 }
 
-.image-node {
-  border-radius: 15px;
-  border: 2px solid black;
-  /* background: rgb(255, 255, 255); */
-  transition: scale 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  /* backdrop-filter: blur(10px); */
-}
-
-.image-node:has(.react-flow__handle-connecting) {
-  scale: 1.1;
-}
-
-.note-node > .react-flow__resize-control.line.right {
-  transform: translate(-14px, -14px);
-  z-index: 500;
-  transition: opacity 0.3s ease-in-out;
-  transition-delay: 0.2s;
+.frame-node {
+  width: 100%;
+  height: 100%;
+  background-color: #50505020;
 }
 
 .uneditable {
@@ -115,7 +108,7 @@ svg {
   cursor: text;
 }
 
-.selected > .note-node {
+.selected > .node {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -134,7 +127,7 @@ svg {
   scale: 2;
 } 
 
-.dragging > .note-node {
+.dragging > .node {
   scale: 1.04;
   box-shadow: rgba(0, 0, 0, 0.47) 5px 5px 15px;
 }
