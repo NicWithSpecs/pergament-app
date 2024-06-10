@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -18,15 +18,18 @@ import ReactFlow, {
   StraightEdge,
   useReactFlow,
   NodeChange,
+  NodeDragHandler,
+  NodeDimensionChange,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
 
-import NoteNode from "../components/NoteNode";
 import FloatingEdge from "../components/FloatingEdge";
 import CustomConnectionLine from "../components/CustomConnectionLine";
+import NoteNode from "../components/NoteNode";
 import ImageNode from "./ImageNode";
 import FrameNode from "./FrameNode";
+import HeadingNode from "./HeadingNode";
 
 const panOnDrag = [1, 2];
 const proOptions = { hideAttribution: false };
@@ -36,6 +39,7 @@ const nodeTypes: NodeTypes = {
   noteNode: NoteNode,
   imageNode: ImageNode,
   frameNode: FrameNode,
+  headingNode: HeadingNode,
 };
 
 const edgeTypes: EdgeTypes = {
@@ -59,6 +63,10 @@ const frameNodeStyle = {
   zIndex: -1,
 };
 
+const headingNodeStyle = {
+  width: 400,
+};
+
 const defaultEdgeOptions = {
   style: { strokeWidth: 2, stroke: "black" },
   type: "floating",
@@ -76,11 +84,13 @@ const PergamentCanvas = () => {
 
   const customApplyNodeChanges = useCallback(
     (changes: NodeChange[], nodes: Node[]): Node[] => {
+      const dimensionChange = changes[0] as NodeDimensionChange;
       if (
         changes[0].type === "dimensions" &&
         changes[0].resizing &&
         changes[0].dimensions !== undefined &&
-        nodes.find((node) => node.id === changes[0].id)?.type === "noteNode"
+        nodes.find((node) => node.id === dimensionChange.id)?.type ===
+          "noteNode"
       ) {
         changes[0] = {
           ...changes[0],
@@ -103,29 +113,37 @@ const PergamentCanvas = () => {
     [setNodes, customApplyNodeChanges]
   );
 
-  const onNodeDrag = useCallback((_: MouseEvent, node: Node) => {
-    const intersections = getIntersectingNodes(node).map((n) => n.id);
+  const onNodeDrag: NodeDragHandler = useCallback(
+    (_: React.MouseEvent, node: Node) => {
+      const intersections = getIntersectingNodes(node).map((n) => n.id);
 
-    setNodes((ns) =>
-      ns.map((n) => ({
-        ...n,
-        className:
-          intersections.includes(n.id) && n.type === "frameNode" ? "" : "",
-      }))
-    );
-  }, []);
+      setNodes((ns) =>
+        ns.map((n) => ({
+          ...n,
+          className:
+            intersections.includes(n.id) &&
+            n.type === "frameNode" &&
+            node.type !== "frameNode"
+              ? "frame-highlight"
+              : "",
+        }))
+      );
+    },
+    []
+  );
 
-  const onNodeDragStop = useCallback(
-    (_: MouseEvent, node: Node) => {
+  const onNodeDragStop: NodeDragHandler = useCallback(
+    (_: React.MouseEvent, node: Node) => {
       // find intersecting frame node
       const intersectingFrame = getIntersectingNodes(node).find(
         (node) => node.type === "frameNode"
       );
 
-      if (intersectingFrame) {
+      if (intersectingFrame && node.type !== "frameNode") {
         setNodes((nodes) =>
           nodes.map((n) => ({
             ...n,
+            className: "",
             position:
               n.id === node.id && n.parentId !== intersectingFrame.id
                 ? {
@@ -141,6 +159,7 @@ const PergamentCanvas = () => {
         setNodes((nodes) =>
           nodes.map((n) => ({
             ...n,
+            className: "",
             position:
               n.id === node.id && parentNode
                 ? {
@@ -214,6 +233,24 @@ const PergamentCanvas = () => {
     setNodes((nds) => nds.concat(newNode));
   };
 
+  const addHeadingNode = () => {
+    const newNode = {
+      id: "heading-" + self.crypto.randomUUID(),
+      type: "headingNode",
+      position: screenToFlowPosition({
+        x: 300,
+        y: 300,
+      }),
+      data: {
+        content: ``,
+      },
+      style: headingNodeStyle,
+      parentId: "",
+    };
+
+    setNodes((nds) => nds.concat(newNode));
+  };
+
   return (
     <div id="pergament-canvas">
       <ReactFlow
@@ -267,6 +304,12 @@ const PergamentCanvas = () => {
         onClick={addFrameNode}
       >
         Add Frame
+      </button>
+      <button
+        className="bg-black hover:bg-slate-600 fixed top-80 left-5 text-white font-bold py-2 px-4 rounded"
+        onClick={addHeadingNode}
+      >
+        Add Heading
       </button>
     </div>
   );
