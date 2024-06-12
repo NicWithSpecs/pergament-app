@@ -125,6 +125,7 @@ function FloatingEdge({
                   minWidth: 30,
                   textAlign: "center",
                 }}
+                className="edge-label"
                 spellCheck="false"
               />
             </div>

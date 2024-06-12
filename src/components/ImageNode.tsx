@@ -5,6 +5,7 @@ import {
   NodeToolbar,
   Position,
   ReactFlowState,
+  useReactFlow,
   useStore,
 } from "reactflow";
 import { BiSolidImageAdd } from "react-icons/bi";
@@ -42,10 +43,12 @@ const arrowTargetStyle: React.CSSProperties = {
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
-const ImageNode = ({ selected, data, dragging }: NodeProps) => {
+const ImageNode = ({ id, selected, data, dragging }: NodeProps) => {
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
+
+  const reactFlow = useReactFlow();
 
   function handleImageSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -53,9 +56,20 @@ const ImageNode = ({ selected, data, dragging }: NodeProps) => {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    // Or you can work with it as a plain object:
     const formJson = Object.fromEntries(formData.entries());
     console.log(formJson.imageUrl);
+
+    // TODO Check if link is valid image
+
+    // update nodes
+    const newNodes = reactFlow.getNodes().map((n) => ({
+      ...n,
+      data:
+        n.id === id
+          ? { ...n.data, hasImage: true, image: { url: formJson.imageUrl } }
+          : n.data,
+    }));
+    reactFlow.setNodes(newNodes);
   }
 
   return (

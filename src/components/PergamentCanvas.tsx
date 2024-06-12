@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -80,6 +80,7 @@ const defaultEdgeOptions = {
 const PergamentCanvas = () => {
   const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [rfInstance, setRfInstance] = useState(null);
   const { screenToFlowPosition, getIntersectingNodes } = useReactFlow();
 
   const customApplyNodeChanges = useCallback(
@@ -221,6 +222,8 @@ const PergamentCanvas = () => {
       parentId: "",
     };
 
+    console.log(rfInstance.toObject());
+
     setNodes((nds) => nds.concat(newNode));
   };
 
@@ -261,6 +264,7 @@ const PergamentCanvas = () => {
   return (
     <div id="pergament-canvas">
       <ReactFlow
+        onInit={setRfInstance}
         maxZoom={1.8}
         minZoom={1}
         nodes={nodes}

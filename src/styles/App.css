@@ -112,6 +112,10 @@ svg {
   height: 100%;
 }
 
+.image-node {
+  padding: 0;
+}
+
 .image-placeholder {
   width: 100px;
   height: 100px;
@@ -167,21 +171,12 @@ svg {
   stroke-width: 3px !important;
 }
 
-.resize-icon {
-  scale: 1;
-  transition: scale 0.05s ease-in-out;
-}
-
-.resize-icon:hover {
-  scale: 1.2;
-}
-
 .ProseMirror:focus {
   outline: none;
 }
 
 
-.tiptap .is-editor-empty:first-child::before {
+.note-node .tiptap .is-editor-empty:first-child::before, .edge-label .tiptap .is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
