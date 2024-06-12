@@ -2,10 +2,12 @@ import {
   Handle,
   NodeProps,
   NodeResizer,
+  NodeToolbar,
   Position,
   ReactFlowState,
   useStore,
 } from "reactflow";
+import { BiSolidImageAdd } from "react-icons/bi";
 
 const arrowHandleStyle: React.CSSProperties = {
   display: "block",
@@ -41,26 +43,66 @@ const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
 const ImageNode = ({ selected, data, dragging }: NodeProps) => {
-  /* const [editing, setEditing] = useState(false); */
-
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
 
+  function handleImageSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Or you can work with it as a plain object:
+    const formJson = Object.fromEntries(formData.entries());
+    console.log(formJson.imageUrl);
+  }
+
   return (
     <>
       <div className="node image-node overflow-hidden">
-        <NodeResizer
-          minWidth={30}
-          minHeight={30}
-          keepAspectRatio={true}
-          isVisible={selected}
-        />
-        <img
-          className="w-full h-full"
-          src={data.image.url}
-          alt={data.image.alt}
-        />
+        {!data.hasImage && (
+          <button
+            className="image-placeholder"
+            /* onClick={() => alert("An Image import modul should open now.")} */
+          >
+            <BiSolidImageAdd />
+          </button>
+        )}
+        <NodeToolbar
+          isVisible={data.forceToolbarVisible || undefined}
+          position={data.toolbarPosition}
+        >
+          <form method="post" onSubmit={handleImageSubmit}>
+            <input
+              name="imageUrl"
+              className="w-50 p-1 rounded"
+              placeholder="Paste link here..."
+            ></input>
+            <button
+              type="submit"
+              className="bg-white hover:text-blue-600 font-bold px-3 py-1 mx-2 rounded"
+            >
+              Add
+            </button>
+          </form>
+        </NodeToolbar>
+
+        {data.hasImage && (
+          <>
+            <NodeResizer
+              minWidth={100}
+              minHeight={100}
+              keepAspectRatio={true}
+              isVisible={selected}
+            />
+            <img
+              className="w-full h-full"
+              src={data.image.url}
+              alt={data.image.alt}
+            />
+          </>
+        )}
         {!isConnecting && (
           <Handle
             className={`customHandle ${selected && !dragging ? "" : "hide"}`}

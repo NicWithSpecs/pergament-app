@@ -54,7 +54,7 @@ const connectionLineStyle = {
 };
 
 const noteNodeStyle = {
-  width: 300,
+  width: 400,
 };
 
 const frameNodeStyle = {
@@ -139,7 +139,12 @@ const PergamentCanvas = () => {
         (node) => node.type === "frameNode"
       );
 
-      if (intersectingFrame && node.type !== "frameNode") {
+      if (
+        intersectingFrame &&
+        node.type !== "frameNode" &&
+        node.parentId === ""
+      ) {
+        // parent or move inside of frame
         setNodes((nodes) =>
           nodes.map((n) => ({
             ...n,
@@ -155,6 +160,7 @@ const PergamentCanvas = () => {
           }))
         );
       } else if (node.parentId !== "") {
+        // unparent
         const parentNode = nodes.find((p) => p.id === node.parentId);
         setNodes((nodes) =>
           nodes.map((n) => ({
@@ -207,6 +213,7 @@ const PergamentCanvas = () => {
         y: 300,
       }),
       data: {
+        hasImage: false,
         image: {
           url: "https://www.wikimedia.de/wp-content/uploads/2021/09/Wikipedia-logo-v2-de.svg",
         },
@@ -254,7 +261,8 @@ const PergamentCanvas = () => {
   return (
     <div id="pergament-canvas">
       <ReactFlow
-        maxZoom={2.5}
+        maxZoom={1.8}
+        minZoom={1}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
