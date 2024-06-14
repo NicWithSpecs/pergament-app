@@ -1,44 +1,14 @@
 import {
-  Handle,
   NodeProps,
   NodeResizer,
   NodeToolbar,
-  Position,
   ReactFlowState,
   useReactFlow,
   useStore,
 } from "reactflow";
 import { BiSolidImageAdd } from "react-icons/bi";
-
-const arrowHandleStyle: React.CSSProperties = {
-  display: "block",
-  width: 11,
-  height: 11,
-  top: -4,
-  right: -4,
-  position: "absolute",
-  backgroundColor: "black",
-  borderRadius: "50%",
-  transform: "none",
-  cursor: "crosshair",
-  textAlign: "center",
-  lineHeight: "9px",
-  fontWeight: "bold",
-};
-
-const arrowTargetStyle: React.CSSProperties = {
-  display: "block",
-  top: 0,
-  right: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: "blue",
-  border: "none",
-  borderRadius: "0",
-  transform: "none",
-  opacity: 0,
-  cursor: "crosshair",
-};
+import ArrowTarget from "./ArrowTarget";
+import ArrowHandle from "./ArrowHandle";
 
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
@@ -78,7 +48,7 @@ const ImageNode = ({ id, selected, data, dragging }: NodeProps) => {
         {!data.hasImage && (
           <button
             className="image-placeholder"
-            /* onClick={() => alert("An Image import modul should open now.")} */
+            /* onClick={() => alert("An Image import modal should open now.")} */
           >
             <BiSolidImageAdd />
           </button>
@@ -117,21 +87,12 @@ const ImageNode = ({ id, selected, data, dragging }: NodeProps) => {
             />
           </>
         )}
-        {!isConnecting && (
-          <Handle
-            className={`customHandle ${selected && !dragging ? "" : "hide"}`}
-            position={Position.Right}
-            type="source"
-            style={arrowHandleStyle}
-          />
-        )}
-        <Handle
-          className="arrowTarget"
-          position={Position.Left}
-          type="target"
-          style={arrowTargetStyle}
-          isConnectableStart={!isConnecting ? false : true}
+        <ArrowHandle
+          isConnecting={isConnecting}
+          selected={selected}
+          dragging={dragging}
         />
+        <ArrowTarget isConnecting={isConnecting} />
       </div>
     </>
   );
