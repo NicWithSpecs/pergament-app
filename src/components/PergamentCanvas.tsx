@@ -20,6 +20,7 @@ import ReactFlow, {
   NodeChange,
   NodeDragHandler,
   NodeDimensionChange,
+  ReactFlowInstance,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
@@ -31,7 +32,6 @@ import ImageNode from "./ImageNode";
 import FrameNode from "./FrameNode";
 import HeadingNode from "./HeadingNode";
 
-const panOnDrag = [1, 2];
 const proOptions = { hideAttribution: false };
 const fitViewOptions = { padding: 4 };
 
@@ -77,11 +77,36 @@ const defaultEdgeOptions = {
   data: { label: " " },
 };
 
+const flowKey = "example-flow";
+
 const PergamentCanvas = () => {
   const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [rfInstance, setRfInstance] = useState(null);
-  const { screenToFlowPosition, getIntersectingNodes } = useReactFlow();
+  const [rfInstance, setRfInstance] = useState<ReactFlowInstance>();
+  const { screenToFlowPosition, getIntersectingNodes, setViewport } =
+    useReactFlow();
+
+  const onSave = useCallback(() => {
+    if (rfInstance) {
+      const flow = rfInstance.toObject();
+      localStorage.setItem(flowKey, JSON.stringify(flow));
+    }
+  }, [rfInstance]);
+
+  const onRestore = useCallback(() => {
+    const restoreFlow = async () => {
+      const flow = JSON.parse(localStorage.getItem(flowKey) || "{}");
+
+      if (flow) {
+        const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+        setViewport({ x, y, zoom });
+      }
+    };
+
+    restoreFlow();
+  }, [setNodes, setEdges, setViewport]);
 
   const customApplyNodeChanges = useCallback(
     (changes: NodeChange[], nodes: Node[]): Node[] => {
@@ -130,7 +155,7 @@ const PergamentCanvas = () => {
         }))
       );
     },
-    []
+    [getIntersectingNodes, setNodes]
   );
 
   const onNodeDragStop: NodeDragHandler = useCallback(
@@ -140,11 +165,7 @@ const PergamentCanvas = () => {
         (node) => node.type === "frameNode"
       );
 
-      if (
-        intersectingFrame &&
-        node.type !== "frameNode" &&
-        node.parentId === ""
-      ) {
+      if (intersectingFrame && node.type !== "frameNode") {
         // parent or move inside of frame
         setNodes((nodes) =>
           nodes.map((n) => ({
@@ -216,13 +237,11 @@ const PergamentCanvas = () => {
       data: {
         hasImage: false,
         image: {
-          url: "https://www.wikimedia.de/wp-content/uploads/2021/09/Wikipedia-logo-v2-de.svg",
+          url: "",
         },
       },
       parentId: "",
     };
-
-    console.log(rfInstance.toObject());
 
     setNodes((nds) => nds.concat(newNode));
   };
@@ -283,7 +302,7 @@ const PergamentCanvas = () => {
         fitView
         fitViewOptions={fitViewOptions}
         selectionOnDrag
-        panOnDrag={panOnDrag}
+        panOnDrag={[1, 2]}
         selectionMode={SelectionMode.Partial}
         selectNodesOnDrag={false}
         connectionLineComponent={CustomConnectionLine}
@@ -322,6 +341,18 @@ const PergamentCanvas = () => {
         onClick={addHeadingNode}
       >
         Add Heading
+      </button>
+      <button
+        className="bg-black hover:bg-slate-600 fixed top-5 right-5 text-white font-bold py-2 px-4 rounded"
+        onClick={onSave}
+      >
+        Save
+      </button>
+      <button
+        className="bg-black hover:bg-slate-600 fixed top-20 right-5 text-white font-bold py-2 px-4 rounded"
+        onClick={onRestore}
+      >
+        Restore
       </button>
     </div>
   );
