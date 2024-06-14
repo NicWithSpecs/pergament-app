@@ -47,7 +47,7 @@ const ImageNode = ({ id, selected, data, dragging }: NodeProps) => {
       <div className="node image-node overflow-hidden">
         {!data.hasImage && (
           <button
-            className="image-placeholder"
+            className="image-placeholder w-32 m-3"
             /* onClick={() => alert("An Image import modal should open now.")} */
           >
             <BiSolidImageAdd />

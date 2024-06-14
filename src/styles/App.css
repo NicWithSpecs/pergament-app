@@ -57,13 +57,13 @@ svg {
 }
 
 .react-flow__resize-control.handle {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 .node {
   border: 3px solid black;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 10px;
   transition: scale 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -74,21 +74,20 @@ svg {
 
 .note-node {
   background: rgb(255, 255, 255);
-  font-size: 1rem;
-  transition: scale 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   
   .react-flow__resize-control.line.right {
-    height: 10px;
-    transform: translate(-14px, -14px);
+    top: 100%;
+    height: 14px;
+    transform: translate(-18px, -18px);
+    background-color: transparent !important;
+    border: none;
     z-index: 500;
     transition: opacity 0.3s ease-in-out;
-    transition-delay: 0.2s;
   }
 }
 
 .note-content {
   width: 100%;
-  margin: 0;
   display: block;
   color: #000000;
 }
@@ -97,9 +96,12 @@ svg {
   scale: 1.04;
 }
 
-.frame-node {
+.frame-node, .image-node, .heading-node {
   width: 100%;
   height: 100%;
+}
+
+.frame-node {
   background-color: #50505020;
 }
 
@@ -107,20 +109,11 @@ svg {
   border: 4px solid black;
 }
 
-.heading-node {
-  width: 100%;
-  height: 100%;
-}
-
 .image-node {
   padding: 0;
 }
 
 .image-placeholder {
-  width: 100px;
-  height: 100px;
-  margin: 20px;
-
   svg {
     width: 100%;
     height: 100%;
@@ -152,18 +145,15 @@ svg {
 }
 
 .react-flow__handle-right {
-  scale: 1;
-  transition: scale 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease-in-out;
-  transition-delay: 0s;
+  transition: scale 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease-in-out;
   border: none;
 }
 
 .react-flow__handle-right:hover {
   scale: 2;
-} 
+}
 
 .dragging > .node {
-  scale: 1.01;
   box-shadow: rgba(0, 0, 0, 0.47) 5px 5px 15px;
 }
 
@@ -174,7 +164,6 @@ svg {
 .ProseMirror:focus {
   outline: none;
 }
-
 
 .note-node .tiptap .is-editor-empty:first-child::before, .edge-label .tiptap .is-editor-empty:first-child::before {
   color: #adb5bd;
@@ -194,8 +183,8 @@ svg {
 
 .arrow-handle {
   display: block;
-  width: 11px;
-  height: 11px;
+  width: 15px;
+  height: 15px;
   top: -4px;
   right: -4px;
   position: absolute;
@@ -205,18 +194,5 @@ svg {
   cursor: crosshair;
   text-align: center;
   line-height: 9px;
-}
-
-.arrow-target {
-  display: block;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  border: none;
-  transform: none;
-  opacity: 0;
-  cursor: crosshair;
 }
 
