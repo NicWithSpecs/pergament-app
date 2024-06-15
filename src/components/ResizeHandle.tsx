@@ -8,9 +8,10 @@ interface ResizeHandleProps {
 const ResizeHandle = ({ selected, dragging }: ResizeHandleProps) => {
   return (
     <NodeResizeControl
-      className={`customHandle ${selected && !dragging ? "" : "hide"}`}
+      className={` ${!selected || dragging ? "opacity-0" : ""}`}
       minWidth={150}
       minHeight={100}
+      maxWidth={1600}
       variant={ResizeControlVariant.Line}
     >
       <ResizeIcon />

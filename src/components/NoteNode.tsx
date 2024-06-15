@@ -28,7 +28,7 @@ function NoteNode({ selected, data, dragging }: NodeProps) {
     content: data.content,
     editorProps: {
       attributes: {
-        class: "prose prose-sm focus:outline-none",
+        class: "prose prose-sm max-w-[1600px] focus:outline-none",
       },
     },
   });
@@ -47,7 +47,12 @@ function NoteNode({ selected, data, dragging }: NodeProps) {
   }, [selected, editor]);
 
   return (
-    <div className="node note-node" onDoubleClick={handleDoubleClick}>
+    <div
+      className={`node note-node bg-white border-4 border-black rounded-xl p-2 ease-in-out-bounce duration-100 ${
+        selected || dragging ? "shadow-3xl" : ""
+      }`}
+      onDoubleClick={handleDoubleClick}
+    >
       <ResizeHandle selected={selected} dragging={dragging} />
       <ArrowHandle
         isConnecting={isConnecting}
@@ -56,7 +61,9 @@ function NoteNode({ selected, data, dragging }: NodeProps) {
       />
       <ArrowTarget isConnecting={isConnecting} />
       <div
-        className={`note-content ${editing ? "nodrag editing" : "uneditable"}`}
+        className={`note-content ${
+          editing ? "nodrag cursor-text" : "pointer-events-none"
+        }`}
       >
         <EditorContent editor={editor} spellCheck={false} />
       </div>

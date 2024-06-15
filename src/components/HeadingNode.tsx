@@ -3,16 +3,15 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useState } from "react";
 import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
+import { useEffect, useState } from "react";
 
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
 const HeadingNode = ({ selected, data, dragging }: NodeProps) => {
   const [editing, setEditing] = useState(false);
-
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
@@ -39,13 +38,27 @@ const HeadingNode = ({ selected, data, dragging }: NodeProps) => {
     },
   });
 
+  const handleDoubleClick = () => {
+    setEditing(true);
+    editor?.chain().focus();
+    /* editor?.setEditable(true); */
+  };
+
   useEffect(() => {
-    setEditing(selected ? true : false);
+    if (!selected) {
+      setEditing(false);
+      /* editor?.setEditable(false); */
+    }
   }, [selected, editor]);
 
   return (
     <>
-      <div className="node heading-node overflow-hidden">
+      <div
+        className={`node heading-node p-2 ease-in-out-bounce duration-100 w-full h-full overflow-hidden ${
+          selected || dragging ? "shadow-3xl" : ""
+        }`}
+        onDoubleClick={handleDoubleClick}
+      >
         <NodeResizer
           minWidth={30}
           minHeight={30}
@@ -61,7 +74,7 @@ const HeadingNode = ({ selected, data, dragging }: NodeProps) => {
         <ArrowTarget isConnecting={isConnecting} />
         <div
           className={`heading-content ${
-            editing ? "nodrag editing" : "uneditable"
+            editing ? "nodrag cursor-text" : "pointer-events-none"
           }`}
         >
           <EditorContent editor={editor} spellCheck={false} />

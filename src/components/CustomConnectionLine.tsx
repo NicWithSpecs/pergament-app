@@ -6,7 +6,6 @@ function CustomConnectionLine({
   fromY,
   toX,
   toY,
-  connectionLineStyle,
 }: ConnectionLineComponentProps) {
   if (!fromNode) {
     return null;
@@ -25,7 +24,7 @@ function CustomConnectionLine({
   return (
     <g>
       <path
-        style={connectionLineStyle}
+        style={{ strokeWidth: 1, stroke: "black" }}
         className="animated"
         fill="none"
         d={edgePath}

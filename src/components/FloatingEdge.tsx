@@ -20,7 +20,6 @@ function FloatingEdge({
   source,
   target,
   markerEnd,
-  style,
   selected,
   data,
 }: EdgeProps) {
@@ -47,6 +46,11 @@ function FloatingEdge({
         ${data.label}
       </p>
     `,
+    editorProps: {
+      attributes: {
+        class: "focus:outline-none",
+      },
+    },
   });
 
   if (!sourceNode || !targetNode) {
@@ -97,8 +101,8 @@ function FloatingEdge({
         id={id}
         path={edgePathBezier}
         markerEnd={markerEnd}
-        interactionWidth={15}
-        style={style}
+        interactionWidth={20}
+        style={{ strokeWidth: selected ? 3 : 2, stroke: "black" }}
       />
 
       <EdgeLabelRenderer>
@@ -108,10 +112,10 @@ function FloatingEdge({
               style={{
                 position: "absolute",
                 transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-                background: "#e1dfdf",
+                background: "rgb(229 231 235)",
                 border: selected ? "1px solid #a1a1a1" : "none",
                 padding: selected ? 6 : 3,
-                borderRadius: 5,
+                borderRadius: 10,
                 fontSize: 12,
                 fontWeight: 700,
               }}

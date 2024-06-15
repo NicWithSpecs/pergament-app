@@ -11,7 +11,11 @@ const FrameNode = ({ selected, dragging }: NodeProps) => {
   const isConnecting = !!connectionNodeId;
 
   return (
-    <div className="node frame-node">
+    <div
+      className={`node frame-node bg-gray-300 border-4 border-black rounded-xl p-0 ease-in-out-bounce duration-100 w-full h-full ${
+        selected || dragging ? "shadow-3xl" : ""
+      }`}
+    >
       <NodeResizer minWidth={100} minHeight={100} isVisible={selected} />
       <ArrowHandle
         isConnecting={isConnecting}

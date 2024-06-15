@@ -47,28 +47,21 @@ const edgeTypes: EdgeTypes = {
   straight: StraightEdge,
 };
 
-const connectionLineStyle = {
-  strokeWidth: 1,
-  stroke: "black",
-  zIndex: "-1 !important",
-};
-
 const noteNodeStyle = {
   width: 400,
 };
 
 const frameNodeStyle = {
-  width: 400,
-  height: 400,
+  width: 500,
+  height: 500,
   zIndex: -1,
 };
 
 const headingNodeStyle = {
-  width: 400,
+  width: 300,
 };
 
 const defaultEdgeOptions = {
-  style: { strokeWidth: 2, stroke: "black" },
   type: "floating",
   markerEnd: {
     type: MarkerType.ArrowClosed,
@@ -281,7 +274,7 @@ const PergamentCanvas = () => {
   };
 
   return (
-    <div id="pergament-canvas">
+    <div className="w-screen h-screen bg-gray-200 overflow-hidden">
       <ReactFlow
         onInit={setRfInstance}
         maxZoom={1.8}
@@ -306,15 +299,14 @@ const PergamentCanvas = () => {
         selectionMode={SelectionMode.Partial}
         selectNodesOnDrag={false}
         connectionLineComponent={CustomConnectionLine}
-        connectionLineStyle={connectionLineStyle}
         connectionMode={ConnectionMode.Loose}
         deleteKeyCode={"Delete"}
       >
         <Controls />
         <Background
           variant={BackgroundVariant.Dots}
-          color="#a9a9a9"
-          gap={10}
+          color="#909090"
+          gap={15}
           size={1}
         />
       </ReactFlow>
