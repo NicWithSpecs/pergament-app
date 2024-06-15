@@ -1,26 +1,18 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
+import { useShallow } from "zustand/react/shallow";
 import ReactFlow, {
   Controls,
   Background,
-  useNodesState,
-  useEdgesState,
-  Node,
-  addEdge,
   BackgroundVariant,
   SelectionMode,
-  OnConnect,
-  OnNodesChange,
-  applyNodeChanges,
   NodeTypes,
   MarkerType,
   ConnectionMode,
   EdgeTypes,
   StraightEdge,
   useReactFlow,
-  NodeChange,
-  NodeDragHandler,
-  NodeDimensionChange,
   ReactFlowInstance,
+  OnInit,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
@@ -31,9 +23,20 @@ import NoteNode from "../components/NoteNode";
 import ImageNode from "./ImageNode";
 import FrameNode from "./FrameNode";
 import HeadingNode from "./HeadingNode";
+import useStore, { PergamentState } from "../store";
 
-const proOptions = { hideAttribution: false };
-const fitViewOptions = { padding: 4 };
+const selector = (state: PergamentState) => ({
+  nodes: state.nodes,
+  edges: state.edges,
+  onNodesChange: state.onNodesChange,
+  onEdgesChange: state.onEdgesChange,
+  onConnect: state.onConnect,
+  onNodeDrag: state.onNodeDrag,
+  onNodeDragStop: state.onNodeDragStop,
+  reactFlowInstance: state.reactFlowInstance,
+  reactFlowKey: state.reactFlowKey,
+  setReactFlowInstance: state.setReactFlowInstance,
+});
 
 const nodeTypes: NodeTypes = {
   noteNode: NoteNode,
@@ -41,24 +44,9 @@ const nodeTypes: NodeTypes = {
   frameNode: FrameNode,
   headingNode: HeadingNode,
 };
-
 const edgeTypes: EdgeTypes = {
   floating: FloatingEdge,
   straight: StraightEdge,
-};
-
-const noteNodeStyle = {
-  width: 400,
-};
-
-const frameNodeStyle = {
-  width: 500,
-  height: 500,
-  zIndex: -1,
-};
-
-const headingNodeStyle = {
-  width: 300,
 };
 
 const defaultEdgeOptions = {
@@ -70,25 +58,39 @@ const defaultEdgeOptions = {
   data: { label: " " },
 };
 
-const flowKey = "example-flow";
-
 const PergamentCanvas = () => {
-  const [nodes, setNodes] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [rfInstance, setRfInstance] = useState<ReactFlowInstance>();
-  const { screenToFlowPosition, getIntersectingNodes, setViewport } =
-    useReactFlow();
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+    onNodeDrag,
+    onNodeDragStop,
+    reactFlowInstance,
+    reactFlowKey,
+    setReactFlowInstance,
+  } = useStore(useShallow(selector));
+  const { setNodes, setEdges } = useStore();
+  const { screenToFlowPosition, setViewport } = useReactFlow();
+
+  const onInit: OnInit = useCallback(
+    (reactFlowInstance: ReactFlowInstance) => {
+      setReactFlowInstance(reactFlowInstance);
+    },
+    [setReactFlowInstance]
+  );
 
   const onSave = useCallback(() => {
-    if (rfInstance) {
-      const flow = rfInstance.toObject();
-      localStorage.setItem(flowKey, JSON.stringify(flow));
+    if (reactFlowInstance) {
+      const flow = reactFlowInstance.toObject();
+      localStorage.setItem(reactFlowKey, JSON.stringify(flow));
     }
-  }, [rfInstance]);
+  }, [reactFlowInstance, reactFlowKey]);
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
-      const flow = JSON.parse(localStorage.getItem(flowKey) || "{}");
+      const flow = JSON.parse(localStorage.getItem(reactFlowKey) || "{}");
 
       if (flow) {
         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
@@ -99,134 +101,26 @@ const PergamentCanvas = () => {
     };
 
     restoreFlow();
-  }, [setNodes, setEdges, setViewport]);
-
-  const customApplyNodeChanges = useCallback(
-    (changes: NodeChange[], nodes: Node[]): Node[] => {
-      const dimensionChange = changes[0] as NodeDimensionChange;
-      if (
-        changes[0].type === "dimensions" &&
-        changes[0].resizing &&
-        changes[0].dimensions !== undefined &&
-        nodes.find((node) => node.id === dimensionChange.id)?.type ===
-          "noteNode"
-      ) {
-        changes[0] = {
-          ...changes[0],
-          dimensions: {
-            height: undefined!, // ! experimental solution
-            width: changes[0].dimensions.width,
-          },
-        };
-      }
-
-      return applyNodeChanges(changes, nodes);
-    },
-    []
-  );
-
-  const onNodesChange: OnNodesChange = useCallback(
-    (changes) => {
-      setNodes((nds) => customApplyNodeChanges(changes, nds));
-    },
-    [setNodes, customApplyNodeChanges]
-  );
-
-  const onNodeDrag: NodeDragHandler = useCallback(
-    (_: React.MouseEvent, node: Node) => {
-      const intersections = getIntersectingNodes(node).map((n) => n.id);
-
-      setNodes((ns) =>
-        ns.map((n) => ({
-          ...n,
-          className:
-            intersections.includes(n.id) &&
-            n.type === "frameNode" &&
-            node.type !== "frameNode"
-              ? "frame-highlight"
-              : "",
-        }))
-      );
-    },
-    [getIntersectingNodes, setNodes]
-  );
-
-  const onNodeDragStop: NodeDragHandler = useCallback(
-    (_: React.MouseEvent, node: Node) => {
-      // find intersecting frame node
-      const intersectingFrame = getIntersectingNodes(node).find(
-        (node) => node.type === "frameNode"
-      );
-
-      if (intersectingFrame && node.type !== "frameNode") {
-        // parent or move inside of frame
-        setNodes((nodes) =>
-          nodes.map((n) => ({
-            ...n,
-            className: "",
-            position:
-              n.id === node.id && n.parentId !== intersectingFrame.id
-                ? {
-                    x: n.position.x - intersectingFrame.position.x,
-                    y: n.position.y - intersectingFrame.position.y,
-                  }
-                : n.position,
-            parentId: n.id === node.id ? intersectingFrame.id : n.parentId,
-          }))
-        );
-      } else if (node.parentId !== "") {
-        // unparent
-        const parentNode = nodes.find((p) => p.id === node.parentId);
-        setNodes((nodes) =>
-          nodes.map((n) => ({
-            ...n,
-            className: "",
-            position:
-              n.id === node.id && parentNode
-                ? {
-                    x: parentNode.position.x + n.position.x,
-                    y: parentNode.position.y + n.position.y,
-                  }
-                : n.position,
-            parentId: n.id === node.id ? "" : n.parentId,
-          }))
-        );
-      }
-    },
-    [setNodes, getIntersectingNodes, nodes]
-  );
-
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
+  }, [setNodes, setEdges, setViewport, reactFlowKey]);
 
   const addNoteNode = () => {
     const newNode = {
       id: "note-" + self.crypto.randomUUID(),
       type: "noteNode",
-      position: screenToFlowPosition({
-        x: 300,
-        y: 300,
-      }),
-      data: {
-        content: ``,
-      },
-      style: noteNodeStyle,
+      position: screenToFlowPosition({ x: 300, y: 300 }),
+      data: { content: `` },
+      style: { width: 400 },
       parentId: "",
     };
 
-    setNodes((nds) => nds.concat(newNode));
+    setNodes(nodes.concat(newNode));
   };
 
   const addImageNode = () => {
     const newNode = {
       id: "image-" + self.crypto.randomUUID(),
       type: "imageNode",
-      position: screenToFlowPosition({
-        x: 300,
-        y: 300,
-      }),
+      position: screenToFlowPosition({ x: 300, y: 300 }),
       data: {
         hasImage: false,
         image: {
@@ -236,47 +130,39 @@ const PergamentCanvas = () => {
       parentId: "",
     };
 
-    setNodes((nds) => nds.concat(newNode));
+    setNodes(nodes.concat(newNode));
   };
 
   const addFrameNode = () => {
     const newNode = {
       id: "frame-" + self.crypto.randomUUID(),
       type: "frameNode",
-      position: screenToFlowPosition({
-        x: 300,
-        y: 300,
-      }),
+      position: screenToFlowPosition({ x: 300, y: 300 }),
       data: {},
-      style: frameNodeStyle,
+      style: { width: 500, height: 500, zIndex: -1 },
       parentId: "",
     };
 
-    setNodes((nds) => nds.concat(newNode));
+    setNodes(nodes.concat(newNode));
   };
 
   const addHeadingNode = () => {
     const newNode = {
       id: "heading-" + self.crypto.randomUUID(),
       type: "headingNode",
-      position: screenToFlowPosition({
-        x: 300,
-        y: 300,
-      }),
-      data: {
-        content: ``,
-      },
-      style: headingNodeStyle,
+      position: screenToFlowPosition({ x: 300, y: 300 }),
+      data: { content: `` },
+      style: { width: 300 },
       parentId: "",
     };
 
-    setNodes((nds) => nds.concat(newNode));
+    setNodes(nodes.concat(newNode));
   };
 
   return (
     <div className="w-screen h-screen bg-gray-200 overflow-hidden">
       <ReactFlow
-        onInit={setRfInstance}
+        onInit={onInit}
         maxZoom={1.8}
         minZoom={1}
         nodes={nodes}
@@ -291,9 +177,9 @@ const PergamentCanvas = () => {
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
         elementsSelectable={true}
-        proOptions={proOptions}
+        proOptions={{ hideAttribution: false }}
         fitView
-        fitViewOptions={fitViewOptions}
+        fitViewOptions={{ padding: 4 }}
         selectionOnDrag
         panOnDrag={[1, 2]}
         selectionMode={SelectionMode.Partial}
