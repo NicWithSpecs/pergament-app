@@ -1,12 +1,7 @@
 import "reactflow/dist/style.css";
 import "./styles/App.css";
-import PergamentCanvas from "./components/PergamentCanvas";
-import { ReactFlowProvider } from "reactflow";
+import PergamentApp from "./pages/PergamentApp";
 
 export default function App() {
-  return (
-    <ReactFlowProvider>
-      <PergamentCanvas />
-    </ReactFlowProvider>
-  );
+  return <PergamentApp />;
 }

@@ -160,7 +160,7 @@ const PergamentCanvas = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-gray-200 overflow-hidden">
+    <div className="w-screen h-full bg-gray-200 overflow-hidden">
       <ReactFlow
         onInit={onInit}
         maxZoom={1.8}
@@ -221,13 +221,13 @@ const PergamentCanvas = () => {
         Add Heading
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-5 right-5 text-white font-bold py-2 px-4 rounded-xl"
+        className="bg-black hover:bg-slate-600 fixed top-20 right-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={onSave}
       >
         Save
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-20 right-5 text-white font-bold py-2 px-4 rounded-xl"
+        className="bg-black hover:bg-slate-600 fixed top-40 right-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={onRestore}
       >
         Restore
