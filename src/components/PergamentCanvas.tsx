@@ -24,6 +24,8 @@ import ImageNode from "./ImageNode";
 import FrameNode from "./FrameNode";
 import HeadingNode from "./HeadingNode";
 import usePergamentStore, { PergamentState } from "../store";
+import PergamentToolbar from "./PergamentToolbar";
+import { FaBorderAll, FaHeading, FaImage, FaStickyNote } from "react-icons/fa";
 
 const selector = (state: PergamentState) => ({
   nodes: state.nodes,
@@ -159,6 +161,29 @@ const PergamentCanvas = () => {
     setNodes(nodes.concat(newNode));
   };
 
+  const addNodeFunctions = [
+    {
+      name: "Note",
+      createFunction: addNoteNode,
+      icon: FaStickyNote,
+    },
+    {
+      name: "Frame",
+      createFunction: addFrameNode,
+      icon: FaBorderAll,
+    },
+    {
+      name: "Heading",
+      createFunction: addHeadingNode,
+      icon: FaHeading,
+    },
+    {
+      name: "Image",
+      createFunction: addImageNode,
+      icon: FaImage,
+    },
+  ];
+
   return (
     <div className="w-screen h-full bg-gray-200 overflow-hidden">
       <ReactFlow
@@ -195,31 +220,9 @@ const PergamentCanvas = () => {
           gap={15}
           size={1}
         />
+        <PergamentToolbar noteFunctions={addNodeFunctions} />
       </ReactFlow>
-      <button
-        className="bg-black hover:bg-slate-600 fixed top-20 left-5 text-white font-bold py-2 px-4 rounded-xl"
-        onClick={addNoteNode}
-      >
-        Add Note
-      </button>
-      <button
-        className="bg-black hover:bg-slate-600 fixed top-40 left-5 text-white font-bold py-2 px-4 rounded-xl"
-        onClick={addImageNode}
-      >
-        Add Image
-      </button>
-      <button
-        className="bg-black hover:bg-slate-600 fixed top-60 left-5 text-white font-bold py-2 px-4 rounded-xl"
-        onClick={addFrameNode}
-      >
-        Add Frame
-      </button>
-      <button
-        className="bg-black hover:bg-slate-600 fixed top-80 left-5 text-white font-bold py-2 px-4 rounded-xl"
-        onClick={addHeadingNode}
-      >
-        Add Heading
-      </button>
+
       <button
         className="bg-black hover:bg-slate-600 fixed top-20 right-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={onSave}

@@ -4,13 +4,13 @@ import { HiMenu, HiX } from "react-icons/hi";
 const NavLinks = () => {
   return (
     <>
-      <a className="font-bold" href="#">
+      <a className="font-bold mx-10" href="#">
         Templates
       </a>
-      <a className="font-bold" href="#">
+      <a className="font-bold mx-10" href="#">
         Help
       </a>
-      <a className="font-bold" href="#">
+      <a className="font-bold mx-10" href="#">
         Settings
       </a>
     </>
@@ -27,7 +27,7 @@ const Nav = () => {
   return (
     <>
       <nav className="flex w-1/5 justify-end">
-        <div className="hidden md:flex w-full justify-between mx-10">
+        <div className="hidden md:flex w-full justify-end">
           <NavLinks />
         </div>
         <div className="md:hidden">
