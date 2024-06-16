@@ -1,4 +1,10 @@
-import { NodeProps, NodeResizer, ReactFlowState, useStore } from "reactflow";
+import {
+  NodeProps,
+  NodeResizer,
+  ReactFlowState,
+  useNodeId,
+  useStore,
+} from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -6,11 +12,16 @@ import StarterKit from "@tiptap/starter-kit";
 import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
 import { useEffect, useState } from "react";
+import usePergamentStore, { NodeData } from "../store";
 
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
-const HeadingNode = ({ selected, data, dragging }: NodeProps) => {
+const HeadingNode = ({ selected, data, dragging }: NodeProps<NodeData>) => {
+  const nodeId = useNodeId();
+  const updateNodeContent = usePergamentStore(
+    (state) => state.updateNodeContent
+  );
   const [editing, setEditing] = useState(false);
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
@@ -47,9 +58,12 @@ const HeadingNode = ({ selected, data, dragging }: NodeProps) => {
   useEffect(() => {
     if (!selected) {
       setEditing(false);
+      if (editor) {
+        updateNodeContent(nodeId ?? "", editor.getJSON());
+      }
       /* editor?.setEditable(false); */
     }
-  }, [selected, editor]);
+  }, [selected, editor, nodeId, updateNodeContent]);
 
   return (
     <>

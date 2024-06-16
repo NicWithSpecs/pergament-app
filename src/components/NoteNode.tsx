@@ -1,17 +1,12 @@
 import { NodeProps, ReactFlowState, useNodeId, useStore } from "reactflow";
-import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useState } from "react";
 import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
 import ResizeHandle from "./ResizeHandle";
-
-import usePergamentStore from "../store";
-
-export type NodeData = {
-  content: JSONContent;
-};
+import usePergamentStore, { NodeData } from "../store";
 
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;

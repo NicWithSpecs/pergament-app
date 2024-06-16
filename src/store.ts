@@ -17,6 +17,10 @@ import {
 } from "reactflow";
 import { JSONContent } from "@tiptap/react";
 
+export type NodeData = {
+  content: JSONContent;
+};
+
 export type PergamentState = {
   nodes: Node[];
   edges: Edge[];
