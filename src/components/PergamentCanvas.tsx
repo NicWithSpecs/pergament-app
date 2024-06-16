@@ -23,7 +23,7 @@ import NoteNode from "../components/NoteNode";
 import ImageNode from "./ImageNode";
 import FrameNode from "./FrameNode";
 import HeadingNode from "./HeadingNode";
-import useStore, { PergamentState } from "../store";
+import usePergamentStore, { PergamentState } from "../store";
 
 const selector = (state: PergamentState) => ({
   nodes: state.nodes,
@@ -70,8 +70,8 @@ const PergamentCanvas = () => {
     reactFlowInstance,
     reactFlowKey,
     setReactFlowInstance,
-  } = useStore(useShallow(selector));
-  const { setNodes, setEdges } = useStore();
+  } = usePergamentStore(useShallow(selector));
+  const { setNodes, setEdges } = usePergamentStore();
   const { screenToFlowPosition, setViewport } = useReactFlow();
 
   const onInit: OnInit = useCallback(
@@ -197,37 +197,37 @@ const PergamentCanvas = () => {
         />
       </ReactFlow>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-20 left-5 text-white font-bold py-2 px-4 rounded"
+        className="bg-black hover:bg-slate-600 fixed top-20 left-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={addNoteNode}
       >
         Add Note
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-40 left-5 text-white font-bold py-2 px-4 rounded"
+        className="bg-black hover:bg-slate-600 fixed top-40 left-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={addImageNode}
       >
         Add Image
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-60 left-5 text-white font-bold py-2 px-4 rounded"
+        className="bg-black hover:bg-slate-600 fixed top-60 left-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={addFrameNode}
       >
         Add Frame
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-80 left-5 text-white font-bold py-2 px-4 rounded"
+        className="bg-black hover:bg-slate-600 fixed top-80 left-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={addHeadingNode}
       >
         Add Heading
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-5 right-5 text-white font-bold py-2 px-4 rounded"
+        className="bg-black hover:bg-slate-600 fixed top-5 right-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={onSave}
       >
         Save
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-20 right-5 text-white font-bold py-2 px-4 rounded"
+        className="bg-black hover:bg-slate-600 fixed top-20 right-5 text-white font-bold py-2 px-4 rounded-xl"
         onClick={onRestore}
       >
         Restore

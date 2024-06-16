@@ -15,6 +15,7 @@ import {
   NodeDragHandler,
   ReactFlowInstance,
 } from "reactflow";
+import { JSONContent } from "@tiptap/react";
 
 export type PergamentState = {
   nodes: Node[];
@@ -30,10 +31,11 @@ export type PergamentState = {
   setReactFlowKey: (key: string) => void;
   setNodes: (nodes: Node[]) => void;
   setEdges: (edges: Edge[]) => void;
+  updateNodeContent: (nodeId: string, content: JSONContent) => void;
 };
 
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
-const useStore = create<PergamentState>((set, get) => ({
+const usePergamentStore = create<PergamentState>((set, get) => ({
   nodes: [],
   edges: [],
   onNodesChange: (changes: NodeChange[]) => {
@@ -135,6 +137,16 @@ const useStore = create<PergamentState>((set, get) => ({
   setEdges: (edges: Edge[]) => {
     set({ edges });
   },
+  updateNodeContent: (nodeId: string, content: JSONContent) => {
+    set({
+      nodes: get().nodes.map((node) => {
+        if (node.id === nodeId) {
+          return { ...node, data: { ...node.data, content: content } };
+        }
+        return node;
+      }),
+    });
+  },
 }));
 
-export default useStore;
+export default usePergamentStore;

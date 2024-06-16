@@ -1,5 +1,5 @@
-import { NodeProps, ReactFlowState, useStore } from "reactflow";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { NodeProps, ReactFlowState, useNodeId, useStore } from "reactflow";
+import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useState } from "react";
@@ -7,10 +7,20 @@ import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
 import ResizeHandle from "./ResizeHandle";
 
+import usePergamentStore from "../store";
+
+export type NodeData = {
+  content: JSONContent;
+};
+
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
 
-function NoteNode({ selected, data, dragging }: NodeProps) {
+function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
+  const nodeId = useNodeId();
+  const updateNodeContent = usePergamentStore(
+    (state) => state.updateNodeContent
+  );
   const [editing, setEditing] = useState(false);
 
   const connectionNodeId = useStore(connectionNodeIdSelector);
@@ -36,15 +46,16 @@ function NoteNode({ selected, data, dragging }: NodeProps) {
   const handleDoubleClick = () => {
     setEditing(true);
     editor?.chain().focus();
-    /* editor?.setEditable(true); */
   };
 
   useEffect(() => {
     if (!selected) {
       setEditing(false);
-      /* editor?.setEditable(false); */
+      if (editor) {
+        updateNodeContent(nodeId ?? "", editor.getJSON());
+      }
     }
-  }, [selected, editor]);
+  }, [selected, editor, nodeId, updateNodeContent]);
 
   return (
     <div
