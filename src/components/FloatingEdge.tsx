@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import {
   useStore,
   EdgeProps,
@@ -12,6 +12,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { getEdgeParams } from "../utils";
 import CharacterCount from "@tiptap/extension-character-count";
 import Placeholder from "@tiptap/extension-placeholder";
+import usePergamentStore, { EdgeData } from "../store";
 
 const limit = 50;
 
@@ -22,8 +23,8 @@ function FloatingEdge({
   markerEnd,
   selected,
   data,
-}: EdgeProps) {
-  /* const { setEdges } = useReactFlow(); */
+}: EdgeProps<EdgeData>) {
+  const updateEdgeLabel = usePergamentStore((state) => state.updateEdgeLabel);
   const sourceNode = useStore(
     useCallback((store) => store.nodeInternals.get(source), [source])
   );
@@ -41,17 +42,21 @@ function FloatingEdge({
         limit,
       }),
     ],
-    content: `
-      <p>
-        ${data.label}
-      </p>
-    `,
+    content: data?.label,
     editorProps: {
       attributes: {
         class: "focus:outline-none",
       },
     },
   });
+
+  useEffect(() => {
+    if (!selected) {
+      if (editor) {
+        updateEdgeLabel(id, editor.getJSON());
+      }
+    }
+  }, [selected, editor, id, updateEdgeLabel]);
 
   if (!sourceNode || !targetNode) {
     return null;

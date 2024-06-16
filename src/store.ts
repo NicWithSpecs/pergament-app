@@ -21,6 +21,10 @@ export type NodeData = {
   content: JSONContent;
 };
 
+export type EdgeData = {
+  label: JSONContent;
+};
+
 export type PergamentState = {
   nodes: Node[];
   edges: Edge[];
@@ -35,7 +39,8 @@ export type PergamentState = {
   setReactFlowKey: (key: string) => void;
   setNodes: (nodes: Node[]) => void;
   setEdges: (edges: Edge[]) => void;
-  updateNodeContent: (nodeId: string, content: JSONContent) => void;
+  updateNodeContent: (nodeId: string | null, content: JSONContent) => void;
+  updateEdgeLabel: (edgeId: string, label: JSONContent) => void;
 };
 
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
@@ -141,13 +146,23 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
   setEdges: (edges: Edge[]) => {
     set({ edges });
   },
-  updateNodeContent: (nodeId: string, content: JSONContent) => {
+  updateNodeContent: (nodeId: string | null, content: JSONContent) => {
     set({
       nodes: get().nodes.map((node) => {
         if (node.id === nodeId) {
           return { ...node, data: { ...node.data, content: content } };
         }
         return node;
+      }),
+    });
+  },
+  updateEdgeLabel: (edgeId: string, label: JSONContent) => {
+    set({
+      edges: get().edges.map((edge) => {
+        if (edge.id === edgeId) {
+          return { ...edge, data: { ...edge.data, label: label } };
+        }
+        return edge;
       }),
     });
   },

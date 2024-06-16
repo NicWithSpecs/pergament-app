@@ -47,7 +47,7 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
     if (!selected) {
       setEditing(false);
       if (editor) {
-        updateNodeContent(nodeId ?? "", editor.getJSON());
+        updateNodeContent(nodeId, editor.getJSON());
       }
     }
   }, [selected, editor, nodeId, updateNodeContent]);
