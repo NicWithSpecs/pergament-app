@@ -45,7 +45,7 @@ const ImageNode = ({ id, selected, data, dragging }: NodeProps) => {
   return (
     <>
       <div
-        className={`node image-node overflow-hidden border-4 border-black rounded-xl p-0 ease-in-out-bounce duration-100 ${
+        className={`node image-node overflow-hidden border-2 border-black rounded-xl p-0 ease-in-out-bounce duration-100 ${
           selected || dragging ? "shadow-3xl" : ""
         }`}
       >

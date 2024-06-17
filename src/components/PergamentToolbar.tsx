@@ -10,13 +10,13 @@ export interface PergamentToolbarProps {
 
 const PergamentToolbar = ({ noteFunctions }: PergamentToolbarProps) => {
   return (
-    <div className="flex flex-col absolute">
+    <div className="flex flex-col absolute top-1">
       {noteFunctions.map((note) => {
         const Icon = note.icon;
         return (
           <button
             title={"Add " + note.name}
-            className="bg-white text-black hover:bg-black hover:text-white border-4 border-black font-bold py-2 px-4 m-2 w-16 h-16 rounded-2xl z-[1000]"
+            className="bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold py-2 px-4 m-2 w-16 h-16 rounded-2xl z-[1000]"
             onClick={note.createFunction}
             key={note.name}
           >

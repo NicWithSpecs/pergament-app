@@ -222,15 +222,14 @@ const PergamentCanvas = () => {
         />
         <PergamentToolbar noteFunctions={addNodeFunctions} />
       </ReactFlow>
-
       <button
-        className="bg-black hover:bg-slate-600 fixed top-20 right-5 text-white font-bold py-2 px-4 rounded-xl"
+        className="bg-white text-black hover:bg-black hover:text-white border-2 border-black fixed top-20 right-5 py-2 px-4 rounded-xl"
         onClick={onSave}
       >
         Save
       </button>
       <button
-        className="bg-black hover:bg-slate-600 fixed top-40 right-5 text-white font-bold py-2 px-4 rounded-xl"
+        className="bg-white text-black hover:bg-black hover:text-white border-2 border-black fixed top-40 right-5 py-2 px-4 rounded-xl"
         onClick={onRestore}
       >
         Restore

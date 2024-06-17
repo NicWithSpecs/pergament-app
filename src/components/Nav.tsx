@@ -4,13 +4,13 @@ import { HiMenu, HiX } from "react-icons/hi";
 const NavLinks = () => {
   return (
     <>
-      <a className="font-bold mx-10" href="#">
+      <a className="font-medium text-sm mx-10" href="#">
         Templates
       </a>
-      <a className="font-bold mx-10" href="#">
+      <a className="font-medium text-sm mx-10" href="#">
         Help
       </a>
-      <a className="font-bold mx-10" href="#">
+      <a className="font-medium text-sm mx-10" href="#">
         Settings
       </a>
     </>
