@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
 import ReactFlow, {
+  Node,
   Controls,
   Background,
   BackgroundVariant,
@@ -106,7 +107,7 @@ const PergamentCanvas = () => {
   }, [setNodes, setEdges, setViewport, reactFlowKey]);
 
   const addNoteNode = () => {
-    const newNode = {
+    const newNode: Node = {
       id: "note-" + self.crypto.randomUUID(),
       type: "noteNode",
       position: screenToFlowPosition({ x: 300, y: 300 }),
@@ -119,7 +120,7 @@ const PergamentCanvas = () => {
   };
 
   const addImageNode = () => {
-    const newNode = {
+    const newNode: Node = {
       id: "image-" + self.crypto.randomUUID(),
       type: "imageNode",
       position: screenToFlowPosition({ x: 300, y: 300 }),
@@ -136,7 +137,7 @@ const PergamentCanvas = () => {
   };
 
   const addFrameNode = () => {
-    const newNode = {
+    const newNode: Node = {
       id: "frame-" + self.crypto.randomUUID(),
       type: "frameNode",
       position: screenToFlowPosition({ x: 300, y: 300 }),
@@ -145,11 +146,11 @@ const PergamentCanvas = () => {
       parentId: "",
     };
 
-    setNodes(nodes.concat(newNode));
+    setNodes([newNode].concat(nodes));
   };
 
   const addHeadingNode = () => {
-    const newNode = {
+    const newNode: Node = {
       id: "heading-" + self.crypto.randomUUID(),
       type: "headingNode",
       position: screenToFlowPosition({ x: 300, y: 300 }),
@@ -185,7 +186,7 @@ const PergamentCanvas = () => {
   ];
 
   return (
-    <div className="w-screen h-full bg-gray-200 overflow-hidden">
+    <div className="w-screen h-full bg-zinc-200 text-zinc-800 overflow-hidden">
       <ReactFlow
         onInit={onInit}
         maxZoom={1.8}
@@ -223,13 +224,13 @@ const PergamentCanvas = () => {
         <PergamentToolbar noteFunctions={addNodeFunctions} />
       </ReactFlow>
       <button
-        className="bg-white text-black hover:bg-black hover:text-white border-2 border-black fixed top-20 right-5 py-2 px-4 rounded-xl"
+        className="bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border-2 border-zinc-800 fixed top-20 right-5 py-2 px-4 rounded-xl"
         onClick={onSave}
       >
         Save
       </button>
       <button
-        className="bg-white text-black hover:bg-black hover:text-white border-2 border-black fixed top-40 right-5 py-2 px-4 rounded-xl"
+        className="bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border-2 border-zinc-800 fixed top-40 right-5 py-2 px-4 rounded-xl"
         onClick={onRestore}
       >
         Restore
