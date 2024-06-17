@@ -16,8 +16,9 @@ const PergamentToolbar = ({ noteFunctions }: PergamentToolbarProps) => {
         return (
           <button
             title={"Add " + note.name}
-            className="bg-white text-black hover:bg-black hover:text-white border-4 border-black font-bold py-2 px-4 m-2 w-20 h-20 rounded-2xl z-[1000]"
+            className="bg-white text-black hover:bg-black hover:text-white border-4 border-black font-bold py-2 px-4 m-2 w-16 h-16 rounded-2xl z-[1000]"
             onClick={note.createFunction}
+            key={note.name}
           >
             <Icon className="w-full h-full" />
             {/* <span>{note.name}</span> */}
