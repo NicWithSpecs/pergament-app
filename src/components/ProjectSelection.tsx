@@ -6,7 +6,7 @@ interface ProjectSelectionProps {
 
 const ProjectSelection = ({ currentProject }: ProjectSelectionProps) => {
   return (
-    <div>
+    <div className="text-sm">
       projects /{" "}
       <span className="font-bold">
         {currentProject} <RxCaretDown className="inline" />

@@ -56,7 +56,7 @@ scale: 1.04;
 }
 
 .frame-highlight > .frame-node {
-border: 8px solid black;
+border-width: 8px;
 }
 
 /* ! TipTap overrides */
