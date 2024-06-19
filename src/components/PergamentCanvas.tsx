@@ -26,7 +26,14 @@ import FrameNode from "./FrameNode";
 import HeadingNode from "./HeadingNode";
 import usePergamentStore, { PergamentState } from "../store";
 import PergamentToolbar from "./PergamentToolbar";
-import { FaBorderAll, FaHeading, FaImage, FaStickyNote } from "react-icons/fa";
+import {
+  FaBorderAll,
+  FaHeading,
+  FaImage,
+  FaRegCheckSquare,
+  FaStickyNote,
+} from "react-icons/fa";
+import TodoNode from "./TodoNode";
 
 const selector = (state: PergamentState) => ({
   nodes: state.nodes,
@@ -46,6 +53,7 @@ const nodeTypes: NodeTypes = {
   imageNode: ImageNode,
   frameNode: FrameNode,
   headingNode: HeadingNode,
+  todoNode: TodoNode,
 };
 const edgeTypes: EdgeTypes = {
   floating: FloatingEdge,
@@ -162,6 +170,18 @@ const PergamentCanvas = () => {
     setNodes(nodes.concat(newNode));
   };
 
+  const addTodoNode = () => {
+    const newNode: Node = {
+      id: "todo-" + self.crypto.randomUUID(),
+      type: "todoNode",
+      position: screenToFlowPosition({ x: 300, y: 300 }),
+      data: { content: "" },
+      style: { width: 400 },
+      parentId: "",
+    };
+    setNodes(nodes.concat(newNode));
+  };
+
   const addNodeFunctions = [
     {
       name: "Note",
@@ -182,6 +202,11 @@ const PergamentCanvas = () => {
       name: "Image",
       createFunction: addImageNode,
       icon: FaImage,
+    },
+    {
+      name: "Todo",
+      createFunction: addTodoNode,
+      icon: FaRegCheckSquare,
     },
   ];
 

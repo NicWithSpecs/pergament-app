@@ -48,13 +48,17 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
   nodes: [],
   edges: [],
   onNodesChange: (changes: NodeChange[]) => {
-    const dimensionChange = changes[0] as NodeDimensionChange;
+    const dimensionChangeId = (changes[0] as NodeDimensionChange).id;
+    const changedNodeId = get().nodes.find(
+      (node) => node.id === dimensionChangeId
+    );
+    const changedNodeIsNote =
+      changedNodeId?.type === "noteNode" || changedNodeId?.type === "todoNode";
     if (
       changes[0].type === "dimensions" &&
       changes[0].resizing &&
       changes[0].dimensions !== undefined &&
-      get().nodes.find((node) => node.id === dimensionChange.id)?.type ===
-        "noteNode"
+      changedNodeIsNote
     ) {
       changes[0] = {
         ...changes[0],
