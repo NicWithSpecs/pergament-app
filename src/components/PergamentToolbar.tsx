@@ -16,8 +16,8 @@ const PergamentToolbar = ({ noteFunctions }: PergamentToolbarProps) => {
         return (
           <span className="group relative z-[1000]">
             <div className="absolute hidden left-[calc(100%)] top-[calc(50%-1rem)] group-hover:block w-auto select-none">
-              <div className="bottom-full rounded bg-zinc-800 px-4 py-1 text-xs text-white whitespace-nowrap">
-                {note.name}
+              <div className="bottom-full rounded bg-zinc-800 px-4 py-1 text-sm text-zinc-100 whitespace-nowrap">
+                Add {note.name}
               </div>
             </div>
             <button
