@@ -95,9 +95,14 @@ ul[data-type="taskList"] {
       flex: 1 1 auto;
     }
   }
+  li[data-checked="true"] {
+    text-decoration: line-through;
+  }
 
   input[type="checkbox"] {
     cursor: pointer;
+    pointer-events: all;
+    accent-color: black;
   }
 }
 
