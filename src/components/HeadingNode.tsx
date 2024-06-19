@@ -7,8 +7,9 @@ import {
 } from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
+import Heading from "@tiptap/extension-heading";
+import Text from "@tiptap/extension-text";
 import Placeholder from "@tiptap/extension-placeholder";
-import StarterKit from "@tiptap/starter-kit";
 import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
 import { useEffect, useState } from "react";
@@ -28,15 +29,14 @@ const HeadingNode = ({ selected, data, dragging }: NodeProps<NodeData>) => {
   const isConnecting = !!connectionNodeId;
 
   const CustomDocument = Document.extend({
-    content: "heading block*",
+    content: "heading",
   });
 
   const editor = useEditor({
     extensions: [
       CustomDocument,
-      StarterKit.configure({
-        document: false,
-      }),
+      Text,
+      Heading.configure({ levels: [2] }),
       Placeholder.configure({
         placeholder: "Add a heading …",
       }),
@@ -44,7 +44,7 @@ const HeadingNode = ({ selected, data, dragging }: NodeProps<NodeData>) => {
     content: data.content,
     editorProps: {
       attributes: {
-        class: "prose prose-sm text-center focus:outline-none",
+        class: "prose prose-md text-center focus:outline-none",
       },
     },
   });
