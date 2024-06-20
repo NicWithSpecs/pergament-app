@@ -26,14 +26,16 @@ import FrameNode from "./FrameNode";
 import HeadingNode from "./HeadingNode";
 import usePergamentStore, { PergamentState } from "../store";
 import PergamentToolbar from "./PergamentToolbar";
-import {
-  FaBorderAll,
-  FaHeading,
-  FaImage,
-  FaRegCheckSquare,
-  FaStickyNote,
-} from "react-icons/fa";
 import TodoNode from "./TodoNode";
+import {
+  LuArchiveRestore,
+  LuCheckSquare,
+  LuHeading1,
+  LuImage,
+  LuPenSquare,
+  LuSave,
+  LuSquare,
+} from "react-icons/lu";
 
 const selector = (state: PergamentState) => ({
   nodes: state.nodes,
@@ -186,32 +188,32 @@ const PergamentCanvas = () => {
     {
       name: "Note",
       createFunction: addNoteNode,
-      icon: FaStickyNote,
+      icon: LuPenSquare,
     },
     {
       name: "Frame",
       createFunction: addFrameNode,
-      icon: FaBorderAll,
+      icon: LuSquare,
     },
     {
       name: "Heading",
       createFunction: addHeadingNode,
-      icon: FaHeading,
+      icon: LuHeading1,
     },
     {
       name: "Image",
       createFunction: addImageNode,
-      icon: FaImage,
+      icon: LuImage,
     },
     {
       name: "Todo",
       createFunction: addTodoNode,
-      icon: FaRegCheckSquare,
+      icon: LuCheckSquare,
     },
   ];
 
   return (
-    <div className="w-screen h-full bg-zinc-200 text-zinc-800 overflow-hidden">
+    <div className="w-screen h-full bg-zinc-200 text-zinc-900 overflow-hidden">
       <ReactFlow
         onInit={onInit}
         maxZoom={1.8}
@@ -249,15 +251,17 @@ const PergamentCanvas = () => {
         <PergamentToolbar noteFunctions={addNodeFunctions} />
       </ReactFlow>
       <button
-        className="bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border-2 border-zinc-800 fixed top-20 right-5 py-2 px-4 rounded-xl"
+        className="inline-flex items-center justify-center space-evenly whitespace-nowrap rounded-md text-sm font-medium bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border border-zinc-300 shadow-lg fixed top-[70px] right-5 w-32 py-2 px-4"
         onClick={onSave}
       >
+        <LuSave className="mr-2 h-4 w-4" />
         Save
       </button>
       <button
-        className="bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border-2 border-zinc-800 fixed top-40 right-5 py-2 px-4 rounded-xl"
+        className="inline-flex items-center justify-center space-evenly whitespace-nowrap rounded-md text-sm font-medium bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border border-zinc-300 shadow-lg fixed top-[120px] right-5 w-32 py-2 px-4"
         onClick={onRestore}
       >
+        <LuArchiveRestore className="mr-2 h-4 w-4" />
         Restore
       </button>
     </div>
