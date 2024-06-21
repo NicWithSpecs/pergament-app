@@ -16,5 +16,6 @@ export default {
     },
   },
   plugins: [typographyPlugin],
+  darkMode: 'selector'
 }
 

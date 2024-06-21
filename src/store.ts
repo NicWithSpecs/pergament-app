@@ -35,12 +35,14 @@ export type PergamentState = {
   onNodeDragStop: NodeDragHandler;
   reactFlowInstance: ReactFlowInstance | null;
   reactFlowKey: string;
+  darkMode: boolean;
   setReactFlowInstance: (rfi: ReactFlowInstance) => void;
   setReactFlowKey: (key: string) => void;
   setNodes: (nodes: Node[]) => void;
   setEdges: (edges: Edge[]) => void;
   updateNodeContent: (nodeId: string | null, content: JSONContent) => void;
   updateEdgeLabel: (edgeId: string, label: JSONContent) => void;
+  toggleDarkMode: () => void;
 };
 
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
@@ -141,6 +143,7 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
   },
   reactFlowInstance: null,
   reactFlowKey: "default",
+  darkMode: false,
   setReactFlowInstance: (rfi: ReactFlowInstance) =>
     set({ reactFlowInstance: rfi }),
   setReactFlowKey: (key: string) => set({ reactFlowKey: key }),
@@ -169,6 +172,9 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
         return edge;
       }),
     });
+  },
+  toggleDarkMode: () => {
+    set({ darkMode: !get().darkMode });
   },
 }));
 
