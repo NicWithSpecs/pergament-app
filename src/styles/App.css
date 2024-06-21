@@ -9,6 +9,10 @@ https://reactflow.dev/learn/customization/theming#overriding-built-in-classes
   overflow: hidden;
 }
 
+.react-flow__pane.selection {
+  cursor: default;
+}
+
 .react-flow__selection {
   background-color: #8585853e;
   border: 1px solid #505050;

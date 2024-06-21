@@ -10,14 +10,11 @@ export interface PergamentToolbarProps {
 
 const PergamentToolbar = ({ noteFunctions }: PergamentToolbarProps) => {
   return (
-    <div className="top-60 flex flex-col absolute bg-zinc-50 border border-zinc-300 shadow-lg rounded-r-xl p-3">
+    <div className="top-60 flex flex-col absolute z-[1000] bg-zinc-50 border border-zinc-300 shadow-lg rounded-r-xl p-3">
       {noteFunctions.map((note) => {
         const Icon = note.icon;
         return (
-          <span
-            key={note.name + "-tooltip"}
-            className="group relative z-[1000]"
-          >
+          <span key={note.name + "-tooltip"} className="group relative">
             <div className="absolute hidden left-[calc(100%)] top-[calc(50%-1rem)] group-hover:block w-auto select-none">
               <div className="bottom-full rounded bg-zinc-800 px-4 py-1 text-sm text-zinc-100 whitespace-nowrap">
                 Add {note.name}

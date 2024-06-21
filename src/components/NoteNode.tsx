@@ -54,7 +54,7 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
 
   return (
     <div
-      className={`node note-node bg-zinc-50 border border-zinc-300 shadow rounded-xl p-2 ease-in-out-bounce duration-100 ${
+      className={`node note-node bg-zinc-50 border border-zinc-300 shadow rounded-xl p-4 ease-in-out-bounce duration-100 ${
         selected || dragging ? "shadow-3xl" : ""
       }`}
       onDoubleClick={handleDoubleClick}
