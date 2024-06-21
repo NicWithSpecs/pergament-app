@@ -143,7 +143,7 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
   },
   reactFlowInstance: null,
   reactFlowKey: "default",
-  darkMode: false,
+  darkMode: window.matchMedia("(prefers-color-scheme: dark)").matches,
   setReactFlowInstance: (rfi: ReactFlowInstance) =>
     set({ reactFlowInstance: rfi }),
   setReactFlowKey: (key: string) => set({ reactFlowKey: key }),
