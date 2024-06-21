@@ -107,7 +107,7 @@ function FloatingEdge({
         path={edgePathBezier}
         markerEnd={markerEnd}
         interactionWidth={20}
-        style={{ strokeWidth: selected ? 3 : 2, stroke: "black" }}
+        style={{ strokeWidth: selected ? 2 : 1, stroke: "#27272a" }}
       />
 
       <EdgeLabelRenderer>
@@ -117,8 +117,8 @@ function FloatingEdge({
               style={{
                 position: "absolute",
                 transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-                background: "rgb(229 231 235)",
-                border: selected ? "1px solid #a1a1a1" : "none",
+                background: "#e4e4e7",
+                border: selected ? "1px solid #d4d4d8" : "none",
                 padding: selected ? 6 : 3,
                 borderRadius: 10,
                 fontSize: 12,

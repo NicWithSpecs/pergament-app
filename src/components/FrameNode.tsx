@@ -12,8 +12,8 @@ const FrameNode = ({ selected, dragging }: NodeProps) => {
 
   return (
     <div
-      className={`node frame-node bg-zinc-100 border-2 border-zinc-800 rounded-xl p-0 ease-in-out-bounce duration-100 w-full h-full ${
-        selected || dragging ? "shadow-3xl" : ""
+      className={`node frame-node bg-zinc-50 border border-zinc-300 shadow rounded-xl p-0 ease-in-out-bounce duration-100 w-full h-full ${
+        selected || dragging ? "shadow-2xl" : ""
       }`}
     >
       <NodeResizer minWidth={100} minHeight={100} isVisible={selected} />
