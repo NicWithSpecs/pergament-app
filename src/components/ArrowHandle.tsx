@@ -1,3 +1,4 @@
+import { MdArrowCircleRight } from "react-icons/md";
 import { Handle, Position } from "reactflow";
 
 interface ArrowHandleProps {
@@ -7,12 +8,13 @@ interface ArrowHandleProps {
 }
 
 const arrowHandleStyle = {
-  width: "15px",
-  height: "15px",
-  top: "-4px",
-  right: "-4px",
+  width: "20px",
+  height: "20px",
+  top: "-7px",
+  right: "-7px",
   borderRadius: "50%",
   transform: "none",
+  background: "none",
 };
 
 const ArrowHandle = ({
@@ -23,13 +25,15 @@ const ArrowHandle = ({
   return (
     !isConnecting && (
       <Handle
-        className={`bg-zinc-900 dark:bg-zinc-50  ${
+        className={`overflow-hidden ${
           !selected || dragging ? "opacity-0" : ""
         }`}
         position={Position.Right}
         type="source"
         style={arrowHandleStyle}
-      />
+      >
+        <MdArrowCircleRight className="bg-zinc-200 dark:bg-zinc-900 fill-zinc-900 dark:fill-zinc-200 w-full h-full m-auto pointer-events-none" />
+      </Handle>
     )
   );
 };
