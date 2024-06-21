@@ -25,7 +25,7 @@ const PergamentToolbar = ({ noteFunctions }: PergamentToolbarProps) => {
             </div>
             <div>
               <button
-                className="tool flex flex-col items-center justify-evenly shadow-md bg-zinc-50  hover:bg-zinc-900 hover:text-zinc-100 border 
+                className="tool flex flex-col items-center justify-evenly shadow-md bg-zinc-50 hover:bg-zinc-200 dark:hover:bg-zinc-900 dark:hover:text-zinc-100 border 
                 border-zinc-300  dark:bg-zinc-800 dark:border-zinc-700 py-2 px-4 m-2 w-20 h-20 rounded-xl"
                 onClick={note.createFunction}
                 key={note.name}
