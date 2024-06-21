@@ -12,7 +12,7 @@ const FrameNode = ({ selected, dragging }: NodeProps) => {
 
   return (
     <div
-      className={`node frame-node bg-zinc-50 border border-zinc-300 shadow rounded-xl p-0 ease-in-out-bounce duration-100 w-full h-full ${
+      className={`node frame-node bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 shadow rounded-xl p-0 ease-in-out-bounce duration-100 w-full h-full ${
         selected || dragging ? "shadow-2xl" : ""
       }`}
     >

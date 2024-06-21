@@ -10,7 +10,10 @@ export interface PergamentToolbarProps {
 
 const PergamentToolbar = ({ noteFunctions }: PergamentToolbarProps) => {
   return (
-    <div className="top-60 flex flex-col absolute z-[1000] bg-zinc-50 border border-zinc-300 shadow-lg rounded-r-xl p-3">
+    <div
+      className="top-60 flex flex-col absolute z-[1000] bg-zinc-50 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-800 
+    shadow-lg rounded-r-xl p-3"
+    >
       {noteFunctions.map((note) => {
         const Icon = note.icon;
         return (
@@ -22,12 +25,13 @@ const PergamentToolbar = ({ noteFunctions }: PergamentToolbarProps) => {
             </div>
             <div>
               <button
-                className="tool flex flex-col items-center justify-evenly shadow-md bg-zinc-50 text-zinc-900 hover:bg-zinc-900 hover:text-zinc-100 border border-zinc-300 py-2 px-4 m-2 w-20 h-20 rounded-xl"
+                className="tool flex flex-col items-center justify-evenly shadow-md bg-zinc-50  hover:bg-zinc-900 hover:text-zinc-100 border 
+                border-zinc-300  dark:bg-zinc-800 dark:border-zinc-700 py-2 px-4 m-2 w-20 h-20 rounded-xl"
                 onClick={note.createFunction}
                 key={note.name}
               >
                 <Icon className="w-6 h-6" />
-                <label className="text-xs">{note.name}</label>
+                <label className="text-xs cursor-pointer">{note.name}</label>
               </button>
             </div>
           </span>

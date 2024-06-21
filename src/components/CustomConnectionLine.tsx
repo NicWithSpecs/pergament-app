@@ -24,8 +24,8 @@ function CustomConnectionLine({
   return (
     <g>
       <path
-        style={{ strokeWidth: 1, stroke: "black" }}
-        className="animated"
+        style={{ strokeWidth: 1 }}
+        className="animated stroke-zinc-900 dark:stroke-zinc-100"
         fill="none"
         d={edgePath}
       />

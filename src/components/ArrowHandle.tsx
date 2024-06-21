@@ -11,7 +11,6 @@ const arrowHandleStyle = {
   height: "15px",
   top: "-4px",
   right: "-4px",
-  backgroundColor: "black",
   borderRadius: "50%",
   transform: "none",
 };
@@ -24,7 +23,9 @@ const ArrowHandle = ({
   return (
     !isConnecting && (
       <Handle
-        className={`${!selected || dragging ? "opacity-0" : ""}`}
+        className={`bg-zinc-900 dark:bg-zinc-50  ${
+          !selected || dragging ? "opacity-0" : ""
+        }`}
         position={Position.Right}
         type="source"
         style={arrowHandleStyle}

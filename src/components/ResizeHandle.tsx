@@ -8,7 +8,7 @@ interface ResizeHandleProps {
 const ResizeHandle = ({ selected, dragging }: ResizeHandleProps) => {
   return (
     <NodeResizeControl
-      className={` ${!selected || dragging ? "opacity-0" : ""}`}
+      className={`${!selected || dragging ? "opacity-0" : ""}`}
       minWidth={150}
       minHeight={100}
       maxWidth={1600}
@@ -22,7 +22,7 @@ const ResizeHandle = ({ selected, dragging }: ResizeHandleProps) => {
 function ResizeIcon() {
   return (
     <svg
-      className="resize-icon"
+      className="resize-icon fill-zinc-900 dark:fill-zinc-50"
       width="11"
       xmlns="http://www.w3.org/2000/svg"
       height="11"
@@ -36,7 +36,6 @@ function ResizeIcon() {
         transform="rotate(45 5.5 5.5)"
         width="1.316"
         height="14.24"
-        style={{ fill: "rgb(0, 0, 0)", fillOpacity: 0.5 }}
         className="fills"
       />
       <rect
@@ -47,7 +46,6 @@ function ResizeIcon() {
         transform="rotate(45 7.91 7.91)"
         width="1.356"
         height="7.14"
-        style={{ fill: "rgb(0, 0, 0)", fillOpacity: 0.5 }}
         className="fills"
       />
     </svg>

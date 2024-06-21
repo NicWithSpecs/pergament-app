@@ -7,7 +7,6 @@ import ReactFlow, {
   BackgroundVariant,
   SelectionMode,
   NodeTypes,
-  MarkerType,
   ConnectionMode,
   EdgeTypes,
   StraightEdge,
@@ -18,7 +17,7 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 
-import FloatingEdge from "../components/FloatingEdge";
+import FloatingEdge, { ArrowTip } from "../components/FloatingEdge";
 import CustomConnectionLine from "../components/CustomConnectionLine";
 import NoteNode from "../components/NoteNode";
 import ImageNode from "./ImageNode";
@@ -64,11 +63,9 @@ const edgeTypes: EdgeTypes = {
 
 const defaultEdgeOptions = {
   type: "floating",
-  markerEnd: {
-    type: MarkerType.ArrowClosed,
-    color: "black",
-  },
+  markerEnd: "arrow-tip",
   data: { label: " " },
+  className: "stroke-zinc-900 dark:stroke-zinc-200",
 };
 
 const PergamentCanvas = () => {
@@ -213,58 +210,61 @@ const PergamentCanvas = () => {
   ];
 
   return (
-    <div className="w-screen h-full bg-zinc-200 text-zinc-900 overflow-hidden">
-      <ReactFlow
-        onInit={onInit}
-        maxZoom={1.8}
-        minZoom={1}
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onNodeDrag={onNodeDrag}
-        onNodeDragStop={onNodeDragStop}
-        nodeDragThreshold={5}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
-        defaultEdgeOptions={defaultEdgeOptions}
-        elementsSelectable={true}
-        proOptions={{ hideAttribution: false }}
-        fitView
-        fitViewOptions={{ padding: 4 }}
-        selectionOnDrag
-        panOnDrag={[1, 2]}
-        selectionMode={SelectionMode.Partial}
-        selectNodesOnDrag={false}
-        connectionLineComponent={CustomConnectionLine}
-        connectionMode={ConnectionMode.Loose}
-        deleteKeyCode={"Delete"}
-      >
-        <Controls />
-        <Background
-          variant={BackgroundVariant.Dots}
-          color="#909090"
-          gap={15}
-          size={1}
-        />
-        <PergamentToolbar noteFunctions={addNodeFunctions} />
-      </ReactFlow>
-      <button
-        className="inline-flex items-center justify-center space-evenly whitespace-nowrap rounded-md text-sm font-medium bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border border-zinc-300 shadow-lg fixed top-[70px] right-5 w-32 py-2 px-4"
-        onClick={onSave}
-      >
-        <LuSave className="mr-2 h-4 w-4" />
-        Save
-      </button>
-      <button
-        className="inline-flex items-center justify-center space-evenly whitespace-nowrap rounded-md text-sm font-medium bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border border-zinc-300 shadow-lg fixed top-[120px] right-5 w-32 py-2 px-4"
-        onClick={onRestore}
-      >
-        <LuArchiveRestore className="mr-2 h-4 w-4" />
-        Restore
-      </button>
-    </div>
+    <>
+      <ArrowTip />
+      <div className="w-screen h-full bg-zinc-200 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200 overflow-hidden">
+        <ReactFlow
+          onInit={onInit}
+          maxZoom={1.8}
+          minZoom={1}
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onNodeDrag={onNodeDrag}
+          onNodeDragStop={onNodeDragStop}
+          nodeDragThreshold={5}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          defaultEdgeOptions={defaultEdgeOptions}
+          elementsSelectable={true}
+          proOptions={{ hideAttribution: false }}
+          fitView
+          fitViewOptions={{ padding: 4 }}
+          selectionOnDrag
+          panOnDrag={[1, 2]}
+          selectionMode={SelectionMode.Partial}
+          selectNodesOnDrag={false}
+          connectionLineComponent={CustomConnectionLine}
+          connectionMode={ConnectionMode.Loose}
+          deleteKeyCode={"Delete"}
+        >
+          <Controls />
+          <Background
+            variant={BackgroundVariant.Dots}
+            color="#909090"
+            gap={15}
+            size={1}
+          />
+          <PergamentToolbar noteFunctions={addNodeFunctions} />
+        </ReactFlow>
+        <button
+          className="inline-flex items-center justify-center space-evenly whitespace-nowrap rounded-md text-sm font-medium bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-200 shadow-lg fixed top-[70px] right-5 w-32 py-2 px-4"
+          onClick={onSave}
+        >
+          <LuSave className="mr-2 h-4 w-4" />
+          Save
+        </button>
+        <button
+          className="inline-flex items-center justify-center space-evenly whitespace-nowrap rounded-md text-sm font-medium bg-zinc-50 hover:bg-zinc-800 hover:text-zinc-100 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-200 shadow-lg fixed top-[120px] right-5 w-32 py-2 px-4"
+          onClick={onRestore}
+        >
+          <LuArchiveRestore className="mr-2 h-4 w-4" />
+          Restore
+        </button>
+      </div>
+    </>
   );
 };
 

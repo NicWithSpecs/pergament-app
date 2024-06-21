@@ -46,6 +46,10 @@ https://reactflow.dev/learn/customization/theming#overriding-built-in-classes
   height: 8px;
 }
 
+.react-flow__edge-path, .react-flow__connection-path {
+  stroke: inherit !important;
+}
+
 .react-flow__connectionline {
   z-index: 1 !important;
 }
@@ -112,16 +116,19 @@ ul[data-type="taskList"] {
     > div {
       flex: 1 1 auto;
     }
+
+    input[type="checkbox"] {
+      cursor: pointer;
+      pointer-events: all;
+      accent-color: inherit;
+    }
   }
+
   li[data-checked="true"] {
     text-decoration: line-through;
   }
 
-  input[type="checkbox"] {
-    cursor: pointer;
-    pointer-events: all;
-    accent-color: black;
-  }
+  
 }
 
 

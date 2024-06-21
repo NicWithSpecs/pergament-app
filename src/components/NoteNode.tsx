@@ -33,7 +33,8 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
     content: data.content,
     editorProps: {
       attributes: {
-        class: "prose prose-sm max-w-[1600px] focus:outline-none",
+        class:
+          "prose prose-sm max-w-[1600px] focus:outline-none dark:prose-invert",
       },
     },
   });
@@ -54,7 +55,7 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
 
   return (
     <div
-      className={`node note-node bg-zinc-50 border border-zinc-300 shadow rounded-xl p-4 ease-in-out-bounce duration-100 ${
+      className={`node note-node bg-zinc-50 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 border shadow rounded-xl p-4 ease-in-out-bounce duration-100 ${
         selected || dragging ? "shadow-3xl" : ""
       }`}
       onDoubleClick={handleDoubleClick}

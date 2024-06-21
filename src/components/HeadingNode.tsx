@@ -44,7 +44,8 @@ const HeadingNode = ({ selected, data, dragging }: NodeProps<NodeData>) => {
     content: data.content,
     editorProps: {
       attributes: {
-        class: "prose prose-md text-center focus:outline-none",
+        class:
+          "prose prose-md text-center focus:outline-none dark:prose-invert",
       },
     },
   });

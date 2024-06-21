@@ -45,7 +45,7 @@ function FloatingEdge({
     content: data?.label,
     editorProps: {
       attributes: {
-        class: "focus:outline-none",
+        class: "focus:outline-none dark:prose-invert",
       },
     },
   });
@@ -107,7 +107,7 @@ function FloatingEdge({
         path={edgePathBezier}
         markerEnd={markerEnd}
         interactionWidth={20}
-        style={{ strokeWidth: selected ? 2 : 1, stroke: "#27272a" }}
+        style={{ strokeWidth: selected ? 2 : 1 }}
       />
 
       <EdgeLabelRenderer>
@@ -117,14 +117,10 @@ function FloatingEdge({
               style={{
                 position: "absolute",
                 transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-                background: "#e4e4e7",
-                border: selected ? "1px solid #d4d4d8" : "none",
-                padding: selected ? 6 : 3,
-                borderRadius: 10,
-                fontSize: 12,
-                fontWeight: 700,
               }}
-              className="nodrag nopan"
+              className={`nodrag nopan bg-zinc-200 dark:bg-zinc-900 ${
+                selected ? "border p-2" : "p-1"
+              } dark:border-zinc-700 text-xs font-bold rounded-lg`}
             >
               <EditorContent
                 editor={editor}
@@ -141,6 +137,34 @@ function FloatingEdge({
           )}
       </EdgeLabelRenderer>
     </>
+  );
+}
+
+export function ArrowTip() {
+  return (
+    <svg
+      style={{ position: "absolute", top: 0, left: 0 }}
+      className="fill-zinc-900 dark:fill-zinc-200"
+    >
+      <defs>
+        <marker
+          id="arrow-tip"
+          orient="auto-start-reverse"
+          viewBox="0 0 40 40"
+          markerHeight={20}
+          markerWidth={20}
+          refX={15}
+          refY={8}
+        >
+          <polygon
+            id="arrowtip-2"
+            data-name="arrowtip"
+            className="cls-1"
+            points="0 15.39 0 0 18.11 7.69 0 15.39"
+          />
+        </marker>
+      </defs>
+    </svg>
   );
 }
 
