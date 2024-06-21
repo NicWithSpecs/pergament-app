@@ -34,8 +34,8 @@ function CustomConnectionLine({
         cy={toY}
         fill="black"
         r={2}
-        stroke="black"
         strokeWidth={3}
+        className="stroke-zinc-900 dark:stroke-zinc-100"
       />
     </g>
   );
