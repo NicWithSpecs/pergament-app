@@ -1,12 +1,20 @@
-import { NodeProps, ReactFlowState, useNodeId, useStore } from "reactflow";
+import {
+  NodeProps,
+  NodeToolbar,
+  ReactFlowState,
+  useNodeId,
+  useStore,
+} from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
 import { useEffect, useState } from "react";
 import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
 import ResizeHandle from "./ResizeHandle";
 import usePergamentStore, { NodeData } from "../store";
+import { LuBold, LuItalic, LuUnderline } from "react-icons/lu";
 
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
@@ -14,7 +22,7 @@ const connectionNodeIdSelector = (state: ReactFlowState) =>
 function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
   const nodeId = useNodeId();
   const updateNodeContent = usePergamentStore(
-    (state) => state.updateNodeContent
+    (state) => state.updateNodeContent,
   );
   const [editing, setEditing] = useState(false);
 
@@ -29,6 +37,7 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
       Placeholder.configure({
         placeholder: "Write something …",
       }),
+      Underline,
     ],
     content: data.content,
     editorProps: {
@@ -53,28 +62,62 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
     }
   }, [selected, editor, nodeId, updateNodeContent]);
 
+  const toggleBold = () => {
+    editor?.chain().focus().toggleBold().run();
+  };
+
+  const toggleItalic = () => {
+    editor?.chain().focus().toggleItalic().run();
+  };
+
+  const toggleUnderline = () => {
+    editor?.chain().focus().toggleUnderline().run();
+  };
+
   return (
-    <div
-      className={`node note-node bg-zinc-50 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 border shadow rounded-xl p-4 ease-in-out-bounce duration-100 ${
-        selected || dragging ? "shadow-3xl" : ""
-      }`}
-      onDoubleClick={handleDoubleClick}
-    >
-      <ResizeHandle selected={selected} dragging={dragging} />
-      <ArrowHandle
-        isConnecting={isConnecting}
-        selected={selected}
-        dragging={dragging}
-      />
-      <ArrowTarget isConnecting={isConnecting} />
+    <>
+      <NodeToolbar isVisible={editing} position={data.toolbarPosition}>
+        <button
+          onClick={toggleBold}
+          className="absolute m-1 rounded-xl border border-zinc-300 bg-zinc-50 p-2 shadow-md hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
+        >
+          <LuBold />
+        </button>
+        <button
+          onClick={toggleItalic}
+          className="m-1 rounded-xl border border-zinc-300 bg-zinc-50 p-2 shadow-md hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
+        >
+          <LuItalic />
+        </button>
+        <button
+          onClick={toggleUnderline}
+          className="m-1 rounded-xl border border-zinc-300 bg-zinc-50 p-2 shadow-md hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
+        >
+          <LuUnderline />
+        </button>
+      </NodeToolbar>
       <div
-        className={`note-content ${
-          editing ? "nodrag cursor-text" : "pointer-events-none"
+        className={`node note-node rounded-xl border border-zinc-300 bg-zinc-50 p-4 shadow duration-100 ease-in-out-bounce dark:border-zinc-700 dark:bg-zinc-800 ${
+          selected || dragging ? "shadow-3xl" : ""
         }`}
+        onDoubleClick={handleDoubleClick}
       >
-        <EditorContent editor={editor} spellCheck={false} />
+        <ResizeHandle selected={selected} dragging={dragging} />
+        <ArrowHandle
+          isConnecting={isConnecting}
+          selected={selected}
+          dragging={dragging}
+        />
+        <ArrowTarget isConnecting={isConnecting} />
+        <div
+          className={`note-content ${
+            editing ? "nodrag cursor-text" : "pointer-events-none"
+          }`}
+        >
+          <EditorContent editor={editor} spellCheck={false} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
