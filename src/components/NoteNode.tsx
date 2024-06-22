@@ -79,7 +79,7 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
       <NodeToolbar isVisible={editing} position={data.toolbarPosition}>
         <button
           onClick={toggleBold}
-          className="absolute m-1 rounded-xl border border-zinc-300 bg-zinc-50 p-2 shadow-md hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
+          className="m-1 rounded-xl border border-zinc-300 bg-zinc-50 p-2 shadow-md hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
         >
           <LuBold />
         </button>
