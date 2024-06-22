@@ -32,7 +32,7 @@ const ArrowHandle = ({
         type="source"
         style={arrowHandleStyle}
       >
-        <MdArrowCircleRight className="bg-zinc-200 dark:bg-zinc-900 fill-zinc-900 dark:fill-zinc-200 w-full h-full m-auto pointer-events-none" />
+        <MdArrowCircleRight className="pointer-events-none m-auto h-full w-full bg-zinc-200 fill-zinc-900 dark:bg-zinc-900 dark:fill-zinc-200" />
       </Handle>
     )
   );

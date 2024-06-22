@@ -24,7 +24,7 @@ const connectionNodeIdSelector = (state: ReactFlowState) =>
 function TodoNode({ selected, data, dragging }: NodeProps<NodeData>) {
   const nodeId = useNodeId();
   const updateNodeContent = usePergamentStore(
-    (state) => state.updateNodeContent
+    (state) => state.updateNodeContent,
   );
   const [editing, setEditing] = useState(false);
   const connectionNodeId = useStore(connectionNodeIdSelector);
@@ -57,7 +57,7 @@ function TodoNode({ selected, data, dragging }: NodeProps<NodeData>) {
 
   return (
     <div
-      className={`node todo-node bg-zinc-50 border border-zinc-300 dark:bg-zinc-800 dark:border-zinc-700 accent-zinc-900 dark:accent-zinc-50 shadow rounded-xl p-4 ease-in-out-bounce duration-100 ${
+      className={`node todo-node rounded-xl border border-zinc-300 bg-zinc-50 p-4 accent-zinc-900 shadow duration-100 ease-in-out-bounce dark:border-zinc-700 dark:bg-zinc-800 dark:accent-zinc-50 ${
         selected || dragging ? "shadow-3xl" : ""
       }`}
       onDoubleClick={handleDoubleClick}

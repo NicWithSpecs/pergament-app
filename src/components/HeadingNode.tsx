@@ -21,7 +21,7 @@ const connectionNodeIdSelector = (state: ReactFlowState) =>
 const HeadingNode = ({ selected, data, dragging }: NodeProps<NodeData>) => {
   const nodeId = useNodeId();
   const updateNodeContent = usePergamentStore(
-    (state) => state.updateNodeContent
+    (state) => state.updateNodeContent,
   );
   const [editing, setEditing] = useState(false);
   const connectionNodeId = useStore(connectionNodeIdSelector);
@@ -69,7 +69,7 @@ const HeadingNode = ({ selected, data, dragging }: NodeProps<NodeData>) => {
   return (
     <>
       <div
-        className={`node heading-node p-2 ease-in-out-bounce duration-100 w-full h-full overflow-hidden ${
+        className={`node heading-node h-full w-full overflow-hidden p-2 duration-100 ease-in-out-bounce ${
           selected || dragging ? "shadow-3xl" : ""
         }`}
         onDoubleClick={handleDoubleClick}

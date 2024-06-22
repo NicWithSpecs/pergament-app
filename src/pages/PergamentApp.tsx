@@ -9,7 +9,7 @@ const PergamentApp = () => {
   const { darkMode } = usePergamentStore();
 
   return (
-    <div className={`flex flex-col w-screen h-screen  ${darkMode && "dark"}`}>
+    <div className={`flex h-screen w-screen flex-col ${darkMode && "dark"}`}>
       <PergamentHeader />
       <ReactFlowProvider>
         <PergamentCanvas />

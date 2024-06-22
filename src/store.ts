@@ -14,11 +14,13 @@ import {
   NodeDimensionChange,
   NodeDragHandler,
   ReactFlowInstance,
+  Position,
 } from "reactflow";
 import { JSONContent } from "@tiptap/react";
 
 export type NodeData = {
   content: JSONContent;
+  toolbarPosition: Position;
 };
 
 export type EdgeData = {

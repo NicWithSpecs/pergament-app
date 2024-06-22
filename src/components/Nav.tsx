@@ -7,13 +7,13 @@ import { MdOutlineDarkMode } from "react-icons/md";
 const NavLinks = () => {
   return (
     <>
-      <a className="font-medium text-sm mx-10" href="#">
+      <a className="mx-10 text-sm font-medium" href="#">
         Templates
       </a>
-      <a className="font-medium text-sm mx-10" href="#">
+      <a className="mx-10 text-sm font-medium" href="#">
         Help
       </a>
-      <a className="font-medium text-sm mx-10" href="#">
+      <a className="mx-10 text-sm font-medium" href="#">
         Settings
       </a>
     </>
@@ -31,13 +31,13 @@ const Nav = () => {
   return (
     <>
       <nav className={`flex w-1/5 justify-end`}>
-        <div className="hidden items-center md:flex w-full justify-end">
+        <div className="hidden w-full items-center justify-end md:flex">
           <NavLinks />
           <button onClick={toggleDarkMode} className="p-1">
             {darkMode ? (
-              <MdOutlineDarkMode className="w-6 h-6" />
+              <MdOutlineDarkMode className="h-6 w-6" />
             ) : (
-              <LuSun className="w-6 h-6" />
+              <LuSun className="h-6 w-6" />
             )}
           </button>
         </div>
@@ -48,7 +48,7 @@ const Nav = () => {
         </div>
       </nav>
       {isOpen && (
-        <div className="flex basis-full flex-col items-center ">
+        <div className="flex basis-full flex-col items-center">
           <NavLinks />
           <button>DM</button>
         </div>

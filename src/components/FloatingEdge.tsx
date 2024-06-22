@@ -26,10 +26,10 @@ function FloatingEdge({
 }: EdgeProps<EdgeData>) {
   const updateEdgeLabel = usePergamentStore((state) => state.updateEdgeLabel);
   const sourceNode = useStore(
-    useCallback((store) => store.nodeInternals.get(source), [source])
+    useCallback((store) => store.nodeInternals.get(source), [source]),
   );
   const targetNode = useStore(
-    useCallback((store) => store.nodeInternals.get(target), [target])
+    useCallback((store) => store.nodeInternals.get(target), [target]),
   );
 
   const editor = useEditor({
@@ -72,7 +72,7 @@ function FloatingEdge({
 
   const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(
     sourceNode,
-    targetNode
+    targetNode,
   );
 
   /* const [edgePath] = getStraightPath({
@@ -120,7 +120,7 @@ function FloatingEdge({
               }}
               className={`nodrag nopan bg-zinc-200 dark:bg-zinc-900 ${
                 selected ? "border p-2" : "p-1"
-              } dark:border-zinc-700 text-xs font-bold rounded-lg`}
+              } rounded-lg text-xs font-bold dark:border-zinc-700`}
             >
               <EditorContent
                 editor={editor}

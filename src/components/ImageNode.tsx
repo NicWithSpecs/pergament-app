@@ -45,18 +45,19 @@ const ImageNode = ({ id, selected, data, dragging }: NodeProps) => {
   return (
     <>
       <div
-        className={`node image-node overflow-hidden bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 shadow rounded-xl p-0 ease-in-out-bounce duration-100 ${
+        className={`node image-node overflow-hidden rounded-xl border border-zinc-300 bg-zinc-50 p-0 shadow duration-100 ease-in-out-bounce dark:border-zinc-700 dark:bg-zinc-800 ${
           selected || dragging ? "shadow-3xl" : ""
         }`}
       >
         {!data.hasImage && (
           <button
-            className="w-32 m-3"
+            className="m-3 w-32"
             /* onClick={() => alert("An Image import modal should open now.")} */
           >
-            <BiSolidImageAdd className="w-full h-full" />
+            <BiSolidImageAdd className="h-full w-full" />
           </button>
         )}
+        {/* TODO replace this toolbar with a image import modal */}
         <NodeToolbar
           isVisible={data.forceToolbarVisible || undefined}
           position={data.toolbarPosition}
@@ -64,12 +65,12 @@ const ImageNode = ({ id, selected, data, dragging }: NodeProps) => {
           <form method="post" onSubmit={handleImageSubmit}>
             <input
               name="imageUrl"
-              className="w-50 p-1 rounded"
+              className="w-50 rounded p-1"
               placeholder="Paste link here..."
             ></input>
             <button
               type="submit"
-              className="bg-white hover:text-blue-600 font-bold px-3 py-1 mx-2 rounded"
+              className="mx-2 rounded bg-white px-3 py-1 font-bold hover:text-blue-600"
             >
               Add
             </button>
@@ -85,7 +86,7 @@ const ImageNode = ({ id, selected, data, dragging }: NodeProps) => {
               isVisible={selected}
             />
             <img
-              className="w-full h-full"
+              className="h-full w-full"
               src={data.image.url}
               alt={data.image.alt}
             />
