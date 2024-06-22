@@ -240,7 +240,7 @@ const PergamentCanvas = () => {
           connectionMode={ConnectionMode.Loose}
           deleteKeyCode={"Delete"}
         >
-          <Controls />
+          <Controls className="*:border-solid *:border dark:*:bg-zinc-800 dark:hover:*:bg-zinc-600 *:border-zinc-400 dark:*:border-zinc-600 dark:*:fill-zinc-200 dark:*:stroke-zinc-200 *:shadow-md *:rounded-lg" />
           <Background
             variant={BackgroundVariant.Dots}
             color="#909090"
