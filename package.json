@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@tiptap/extension-character-count": "^2.4.0",
+    "@tiptap/extension-color": "^2.4.0",
     "@tiptap/extension-document": "^2.4.0",
     "@tiptap/extension-placeholder": "^2.4.0",
     "@tiptap/extension-task-item": "^2.4.0",
     "@tiptap/extension-task-list": "^2.4.0",
+    "@tiptap/extension-text-style": "^2.4.0",
     "@tiptap/extension-underline": "^2.4.0",
     "@tiptap/pm": "^2.4.0",
     "@tiptap/react": "^2.4.0",

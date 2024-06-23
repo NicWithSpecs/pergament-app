@@ -1,9 +1,13 @@
 import { IconType } from "react-icons";
 import { NodeToolbar, Position } from "reactflow";
+import ColorPicker from "./ColorPicker";
 
-export type ToolbarElement = EditorToolbarButton | EditorToolbarDivider;
+export type ToolbarElement =
+  | EditorToolbarButtonData
+  | EditorColorPickerData
+  | EditorToolbarDivider;
 
-type EditorToolbarButton = {
+type EditorToolbarButtonData = {
   type: "button";
   key: string;
   toolTipName: string;
@@ -11,6 +15,17 @@ type EditorToolbarButton = {
   isActive: boolean;
   editorFunction: () => void;
   headingLevel?: number | null;
+};
+
+export type EditorColorPickerData = {
+  type: "colorPicker";
+  toolTipName: string;
+  activeColor: () => string;
+  colorOptions: {
+    color: string;
+    isActive: boolean | undefined;
+    editorFunction: () => void;
+  }[];
 };
 
 type EditorToolbarDivider = {
@@ -32,7 +47,7 @@ const NodeEditorToolbar = ({
     <NodeToolbar
       isVisible={isVisible}
       position={position}
-      className="inline-flex rounded-xl border border-zinc-300 bg-zinc-200 p-1 shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+      className="inline-flex items-center rounded-xl border border-zinc-300 bg-zinc-200 p-1 shadow-md dark:border-zinc-800 dark:bg-zinc-900"
     >
       {toolbarElements.map((el, index) => {
         if (el.type === "button") {
@@ -57,6 +72,9 @@ const NodeEditorToolbar = ({
               className="mx-1 my-auto inline-block h-6 w-[1px] bg-zinc-300 dark:bg-zinc-700"
             ></div>
           );
+        }
+        if (el.type === "colorPicker") {
+          return <ColorPicker key="color-picker" colorPickerData={el} />;
         }
       })}
     </NodeToolbar>

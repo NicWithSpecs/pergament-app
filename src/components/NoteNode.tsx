@@ -1,6 +1,8 @@
 import { NodeProps, ReactFlowState, useNodeId, useStore } from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Placeholder from "@tiptap/extension-placeholder";
+import Color from "@tiptap/extension-color";
+import TextStyle from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import { useEffect, useState } from "react";
@@ -42,6 +44,10 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
       Placeholder.configure({
         placeholder: "Write something …",
       }),
+      Color.configure({
+        types: ["textStyle"],
+      }),
+      TextStyle,
       Underline,
     ],
     content: data.content,
@@ -144,6 +150,37 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
       isActive: editor?.isActive("heading", { level: 3 }) ?? false,
       editorFunction: () =>
         editor?.chain().focus().toggleHeading({ level: 3 }).run(),
+    },
+    { type: "divider" },
+    {
+      type: "colorPicker",
+      toolTipName: "Text color",
+      activeColor: editor?.getAttributes("textStyle").color,
+      colorOptions: [
+        {
+          color: "default",
+          isActive: undefined,
+          editorFunction: () => editor?.commands.unsetMark("textStyle"),
+        },
+        {
+          color: "bg-[#958DF1]",
+          isActive: editor?.isActive("textStyle", { color: "#958DF1" }),
+          editorFunction: () =>
+            editor!.chain().focus().setColor("#958DF1").run(),
+        },
+        {
+          color: "bg-[#ef5353]",
+          isActive: editor?.isActive("textStyle", { color: "#ef5353" }),
+          editorFunction: () =>
+            editor!.chain().focus().setColor("#ef5353").run(),
+        },
+        {
+          color: "bg-[#299635]",
+          isActive: editor?.isActive("textStyle", { color: "#299635" }),
+          editorFunction: () =>
+            editor!.chain().focus().setColor("#299635").run(),
+        },
+      ],
     },
   ];
 
