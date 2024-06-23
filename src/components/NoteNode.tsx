@@ -1,10 +1,4 @@
-import {
-  NodeProps,
-  NodeToolbar,
-  ReactFlowState,
-  useNodeId,
-  useStore,
-} from "reactflow";
+import { NodeProps, ReactFlowState, useNodeId, useStore } from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
@@ -14,7 +8,18 @@ import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
 import ResizeHandle from "./ResizeHandle";
 import usePergamentStore, { NodeData } from "../store";
-import { LuBold, LuItalic, LuUnderline } from "react-icons/lu";
+import {
+  LuBold,
+  LuCode,
+  LuHeading1,
+  LuHeading2,
+  LuHeading3,
+  LuItalic,
+  LuList,
+  LuListOrdered,
+  LuUnderline,
+} from "react-icons/lu";
+import NodeEditorToolbar, { ToolbarElement } from "./NodeEditorToolbar";
 
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;
@@ -62,40 +67,95 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
     }
   }, [selected, editor, nodeId, updateNodeContent]);
 
-  const toggleBold = () => {
-    editor?.chain().focus().toggleBold().run();
-  };
-
-  const toggleItalic = () => {
-    editor?.chain().focus().toggleItalic().run();
-  };
-
-  const toggleUnderline = () => {
-    editor?.chain().focus().toggleUnderline().run();
-  };
+  const editorToolbarElements: ToolbarElement[] = [
+    {
+      type: "button",
+      key: "bold",
+      toolTipName: "Bold",
+      icon: LuBold,
+      isActive: editor?.isActive("bold") ?? false,
+      editorFunction: () => editor?.chain().focus().toggleBold().run(),
+    },
+    {
+      type: "button",
+      key: "italic",
+      toolTipName: "Italic",
+      icon: LuItalic,
+      isActive: editor?.isActive("italic") ?? false,
+      editorFunction: () => editor?.chain().focus().toggleItalic().run(),
+    },
+    {
+      type: "button",
+      key: "underline",
+      toolTipName: "Underline",
+      icon: LuUnderline,
+      isActive: editor?.isActive("underline") ?? false,
+      editorFunction: () => editor?.chain().focus().toggleUnderline().run(),
+    },
+    { type: "divider" },
+    {
+      type: "button",
+      key: "bulletList",
+      toolTipName: "Bullet list",
+      icon: LuList,
+      isActive: editor?.isActive("bulletList") ?? false,
+      editorFunction: () => editor?.chain().focus().toggleBulletList().run(),
+    },
+    {
+      type: "button",
+      key: "orderedList",
+      toolTipName: "Ordered list",
+      icon: LuListOrdered,
+      isActive: editor?.isActive("orderedList") ?? false,
+      editorFunction: () => editor?.chain().focus().toggleOrderedList().run(),
+    },
+    {
+      type: "button",
+      key: "codeBlock",
+      toolTipName: "Code block",
+      icon: LuCode,
+      isActive: editor?.isActive("codeBlock") ?? false,
+      editorFunction: () => editor?.chain().focus().toggleCodeBlock().run(),
+    },
+    { type: "divider" },
+    {
+      type: "button",
+      key: "heading1",
+      toolTipName: "Heading 1",
+      icon: LuHeading1,
+      isActive: editor?.isActive("heading", { level: 1 }) ?? false,
+      editorFunction: () =>
+        editor?.chain().focus().toggleHeading({ level: 1 }).run(),
+    },
+    {
+      type: "button",
+      key: "heading2",
+      toolTipName: "Heading 2",
+      icon: LuHeading2,
+      isActive: editor?.isActive("heading", { level: 2 }) ?? false,
+      editorFunction: () =>
+        editor?.chain().focus().toggleHeading({ level: 2 }).run(),
+    },
+    {
+      type: "button",
+      key: "heading3",
+      toolTipName: "Heading 3",
+      icon: LuHeading3,
+      isActive: editor?.isActive("heading", { level: 3 }) ?? false,
+      editorFunction: () =>
+        editor?.chain().focus().toggleHeading({ level: 3 }).run(),
+    },
+  ];
 
   return (
     <>
-      <NodeToolbar isVisible={editing} position={data.toolbarPosition}>
-        <button
-          onClick={toggleBold}
-          className="m-1 rounded-xl border border-zinc-300 bg-zinc-50 p-2 shadow-md hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
-        >
-          <LuBold />
-        </button>
-        <button
-          onClick={toggleItalic}
-          className="m-1 rounded-xl border border-zinc-300 bg-zinc-50 p-2 shadow-md hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
-        >
-          <LuItalic />
-        </button>
-        <button
-          onClick={toggleUnderline}
-          className="m-1 rounded-xl border border-zinc-300 bg-zinc-50 p-2 shadow-md hover:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
-        >
-          <LuUnderline />
-        </button>
-      </NodeToolbar>
+      {editing && (
+        <NodeEditorToolbar
+          isVisible={editing}
+          position={data.toolbarPosition}
+          toolbarElements={editorToolbarElements}
+        />
+      )}
       <div
         className={`node note-node rounded-xl border border-zinc-300 bg-zinc-50 p-4 shadow duration-100 ease-in-out-bounce dark:border-zinc-700 dark:bg-zinc-800 ${
           selected || dragging ? "shadow-3xl" : ""
