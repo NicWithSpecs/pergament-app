@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply transition-colors duration-100;
-}
-
 *::selection {
   color: inherit;
   background-color: rgba(143, 143, 143, 0.548);

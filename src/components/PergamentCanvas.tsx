@@ -212,7 +212,7 @@ const PergamentCanvas = () => {
   return (
     <>
       <ArrowTip />
-      <div className="h-full w-screen overflow-hidden bg-zinc-200 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200">
+      <div className="h-full w-screen overflow-hidden bg-zinc-200 text-zinc-900 transition-colors duration-500 dark:bg-zinc-900 dark:text-zinc-200">
         <ReactFlow
           onInit={onInit}
           maxZoom={1.8}
