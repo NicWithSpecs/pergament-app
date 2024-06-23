@@ -32,7 +32,7 @@ const NodeEditorToolbar = ({
     <NodeToolbar
       isVisible={isVisible}
       position={position}
-      className="inline-flex rounded-xl border border-zinc-300 bg-zinc-100 p-1 shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+      className="inline-flex rounded-xl border border-zinc-300 bg-zinc-200 p-1 shadow-md dark:border-zinc-800 dark:bg-zinc-900"
     >
       {toolbarElements.map((el, index) => {
         if (el.type === "button") {
