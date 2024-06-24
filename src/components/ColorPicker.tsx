@@ -12,7 +12,7 @@ const ColorPicker = ({ colorPickerData }: ColorPickerProps) => {
     setDrawerOpen(!drawerOpen);
   };
   return (
-    <div className="group relative">
+    <div className="group relative mx-2">
       <button
         onClick={toggleDrawer}
         className={`${colorPickerData.activeColor === undefined ? "bg-zinc-900 dark:bg-zinc-100" : `bg-[${colorPickerData.activeColor}]`} m-1 h-6 w-6 rounded-full p-2 hover:shadow`}
@@ -22,7 +22,7 @@ const ColorPicker = ({ colorPickerData }: ColorPickerProps) => {
           {colorPickerData.colorOptions.map((option) => {
             return (
               <button
-                className={`mx-0.5 h-6 w-6 rounded-full ${option.isActive && "border-2 border-zinc-900 dark:border-zinc-100"} ${option.color === "default" ? "bg-zinc-900 dark:bg-zinc-100" : option.color}`}
+                className={`mx-0.5 h-6 w-6 rounded-full ${option.isActive && "border-2 border-zinc-900 dark:border-zinc-100"} ${option.color === "default" ? "bg-zinc-900 dark:bg-zinc-100" : `bg-[${option.color}]`} `}
                 onClick={option.editorFunction}
                 key={`color-${option.color}`}
               ></button>

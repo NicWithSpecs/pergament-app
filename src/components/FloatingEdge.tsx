@@ -80,9 +80,9 @@ function FloatingEdge({
     sourceY: sy,
     targetX: tx,
     targetY: ty,
-  }); */
+  });
 
-  /* const [edgePathSmoothstep] = getSmoothStepPath({
+  const [edgePathSmoothstep] = getSmoothStepPath({
     sourceX: sx,
     sourceY: sy,
     sourcePosition: sourcePos,
@@ -151,9 +151,9 @@ export function ArrowTip() {
           id="arrow-tip"
           orient="auto-start-reverse"
           viewBox="0 0 40 40"
-          markerHeight={20}
-          markerWidth={20}
-          refX={15}
+          markerHeight={18}
+          markerWidth={18}
+          refX={16}
           refY={8}
         >
           <polygon

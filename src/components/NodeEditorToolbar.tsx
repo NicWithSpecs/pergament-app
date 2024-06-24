@@ -47,7 +47,7 @@ const NodeEditorToolbar = ({
     <NodeToolbar
       isVisible={isVisible}
       position={position}
-      className="inline-flex items-center rounded-xl border border-zinc-300 bg-zinc-200 p-1 shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+      className="inline-flex items-center rounded-xl border border-zinc-300 bg-zinc-200 p-1 shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-xl"
     >
       {toolbarElements.map((el, index) => {
         if (el.type === "button") {
@@ -58,7 +58,7 @@ const NodeEditorToolbar = ({
               className={`${
                 el.isActive
                   ? "border-zinc-700 bg-zinc-800 text-zinc-100 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-800"
-                  : "text-zinc-800 hover:border-zinc-300 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 hover:dark:bg-zinc-800"
+                  : "text-zinc-800 hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-700 dark:hover:bg-zinc-800"
               } m-1 rounded-lg border p-2 hover:shadow`}
             >
               <el.icon />
