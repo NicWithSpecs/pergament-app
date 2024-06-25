@@ -163,25 +163,25 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
           editorFunction: () => editor?.commands.unsetMark("textStyle"),
         },
         {
-          color: "#e11d48",
+          color: "bg-[#e11d48]",
           isActive: editor?.isActive("textStyle", { color: "#e11d48" }),
           editorFunction: () =>
             editor!.chain().focus().setColor("#e11d48").run(),
         },
         {
-          color: "#3b82f6",
+          color: "bg-[#3b82f6]",
           isActive: editor?.isActive("textStyle", { color: "#3b82f6" }),
           editorFunction: () =>
             editor!.chain().focus().setColor("#3b82f6").run(),
         },
         {
-          color: "#22c55e",
+          color: "bg-[#22c55e]",
           isActive: editor?.isActive("textStyle", { color: "#22c55e" }),
           editorFunction: () =>
             editor!.chain().focus().setColor("#22c55e").run(),
         },
         {
-          color: "#ea580c",
+          color: "bg-[#ea580c]",
           isActive: editor?.isActive("textStyle", { color: "#ea580c" }),
           editorFunction: () =>
             editor!.chain().focus().setColor("#ea580c").run(),
