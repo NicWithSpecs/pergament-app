@@ -1,9 +1,9 @@
+import { ReactFlowProvider } from "reactflow";
+import usePergamentStore from "../store";
+import PergamentCanvas from "../components/canvas/PergamentCanvas";
+import PergamentHeader from "../components/PergamentHeader";
 import "reactflow/dist/style.css";
 import "../styles/App.css";
-import PergamentCanvas from "../components/PergamentCanvas";
-import { ReactFlowProvider } from "reactflow";
-import PergamentHeader from "../components/PergamentHeader";
-import usePergamentStore from "../store";
 
 const PergamentApp = () => {
   const { darkMode } = usePergamentStore();

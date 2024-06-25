@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
-import usePergamentStore from "../store";
-import { LuSun } from "react-icons/lu";
 import { MdOutlineDarkMode } from "react-icons/md";
+import { LuSun } from "react-icons/lu";
+import usePergamentStore from "../store";
 
 const NavLinks = () => {
   return (

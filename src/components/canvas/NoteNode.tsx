@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { NodeProps, ReactFlowState, useNodeId, useStore } from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -5,11 +6,6 @@ import Color from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import { useEffect, useState } from "react";
-import ArrowTarget from "./ArrowTarget";
-import ArrowHandle from "./ArrowHandle";
-import ResizeHandle from "./ResizeHandle";
-import usePergamentStore, { NodeData } from "../store";
 import {
   LuBold,
   LuCode,
@@ -21,6 +17,10 @@ import {
   LuListOrdered,
   LuUnderline,
 } from "react-icons/lu";
+import usePergamentStore, { NodeData } from "../../store";
+import ArrowTarget from "./ArrowTarget";
+import ArrowHandle from "./ArrowHandle";
+import ResizeHandle from "./ResizeHandle";
 import NodeEditorToolbar, { ToolbarElement } from "./NodeEditorToolbar";
 
 const connectionNodeIdSelector = (state: ReactFlowState) =>

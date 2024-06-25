@@ -13,9 +13,14 @@ https://reactflow.dev/learn/customization/theming#overriding-built-in-classes
   cursor: default;
 }
 
+.react-flow__pane.dragging {
+  transition: none !important;
+}
+
 .react-flow__selection {
   background-color: #8585853e;
   border: 1px solid #505050;
+  transition: none;
 }
 
 .react-flow__controls {

@@ -1,14 +1,14 @@
+import { useEffect, useState } from "react";
 import { NodeProps, ReactFlowState, useNodeId, useStore } from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Text from "@tiptap/extension-text";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
-import { useEffect, useState } from "react";
+import usePergamentStore, { NodeData } from "../../store";
 import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
 import ResizeHandle from "./ResizeHandle";
-import usePergamentStore, { NodeData } from "../store";
 
 const CustomDocument = Document.extend({
   content: "taskList",

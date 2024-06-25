@@ -14,5 +14,13 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "sort-imports": 
+    [
+      "error", 
+      { 
+        "ignoreCase": true, 
+        "ignoreDeclarationSort": true 
+      }
+    ], 
   },
 }

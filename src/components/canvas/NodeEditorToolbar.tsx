@@ -1,5 +1,5 @@
-import { IconType } from "react-icons";
 import { NodeToolbar, Position } from "reactflow";
+import { IconType } from "react-icons";
 import ColorPicker from "./ColorPicker";
 
 export type ToolbarElement =

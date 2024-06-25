@@ -1,5 +1,5 @@
-import { MdArrowCircleRight } from "react-icons/md";
 import { Handle, Position } from "reactflow";
+import { MdArrowCircleRight } from "react-icons/md";
 
 interface ArrowHandleProps {
   isConnecting: boolean;

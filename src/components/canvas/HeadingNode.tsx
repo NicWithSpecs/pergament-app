@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   NodeProps,
   NodeResizer,
@@ -10,10 +11,9 @@ import Document from "@tiptap/extension-document";
 import Heading from "@tiptap/extension-heading";
 import Text from "@tiptap/extension-text";
 import Placeholder from "@tiptap/extension-placeholder";
+import usePergamentStore, { NodeData } from "../../store";
 import ArrowTarget from "./ArrowTarget";
 import ArrowHandle from "./ArrowHandle";
-import { useEffect, useState } from "react";
-import usePergamentStore, { NodeData } from "../store";
 
 const connectionNodeIdSelector = (state: ReactFlowState) =>
   state.connectionNodeId;

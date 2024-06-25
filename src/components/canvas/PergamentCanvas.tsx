@@ -1,31 +1,19 @@
 import { useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
 import ReactFlow, {
-  Node,
-  Controls,
   Background,
   BackgroundVariant,
-  SelectionMode,
-  NodeTypes,
   ConnectionMode,
+  Controls,
   EdgeTypes,
+  Node,
+  NodeTypes,
+  OnInit,
+  ReactFlowInstance,
+  SelectionMode,
   StraightEdge,
   useReactFlow,
-  ReactFlowInstance,
-  OnInit,
 } from "reactflow";
-
-import "reactflow/dist/style.css";
-
-import FloatingEdge, { ArrowTip } from "../components/FloatingEdge";
-import CustomConnectionLine from "../components/CustomConnectionLine";
-import NoteNode from "../components/NoteNode";
-import ImageNode from "./ImageNode";
-import FrameNode from "./FrameNode";
-import HeadingNode from "./HeadingNode";
-import usePergamentStore, { PergamentState } from "../store";
-import PergamentToolbar from "./PergamentToolbar";
-import TodoNode from "./TodoNode";
 import {
   LuArchiveRestore,
   LuCheckSquare,
@@ -35,6 +23,16 @@ import {
   LuSave,
   LuSquare,
 } from "react-icons/lu";
+import usePergamentStore, { PergamentState } from "../../store";
+import FloatingEdge, { ArrowTip } from "./FloatingEdge";
+import CustomConnectionLine from "./CustomConnectionLine";
+import NoteNode from "./NoteNode";
+import ImageNode from "./ImageNode";
+import FrameNode from "./FrameNode";
+import HeadingNode from "./HeadingNode";
+import PergamentToolbar from "./PergamentToolbar";
+import TodoNode from "./TodoNode";
+import "reactflow/dist/style.css";
 
 const selector = (state: PergamentState) => ({
   nodes: state.nodes,
@@ -119,7 +117,7 @@ const PergamentCanvas = () => {
       type: "noteNode",
       position: screenToFlowPosition({ x: 300, y: 300 }),
       data: { content: `` },
-      style: { width: 400 },
+      style: { width: 405 },
       parentId: "",
     };
 
@@ -149,7 +147,7 @@ const PergamentCanvas = () => {
       type: "frameNode",
       position: screenToFlowPosition({ x: 300, y: 300 }),
       data: {},
-      style: { width: 500, height: 500, zIndex: -1 },
+      style: { width: 510, height: 510, zIndex: -1 },
       parentId: "",
     };
 
@@ -175,7 +173,7 @@ const PergamentCanvas = () => {
       type: "todoNode",
       position: screenToFlowPosition({ x: 300, y: 300 }),
       data: { content: "" },
-      style: { width: 400 },
+      style: { width: 405 },
       parentId: "",
     };
     setNodes(nodes.concat(newNode));
@@ -233,7 +231,7 @@ const PergamentCanvas = () => {
           elementsSelectable={true}
           proOptions={{ hideAttribution: false }}
           fitView
-          fitViewOptions={{ padding: 4 }}
+          fitViewOptions={{ padding: 6 }}
           selectionOnDrag
           panOnDrag={[1, 2]}
           selectionMode={SelectionMode.Partial}

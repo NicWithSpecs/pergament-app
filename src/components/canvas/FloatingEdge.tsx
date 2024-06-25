@@ -1,18 +1,18 @@
 import { useCallback, useEffect } from "react";
 import {
-  useStore,
+  BaseEdge,
+  EdgeLabelRenderer,
   EdgeProps,
   getBezierPath,
-  EdgeLabelRenderer,
-  BaseEdge,
+  useStore,
 } from "reactflow";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-
-import { getEdgeParams } from "../utils";
 import CharacterCount from "@tiptap/extension-character-count";
 import Placeholder from "@tiptap/extension-placeholder";
-import usePergamentStore, { EdgeData } from "../store";
+
+import usePergamentStore, { EdgeData } from "../../store";
+import { getEdgeParams } from "../../utils";
 
 const limit = 50;
 
