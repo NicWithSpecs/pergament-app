@@ -7,10 +7,6 @@
   background-color: rgba(143, 143, 143, 0.548);
 }
 
-* {
-  @apply transition-transform ease-in-out-bounce;
-}
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 

@@ -213,8 +213,6 @@ const PergamentCanvas = () => {
       <div className="h-full w-screen overflow-hidden bg-zinc-200 text-zinc-900 transition-colors duration-500 dark:bg-zinc-900 dark:text-zinc-200">
         <ReactFlow
           onInit={onInit}
-          snapToGrid={true}
-          snapGrid={[15, 15]}
           maxZoom={2}
           minZoom={0.6}
           nodes={nodes}
