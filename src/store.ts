@@ -20,6 +20,7 @@ import { JSONContent } from "@tiptap/react";
 
 export type NodeData = {
   content: JSONContent;
+  color: string;
   toolbarPosition: Position;
 };
 
@@ -45,6 +46,7 @@ export type PergamentState = {
   updateNodeContent: (nodeId: string | null, content: JSONContent) => void;
   updateEdgeLabel: (edgeId: string, label: JSONContent) => void;
   toggleDarkMode: () => void;
+  setNodeColor: (nodeId: string | null, color: string) => void;
 };
 
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
@@ -177,6 +179,16 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
   },
   toggleDarkMode: () => {
     set({ darkMode: !get().darkMode });
+  },
+  setNodeColor: (nodeId: string | null, color: string) => {
+    set({
+      nodes: get().nodes.map((node) => {
+        if (node.id === nodeId) {
+          return { ...node, data: { ...node.data, color: color } };
+        }
+        return node;
+      }),
+    });
   },
 }));
 

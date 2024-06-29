@@ -21,14 +21,10 @@ export type EditorColorPickerData = {
   type: "colorPicker";
   toolTipName: string;
   icon: IconType;
-  activeColor: () => string;
-  colorOptions: {
-    bgColor: string;
-    isActive: boolean | undefined;
-    editorFunction: () => void;
-    textColor?: string;
-    borderColor?: string;
-  }[];
+  activeColor: string | (() => string);
+  setColor: (color: string) => void;
+  isActive: (color: string) => boolean | undefined;
+  colorOptions: string[];
 };
 
 type EditorToolbarDivider = {
@@ -77,7 +73,7 @@ const NodeEditorToolbar = ({
           );
         }
         if (el.type === "colorPicker") {
-          return <ColorPicker key="color-picker" colorPickerData={el} />;
+          return <ColorPicker key={el.toolTipName} colorPickerData={el} />;
         }
       })}
     </NodeToolbar>

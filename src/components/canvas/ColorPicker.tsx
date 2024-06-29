@@ -13,7 +13,7 @@ const ColorPicker = ({ colorPickerData }: ColorPickerProps) => {
   };
 
   return (
-    <div className="group relative mx-2">
+    <div className="group relative mx-1">
       <button
         onClick={toggleDrawer}
         className={
@@ -34,9 +34,12 @@ const ColorPicker = ({ colorPickerData }: ColorPickerProps) => {
           {colorPickerData.colorOptions.map((option) => {
             return (
               <button
-                className={`mx-0.5 h-6 w-6 rounded-full hover:scale-125 ${option.isActive && "border-2 border-zinc-900 dark:border-zinc-100"} ${option.bgColor === "default" ? "bg-zinc-900 dark:bg-zinc-100" : `${option.bgColor}`} `}
-                onClick={option.editorFunction}
-                key={`color-${option.bgColor}`}
+                className={`mx-0.5 h-6 w-6 rounded-full hover:scale-125 ${colorPickerData.isActive(option) && "border-2 border-zinc-900 dark:border-zinc-100"} ${option === "default" && "bg-zinc-900 dark:bg-zinc-100"}`}
+                onClick={() => colorPickerData.setColor(option)}
+                key={`color-${option}`}
+                style={
+                  option !== "default" ? { backgroundColor: `${option}` } : {}
+                }
               ></button>
             );
           })}

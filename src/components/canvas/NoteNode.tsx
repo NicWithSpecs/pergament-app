@@ -9,6 +9,7 @@ import Underline from "@tiptap/extension-underline";
 import {
   LuBaseline,
   LuBold,
+  LuBoxSelect,
   LuCode,
   LuHeading1,
   LuHeading2,
@@ -32,12 +33,12 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
   const updateNodeContent = usePergamentStore(
     (state) => state.updateNodeContent,
   );
+  const setNodeColor = usePergamentStore((state) => state.setNodeColor);
   const [editing, setEditing] = useState(false);
 
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
-  /* const isTarget = connectionNodeId && connectionNodeId !== id; */
 
   const editor = useEditor({
     extensions: [
@@ -165,46 +166,25 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
       toolTipName: "Text color",
       icon: LuBaseline,
       activeColor: editor?.getAttributes("textStyle").color,
-      colorOptions: [
-        {
-          bgColor: "default",
-          isActive: undefined,
-          editorFunction: () =>
-            editor?.chain().focus().unsetMark("textStyle").run(),
-        },
-        {
-          bgColor: "bg-rose-600",
-          textColor: "text-rose-600",
-          borderColor: "border-rose-600",
-          isActive: editor?.isActive("textStyle", { color: "#e11d48" }),
-          editorFunction: () =>
-            editor!.chain().focus().setColor("#e11d48").run(),
-        },
-        {
-          bgColor: "bg-blue-500",
-          textColor: "text-blue-500",
-          borderColor: "border-blue-500",
-          isActive: editor?.isActive("textStyle", { color: "#3b82f6" }),
-          editorFunction: () =>
-            editor!.chain().focus().setColor("#3b82f6").run(),
-        },
-        {
-          bgColor: "bg-green-500",
-          textColor: "text-green-500",
-          borderColor: "border-green-500",
-          isActive: editor?.isActive("textStyle", { color: "#22c55e" }),
-          editorFunction: () =>
-            editor!.chain().focus().setColor("#22c55e").run(),
-        },
-        {
-          bgColor: "bg-orange-600",
-          textColor: "text-orange-600",
-          borderColor: "border-orange-600",
-          isActive: editor?.isActive("textStyle", { color: "#ea580c" }),
-          editorFunction: () =>
-            editor!.chain().focus().setColor("#ea580c").run(),
-        },
-      ],
+      isActive: (color: string) =>
+        color === "default"
+          ? undefined
+          : editor?.isActive("textStyle", { color: color }),
+      setColor: (color: string) =>
+        color === "default"
+          ? editor?.chain().focus().unsetMark("textStyle").run()
+          : editor!.chain().focus().setColor(color).run(),
+      colorOptions: ["default", "#e11d48", "#3b82f6", "#22c55e", "#ea580c"],
+    },
+    {
+      type: "colorPicker",
+      toolTipName: "Node color",
+      icon: LuBoxSelect,
+      activeColor: data.color,
+      isActive: (color: string) =>
+        color === "default" ? undefined : data.color === color,
+      setColor: (color: string) => setNodeColor(nodeId, color),
+      colorOptions: ["default", "#e11d48", "#3b82f6", "#22c55e", "#ea580c"],
     },
   ];
 
@@ -225,6 +205,7 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
         }`}
         onClick={handleClick}
         onDoubleClick={handleDoubleClick}
+        style={data.color !== "default" ? { borderColor: data.color } : {}}
       >
         <ResizeHandle selected={selected} dragging={dragging} />
         <ArrowHandle
