@@ -20,11 +20,14 @@ type EditorToolbarButtonData = {
 export type EditorColorPickerData = {
   type: "colorPicker";
   toolTipName: string;
+  icon: IconType;
   activeColor: () => string;
   colorOptions: {
-    color: string;
+    bgColor: string;
     isActive: boolean | undefined;
     editorFunction: () => void;
+    textColor?: string;
+    borderColor?: string;
   }[];
 };
 

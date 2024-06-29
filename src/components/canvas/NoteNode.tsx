@@ -7,6 +7,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import {
+  LuBaseline,
   LuBold,
   LuCode,
   LuHeading1,
@@ -62,6 +63,13 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
   const handleDoubleClick = () => {
     setEditing(true);
     editor?.chain().focus();
+  };
+
+  const handleClick = () => {
+    if (selected && !editing) {
+      setEditing(true);
+      editor?.chain().focus();
+    }
   };
 
   useEffect(() => {
@@ -155,33 +163,43 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
     {
       type: "colorPicker",
       toolTipName: "Text color",
+      icon: LuBaseline,
       activeColor: editor?.getAttributes("textStyle").color,
       colorOptions: [
         {
-          color: "default",
+          bgColor: "default",
           isActive: undefined,
-          editorFunction: () => editor?.commands.unsetMark("textStyle"),
+          editorFunction: () =>
+            editor?.chain().focus().unsetMark("textStyle").run(),
         },
         {
-          color: "bg-[#e11d48]",
+          bgColor: "bg-rose-600",
+          textColor: "text-rose-600",
+          borderColor: "border-rose-600",
           isActive: editor?.isActive("textStyle", { color: "#e11d48" }),
           editorFunction: () =>
             editor!.chain().focus().setColor("#e11d48").run(),
         },
         {
-          color: "bg-[#3b82f6]",
+          bgColor: "bg-blue-500",
+          textColor: "text-blue-500",
+          borderColor: "border-blue-500",
           isActive: editor?.isActive("textStyle", { color: "#3b82f6" }),
           editorFunction: () =>
             editor!.chain().focus().setColor("#3b82f6").run(),
         },
         {
-          color: "bg-[#22c55e]",
+          bgColor: "bg-green-500",
+          textColor: "text-green-500",
+          borderColor: "border-green-500",
           isActive: editor?.isActive("textStyle", { color: "#22c55e" }),
           editorFunction: () =>
             editor!.chain().focus().setColor("#22c55e").run(),
         },
         {
-          color: "bg-[#ea580c]",
+          bgColor: "bg-orange-600",
+          textColor: "text-orange-600",
+          borderColor: "border-orange-600",
           isActive: editor?.isActive("textStyle", { color: "#ea580c" }),
           editorFunction: () =>
             editor!.chain().focus().setColor("#ea580c").run(),
@@ -201,8 +219,11 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
       )}
       <div
         className={`node note-node rounded-xl border border-zinc-300 bg-zinc-50 p-4 shadow duration-100 ease-in-out-bounce dark:border-zinc-700 dark:bg-zinc-800 ${
-          selected || dragging ? "shadow-3xl" : ""
+          selected || dragging
+            ? "border-zinc-900 shadow-3xl dark:border-zinc-300"
+            : ""
         }`}
+        onClick={handleClick}
         onDoubleClick={handleDoubleClick}
       >
         <ResizeHandle selected={selected} dragging={dragging} />

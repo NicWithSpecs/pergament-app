@@ -1,20 +1,20 @@
 import { create } from "zustand";
 import {
+  addEdge,
+  applyEdgeChanges,
+  applyNodeChanges,
   Connection,
   Edge,
   EdgeChange,
   Node,
   NodeChange,
-  addEdge,
-  OnNodesChange,
-  OnEdgesChange,
-  OnConnect,
-  applyNodeChanges,
-  applyEdgeChanges,
   NodeDimensionChange,
   NodeDragHandler,
-  ReactFlowInstance,
+  OnConnect,
+  OnEdgesChange,
+  OnNodesChange,
   Position,
+  ReactFlowInstance,
 } from "reactflow";
 import { JSONContent } from "@tiptap/react";
 
@@ -54,7 +54,7 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
   onNodesChange: (changes: NodeChange[]) => {
     const dimensionChangeId = (changes[0] as NodeDimensionChange).id;
     const changedNodeId = get().nodes.find(
-      (node) => node.id === dimensionChangeId
+      (node) => node.id === dimensionChangeId,
     );
     const changedNodeIsNote =
       changedNodeId?.type === "noteNode" || changedNodeId?.type === "todoNode";
