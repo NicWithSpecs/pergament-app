@@ -15,6 +15,7 @@ import {
   OnNodesChange,
   Position,
   ReactFlowInstance,
+  XYPosition,
 } from "reactflow";
 import { JSONContent } from "@tiptap/react";
 
@@ -46,6 +47,7 @@ export type PergamentState = {
   updateNodeContent: (nodeId: string | null, content: JSONContent) => void;
   updateEdgeLabel: (edgeId: string, label: JSONContent) => void;
   toggleDarkMode: () => void;
+  addNote: (nodeType: string, position?: XYPosition) => void;
   setNodeColor: (nodeId: string | null, color: string) => void;
 };
 
@@ -189,6 +191,17 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
         return node;
       }),
     });
+  },
+  addNote: (nodeType, position) => {
+    const newNode: Node = {
+      id: nodeType + self.crypto.randomUUID(),
+      type: nodeType,
+      position: position ?? { x: 0, y: 0 },
+      data: {},
+      style: { width: 405 },
+      parentId: "",
+    };
+    set({ nodes: get().nodes.concat(newNode) });
   },
 }));
 

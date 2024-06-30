@@ -79,7 +79,7 @@ const PergamentCanvas = () => {
     reactFlowKey,
     setReactFlowInstance,
   } = usePergamentStore(useShallow(selector));
-  const { setNodes, setEdges } = usePergamentStore();
+  const { setNodes, addNote, setEdges } = usePergamentStore();
   const { screenToFlowPosition, setViewport } = useReactFlow();
 
   const onInit: OnInit = useCallback(
@@ -110,6 +110,34 @@ const PergamentCanvas = () => {
 
     restoreFlow();
   }, [setNodes, setEdges, setViewport, reactFlowKey]);
+
+  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (event.dataTransfer != undefined) event.dataTransfer.dropEffect = "move";
+  }, []);
+
+  const onDrop = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+
+      const type: string | undefined = event.dataTransfer?.getData(
+        "application/reactflow",
+      );
+
+      // check if the dropped element is valid
+      if (typeof type === "undefined" || !type) {
+        return;
+      }
+
+      const position = reactFlowInstance?.screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      addNote(type, position);
+    },
+    [addNote, reactFlowInstance],
+  );
 
   const addNoteNode = () => {
     const newNode: Node = {
@@ -182,26 +210,31 @@ const PergamentCanvas = () => {
   const addNodeFunctions = [
     {
       name: "Note",
+      nodeType: "noteNode",
       createFunction: addNoteNode,
       icon: LuPenSquare,
     },
     {
       name: "Frame",
+      nodeType: "frameNode",
       createFunction: addFrameNode,
       icon: LuSquare,
     },
     {
       name: "Heading",
+      nodeType: "headingNode",
       createFunction: addHeadingNode,
       icon: LuHeading1,
     },
     {
       name: "Image",
+      nodeType: "imageNode",
       createFunction: addImageNode,
       icon: LuImage,
     },
     {
       name: "Todo",
+      nodeType: "todoNode",
       createFunction: addTodoNode,
       icon: LuCheckSquare,
     },
@@ -220,6 +253,8 @@ const PergamentCanvas = () => {
           onNodesChange={onNodesChange}
           onNodeDrag={onNodeDrag}
           onNodeDragStop={onNodeDragStop}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
           nodeDragThreshold={5}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
@@ -228,7 +263,7 @@ const PergamentCanvas = () => {
           defaultEdgeOptions={defaultEdgeOptions}
           elementsSelectable={true}
           proOptions={{ hideAttribution: false }}
-          fitView
+          fitView={false}
           fitViewOptions={{ padding: 6 }}
           selectionOnDrag
           panOnDrag={[1, 2]}
