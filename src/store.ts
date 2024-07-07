@@ -18,6 +18,7 @@ import {
   XYPosition,
 } from "reactflow";
 import { JSONContent } from "@tiptap/react";
+import nodeConfig from "./nodeConfig";
 
 export type NodeData = {
   content: JSONContent;
@@ -193,15 +194,19 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
     });
   },
   addNote: (nodeType, position) => {
-    const newNode: Node = {
-      id: nodeType + self.crypto.randomUUID(),
-      type: nodeType,
-      position: position ?? { x: 0, y: 0 },
-      data: {},
-      style: { width: 405 },
-      parentId: "",
-    };
-    set({ nodes: get().nodes.concat(newNode) });
+    const config = nodeConfig[nodeType].initData;
+
+    if (config) {
+      const newNode: Node = {
+        id: nodeType + self.crypto.randomUUID(),
+        type: nodeType,
+        position: position ?? { x: 0, y: 0 },
+        ...config,
+      };
+      set({ nodes: get().nodes.concat(newNode) });
+    } else {
+      throw new Error(nodeType + " is not a configured node type.");
+    }
   },
 }));
 

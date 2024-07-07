@@ -6,7 +6,6 @@ import ReactFlow, {
   ConnectionMode,
   Controls,
   EdgeTypes,
-  Node,
   NodeTypes,
   OnInit,
   ReactFlowInstance,
@@ -14,15 +13,7 @@ import ReactFlow, {
   StraightEdge,
   useReactFlow,
 } from "reactflow";
-import {
-  LuArchiveRestore,
-  LuCheckSquare,
-  LuHeading1,
-  LuImage,
-  LuPenSquare,
-  LuSave,
-  LuSquare,
-} from "react-icons/lu";
+import { LuArchiveRestore, LuSave } from "react-icons/lu";
 import usePergamentStore, { PergamentState } from "../../store";
 import FloatingEdge, { ArrowTip } from "./FloatingEdge";
 import CustomConnectionLine from "./CustomConnectionLine";
@@ -80,7 +71,7 @@ const PergamentCanvas = () => {
     setReactFlowInstance,
   } = usePergamentStore(useShallow(selector));
   const { setNodes, addNote, setEdges } = usePergamentStore();
-  const { screenToFlowPosition, setViewport } = useReactFlow();
+  const { setViewport } = useReactFlow();
 
   const onInit: OnInit = useCallback(
     (reactFlowInstance: ReactFlowInstance) => {
@@ -121,7 +112,7 @@ const PergamentCanvas = () => {
       event.preventDefault();
 
       const type: string | undefined = event.dataTransfer?.getData(
-        "application/reactflow",
+        "application/pergament",
       );
 
       // check if the dropped element is valid
@@ -138,107 +129,6 @@ const PergamentCanvas = () => {
     },
     [addNote, reactFlowInstance],
   );
-
-  const addNoteNode = () => {
-    const newNode: Node = {
-      id: "note-" + self.crypto.randomUUID(),
-      type: "noteNode",
-      position: screenToFlowPosition({ x: 300, y: 300 }),
-      data: { content: `` },
-      style: { width: 405 },
-      parentId: "",
-    };
-
-    setNodes(nodes.concat(newNode));
-  };
-
-  const addImageNode = () => {
-    const newNode: Node = {
-      id: "image-" + self.crypto.randomUUID(),
-      type: "imageNode",
-      position: screenToFlowPosition({ x: 300, y: 300 }),
-      data: {
-        hasImage: false,
-        image: {
-          url: "",
-        },
-      },
-      parentId: "",
-    };
-
-    setNodes(nodes.concat(newNode));
-  };
-
-  const addFrameNode = () => {
-    const newNode: Node = {
-      id: "frame-" + self.crypto.randomUUID(),
-      type: "frameNode",
-      position: screenToFlowPosition({ x: 300, y: 300 }),
-      data: {},
-      style: { width: 510, height: 510, zIndex: -1 },
-      parentId: "",
-    };
-
-    setNodes([newNode].concat(nodes));
-  };
-
-  const addHeadingNode = () => {
-    const newNode: Node = {
-      id: "heading-" + self.crypto.randomUUID(),
-      type: "headingNode",
-      position: screenToFlowPosition({ x: 300, y: 300 }),
-      data: { content: `` },
-      style: { width: 300 },
-      parentId: "",
-    };
-
-    setNodes(nodes.concat(newNode));
-  };
-
-  const addTodoNode = () => {
-    const newNode: Node = {
-      id: "todo-" + self.crypto.randomUUID(),
-      type: "todoNode",
-      position: screenToFlowPosition({ x: 300, y: 300 }),
-      data: { content: "" },
-      style: { width: 405 },
-      parentId: "",
-    };
-    setNodes(nodes.concat(newNode));
-  };
-
-  const addNodeFunctions = [
-    {
-      name: "Note",
-      nodeType: "noteNode",
-      createFunction: addNoteNode,
-      icon: LuPenSquare,
-    },
-    {
-      name: "Frame",
-      nodeType: "frameNode",
-      createFunction: addFrameNode,
-      icon: LuSquare,
-    },
-    {
-      name: "Heading",
-      nodeType: "headingNode",
-      createFunction: addHeadingNode,
-      icon: LuHeading1,
-    },
-    {
-      name: "Image",
-      nodeType: "imageNode",
-      createFunction: addImageNode,
-      icon: LuImage,
-    },
-    {
-      name: "Todo",
-      nodeType: "todoNode",
-      createFunction: addTodoNode,
-      icon: LuCheckSquare,
-    },
-  ];
 
   return (
     <>
@@ -280,7 +170,7 @@ const PergamentCanvas = () => {
             gap={15}
             size={1}
           />
-          <PergamentToolbar noteFunctions={addNodeFunctions} />
+          <PergamentToolbar />
         </ReactFlow>
         <button
           className="space-evenly fixed right-5 top-[70px] inline-flex w-32 items-center justify-center whitespace-nowrap rounded-md border border-zinc-300 bg-zinc-50 px-4 py-2 text-sm font-medium shadow-lg hover:bg-zinc-800 hover:text-zinc-100 dark:bg-zinc-900 dark:text-zinc-200"
