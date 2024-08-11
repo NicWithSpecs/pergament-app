@@ -198,7 +198,7 @@ function NoteNode({ selected, data, dragging }: NodeProps<NodeData>) {
         />
       )}
       <div
-        className={`node note-node rounded-xl border border-zinc-300 bg-zinc-50 p-4 shadow duration-100 ease-in-out-bounce dark:border-zinc-700 dark:bg-zinc-800 ${
+        className={`node note-node rounded-xl border-2 border-zinc-300 bg-zinc-50 p-4 shadow duration-100 ease-in-out-bounce dark:border-zinc-700 dark:bg-zinc-800 ${
           selected || dragging
             ? "border-zinc-900 shadow-3xl dark:border-zinc-300"
             : ""
