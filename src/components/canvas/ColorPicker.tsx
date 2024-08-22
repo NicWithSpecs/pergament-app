@@ -35,7 +35,10 @@ const ColorPicker = ({ colorPickerData }: ColorPickerProps) => {
             return (
               <button
                 className={`mx-0.5 h-6 w-6 rounded-full hover:scale-125 ${colorPickerData.isActive(option) && "border-2 border-zinc-900 dark:border-zinc-100"} ${option === "default" && "bg-zinc-900 dark:bg-zinc-100"}`}
-                onClick={() => colorPickerData.setColor(option)}
+                onClick={() => {
+                  colorPickerData.setColor(option);
+                  toggleDrawer();
+                }}
                 key={`color-${option}`}
                 style={
                   option !== "default" ? { backgroundColor: `${option}` } : {}
