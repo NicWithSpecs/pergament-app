@@ -113,39 +113,69 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
       .reactFlowInstance?.getIntersectingNodes(node)
       .find((node) => node.type === "frameNode");
 
-    if (intersectingFrame && node.type !== "frameNode") {
-      // parent or move inside of frame
-      set({
-        nodes: get().nodes.map((n) => ({
-          ...n,
-          className: "",
-          position:
-            n.id === node.id && n.parentId !== intersectingFrame.id
-              ? {
-                  x: n.position.x - intersectingFrame.position.x,
-                  y: n.position.y - intersectingFrame.position.y,
-                }
-              : n.position,
-          parentId: n.id === node.id ? intersectingFrame.id : n.parentId,
-        })),
-      });
-    } else if (node.parentId !== "") {
-      // unparent
-      const parentNode = get().nodes.find((p) => p.id === node.parentId);
-      set({
-        nodes: get().nodes.map((n) => ({
-          ...n,
-          className: "",
-          position:
-            n.id === node.id && parentNode
-              ? {
-                  x: parentNode.position.x + n.position.x,
-                  y: parentNode.position.y + n.position.y,
-                }
-              : n.position,
-          parentId: n.id === node.id ? "" : n.parentId,
-        })),
-      });
+    if (node.type !== "frameNode") {
+      // dragged node is not a frame
+      if (intersectingFrame) {
+        // intersecting node is a frame
+        if (!node.parentId || node.parentId === "") {
+          // parent
+          set({
+            nodes: get().nodes.map((n) => ({
+              ...n,
+              position:
+                n.id === node.id
+                  ? {
+                      x: n.position.x - intersectingFrame.position.x,
+                      y: n.position.y - intersectingFrame.position.y,
+                    }
+                  : n.position,
+              parentId: n.id === node.id ? intersectingFrame.id : n.parentId,
+            })),
+          });
+        } else {
+          // move inside frame OR move to another frame
+          if (node.parentId !== intersectingFrame.id) {
+            // moved to another frame
+            const parentNode = get().nodes.find((p) => p.id === node.parentId);
+            set({
+              nodes: get().nodes.map((n) => ({
+                ...n,
+                position:
+                  n.id === node.id && parentNode
+                    ? {
+                        x:
+                          parentNode.position.x +
+                          n.position.x -
+                          intersectingFrame.position.x,
+                        y:
+                          parentNode.position.y +
+                          n.position.y -
+                          intersectingFrame.position.y,
+                      }
+                    : n.position,
+                parentId: n.id === node.id ? intersectingFrame.id : n.parentId,
+              })),
+            });
+          }
+        }
+      } else if (node.parentId !== "") {
+        // there is no intersecting frame and the dragged node has a parent
+        // unparent
+        const parentNode = get().nodes.find((p) => p.id === node.parentId);
+        set({
+          nodes: get().nodes.map((n) => ({
+            ...n,
+            position:
+              n.id === node.id && parentNode
+                ? {
+                    x: parentNode.position.x + n.position.x,
+                    y: parentNode.position.y + n.position.y,
+                  }
+                : n.position,
+            parentId: n.id === node.id ? "" : n.parentId,
+          })),
+        });
+      }
     }
   },
   reactFlowInstance: null,
