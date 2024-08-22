@@ -136,6 +136,7 @@ ul[data-type="taskList"] {
 
   li[data-checked="true"] {
     text-decoration: line-through;
+    opacity: 0.6;
   }
 
   
