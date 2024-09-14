@@ -14,7 +14,7 @@ const PergamentToolbar = () => {
 
   return (
     <div
-      className="absolute top-60 z-[1000] flex flex-col rounded-r-xl border border-zinc-300 bg-zinc-50 p-3 shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
+      className="absolute z-[1000] flex flex-col rounded-br-xl border border-zinc-300 bg-zinc-50 p-3 shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
       onDragOver={onDragOver}
     >
       {Object.entries(nodeConfig).map(([nodeType, node]) => {
