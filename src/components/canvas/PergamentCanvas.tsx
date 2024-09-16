@@ -170,6 +170,13 @@ const PergamentCanvas = () => {
             gap={15}
             size={1}
           />
+          {nodes.length <= 0 && (
+            <div className="pointer-events-none fixed left-0 top-0 flex h-screen w-screen items-center justify-center">
+              <div className="m-auto text-center text-2xl">
+                Drag some nodes from the left on here
+              </div>
+            </div>
+          )}
           <PergamentToolbar />
         </ReactFlow>
         <button
