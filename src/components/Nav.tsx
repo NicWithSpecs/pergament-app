@@ -50,7 +50,7 @@ const Nav = () => {
       {isOpen && (
         <div className="flex basis-full flex-col items-center">
           <NavLinks />
-          <button>DM</button>
+          <button onClick={toggleDarkMode}>DM</button>
         </div>
       )}
     </>
