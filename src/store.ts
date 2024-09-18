@@ -225,12 +225,16 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
   },
   addNote: (nodeType, position) => {
     const config = nodeConfig[nodeType].initData;
+    const center = get().reactFlowInstance?.screenToFlowPosition({
+      x: 100,
+      y: 100,
+    });
 
     if (config) {
       const newNode: Node = {
         id: nodeType + self.crypto.randomUUID(),
         type: nodeType,
-        position: position ?? { x: 0, y: 0 },
+        position: position ?? center,
         ...config,
       };
       set({ nodes: get().nodes.concat(newNode) });
