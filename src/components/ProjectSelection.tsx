@@ -2,11 +2,15 @@ import { RxCaretDown } from "react-icons/rx";
 
 interface ProjectSelectionProps {
   currentProject: string;
+  className?: string;
 }
 
-const ProjectSelection = ({ currentProject }: ProjectSelectionProps) => {
+const ProjectSelection = ({
+  currentProject,
+  className,
+}: ProjectSelectionProps) => {
   return (
-    <div className="text-sm">
+    <div className={`p-4 text-sm md:p-2 ${className}`}>
       projects /{" "}
       <span className="font-bold">
         {currentProject} <RxCaretDown className="inline" />

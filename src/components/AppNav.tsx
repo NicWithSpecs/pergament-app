@@ -3,17 +3,27 @@ import { HiMenu, HiX } from "react-icons/hi";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { LuSun } from "react-icons/lu";
 import usePergamentStore from "../store";
+import ProjectSelection from "./ProjectSelection";
 
 const NavLinks = () => {
   return (
     <>
-      <a className="mx-10 text-sm font-medium" href="#">
+      <a
+        className="mx-8 border-b py-2 text-xl font-medium md:border-none md:text-sm"
+        href="#"
+      >
         Templates
       </a>
-      <a className="mx-10 text-sm font-medium" href="#">
+      <a
+        className="mx-8 border-b py-2 text-xl font-medium md:border-none md:text-sm"
+        href="#"
+      >
         Help
       </a>
-      <a className="mx-10 text-sm font-medium" href="#">
+      <a
+        className="mx-8 border-b py-2 text-xl font-medium md:border-none md:text-sm"
+        href="#"
+      >
         Settings
       </a>
     </>
@@ -41,18 +51,27 @@ const AppNav = () => {
             )}
           </button>
         </div>
-        <div className="md:hidden">
+        <div className="z-[2000] md:hidden">
           <button onClick={toggleNavbar}>
             {isOpen ? <HiX /> : <HiMenu />}
           </button>
         </div>
       </nav>
-      {isOpen && (
-        <div className="flex basis-full flex-col items-center">
+
+      <div
+        className={`fixed ${isOpen ? "right-0" : "right-[-100%]"} top-0 z-50 h-full w-[60%] border-l border-zinc-300 bg-zinc-100 duration-300 ease-in-out md:hidden dark:bg-zinc-900`}
+      >
+        <div className="flex flex-col">
+          <ProjectSelection currentProject="default" />
           <NavLinks />
-          <button onClick={toggleDarkMode}>DM</button>
+          <button
+            className="mx-8 py-2 text-left text-xl font-medium"
+            onClick={toggleDarkMode}
+          >
+            DM
+          </button>
         </div>
-      )}
+      </div>
     </>
   );
 };

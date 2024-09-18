@@ -172,7 +172,7 @@ const PergamentCanvas = () => {
           />
           {nodes.length <= 0 && (
             <div className="pointer-events-none fixed left-0 top-0 flex h-screen w-screen items-center justify-center">
-              <div className="m-auto text-center text-2xl">
+              <div className="m-auto max-w-[50%] text-center text-lg md:text-2xl">
                 Drag some nodes from the left on here
               </div>
             </div>
