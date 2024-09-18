@@ -20,7 +20,7 @@ const NavLinks = () => {
   );
 };
 
-const Nav = () => {
+const AppNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { darkMode, toggleDarkMode } = usePergamentStore();
 
@@ -57,4 +57,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default AppNav;
