@@ -234,7 +234,7 @@ const usePergamentStore = create<PergamentState>((set, get) => ({
       const newNode: Node = {
         id: nodeType + self.crypto.randomUUID(),
         type: nodeType,
-        position: position ?? center,
+        position: position ?? center ?? { x: 0, y: 0 },
         ...config,
       };
       set({ nodes: get().nodes.concat(newNode) });
