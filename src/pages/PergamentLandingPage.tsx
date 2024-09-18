@@ -5,12 +5,12 @@ import screenshot from "../assets/screenshot-1.png";
 const PergamentLandingPage = () => {
   return (
     <>
-      <div className="fixed -z-10 h-screen w-screen bg-zinc-100" />
+      <div className="fixed -z-10 h-screen w-screen bg-gradient-to-b from-zinc-100 to-zinc-300" />
       <LPNavbar />
 
       <div className="flex flex-col items-center">
         <div className="mt-10 flex flex-col items-center p-10 md:mt-14 lg:mt-16">
-          <div className="bg-gradient-to-t from-zinc-900 to-zinc-300 bg-clip-text p-2 text-5xl font-medium tracking-tighter text-transparent md:text-6xl lg:text-8xl">
+          <div className="bg-gradient-to-t from-zinc-900 to-zinc-400 bg-clip-text p-2 text-5xl font-medium tracking-tighter text-transparent md:text-6xl lg:text-8xl">
             Get organized.
           </div>
           <div className="text-5xl font-bold tracking-tighter md:text-6xl lg:text-8xl">
@@ -28,7 +28,10 @@ const PergamentLandingPage = () => {
         >
           Get started
         </Link>
-        <img src={screenshot} className="m-6 max-w-7xl drop-shadow-2xl" />
+        <img
+          src={screenshot}
+          className="m-6 w-[90%] drop-shadow-2xl lg:w-[70%]"
+        />
       </div>
     </>
   );
