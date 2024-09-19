@@ -10,7 +10,7 @@ const LPNavbar = () => {
   };
 
   return (
-    <div className="mx-auto flex h-20 items-center justify-between border-b border-zinc-300 px-4 tracking-tighter">
+    <div className="mx-auto flex h-20 items-center justify-between border-b border-zinc-300 bg-zinc-100 px-4 tracking-tighter">
       <div className="flex items-center">
         <Logo />
         <span className="mx-1 text-2xl font-semibold">Pergament</span>

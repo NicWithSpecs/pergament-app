@@ -9,9 +9,9 @@ https://reactflow.dev/learn/customization/theming#overriding-built-in-classes
   overflow: hidden;
 }
 
-.react-flow__viewport {
+/* .react-flow__viewport {
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+} */
 
 .dragging > .react-flow__viewport {
   transition: none;
