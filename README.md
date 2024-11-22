@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# Pergament
+**_A flexible whiteboard App for note taking, brainstorming and ideation_**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About
+**Pergament** is an approach of a whiteboard style note taking app, in which the user is able to create note elements that are freely placeable on an expandable canvas. **Pergament** is made for people that want to arrange their notes and ideas in a visual way to be able to brainstorm and create mind maps.
 
-Currently, two official plugins are available:
+### Implemented features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Adding, deleting, dragging and scaling nodes on the canvas
+- Rich text editor for note elements
+- Connecting nodes with arrows/connectors
+- Todo-node with checking/unchecking functionality
+- Image-node
+- Heading-node
+- Frame node: Groups all nodes that are inside it
+- Storing node setup in local storage
+- Dark mode
 
-## Expanding the ESLint configuration
+### Planned features:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Storing and uploading node setup to server
+- Uploading images
+- SVG based Diagram element to create diagrams that can be placed on the canvas along note elements
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- TypeScript
+- React
+- React Flow
+- TipTap
+- Zustand
+- Tailwind
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+> [!NOTE]
+> This is a learning project.
+
